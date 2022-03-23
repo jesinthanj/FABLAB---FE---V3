@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import Layout from "../../components/Layout";
 import MenuItem from "@mui/material/MenuItem";
 import {
@@ -12,6 +12,8 @@ import {
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker, TimePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -21,6 +23,8 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function AddSlots() {
+  let navigate = useNavigate();
+
   const section = ["3d printing", "laser cutting"];
 
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
@@ -29,6 +33,8 @@ export default function AddSlots() {
   const [sectionValue, setSectionValue] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {}, []);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -61,6 +67,7 @@ export default function AddSlots() {
       console.log(toValue);
       console.log(sectionValue);
       setOpen(true);
+      navigate("/slotConfirmation");
     }
   };
 
