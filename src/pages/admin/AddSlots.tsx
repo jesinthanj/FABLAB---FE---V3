@@ -13,7 +13,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker, TimePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
-import { axiosGet, axiosPost } from "../requests";
+import axios from "axios";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -25,29 +25,16 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 export default function AddSlots() {
   let navigate = useNavigate();
 
-  // const section = [
-  //   { sectionId: 1, sectionName: "3d printing" },
-  //   { sectionId: 2, sectionName: "laser cutting" },
-  // ];
-
-  type Section = {
-    sectionId: number;
-    sectionName: string;
-  };
+  const section = ["3d printing", "laser cutting"];
 
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
   const [fromValue, setFromValue] = useState<Date | null>(null);
   const [toValue, setToValue] = useState<Date | null>(null);
-  const [sections, setSections] = useState<Section[]>([]);
-  const [sectionValue, setSectionValue] = useState<number>();
+  const [sectionValue, setSectionValue] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    axiosGet("/admin/addSlots").then((res) => {
-      setSections(res.data.sections);
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -61,7 +48,7 @@ export default function AddSlots() {
   };
 
   const handleChange = (event: any) => {
-    setSectionValue(event.target.value as number);
+    setSectionValue(event.target.value as string);
   };
 
   const handleSlots = () => {
@@ -69,23 +56,18 @@ export default function AddSlots() {
       dateValue === null ||
       fromValue === null ||
       toValue === null ||
-      sectionValue === null
+      sectionValue === ""
     ) {
       setError(true);
       setOpen(true);
     } else {
-      axiosPost("/admin/addSlots", {
-        date: dateValue,
-        startTime: fromValue,
-        endTime: toValue,
-        sectionId: sectionValue,
-      }).then((res) => {
-        if (res.data.message === "Success") {
-          setError(false);
-          setOpen(true);
-          navigate("/slotConfirmation");
-        }
-      });
+      setError(false);
+      console.log(dateValue);
+      console.log(fromValue);
+      console.log(toValue);
+      console.log(sectionValue);
+      setOpen(true);
+      navigate("/slotConfirmation");
     }
   };
 
@@ -93,6 +75,9 @@ export default function AddSlots() {
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h3>Add Slots</h3>
+        {/* <div className="align-self-start m-3">
+          <h3>Add Slots</h3>
+        </div> */}
         <div className="container">
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Section</InputLabel>
@@ -104,10 +89,10 @@ export default function AddSlots() {
               label="Sections"
               onChange={(e) => handleChange(e)}
             >
-              {sections.map((item, index) => {
+              {section.map((item, index) => {
                 return (
-                  <MenuItem value={item.sectionId} key={index}>
-                    {item.sectionName}
+                  <MenuItem value={item} key={index}>
+                    {item}
                   </MenuItem>
                 );
               })}

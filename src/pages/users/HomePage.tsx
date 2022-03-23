@@ -4,38 +4,34 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-// import printing from "../../assets/equipment/3d.png";
-// import Vinyl from "../../assets/equipment/vinyl.png";
-// import CNC from "../../assets/equipment/cnc.png";
 
 const details = [
   {
     equipname: "CNC Router",
-    amt: "Rs 200",
-    //image: CNC,
+    amt: "Rs 200/hr",
+    image: require("../../assets/equipment/3d.png"),
   },
   {
     equipname: "Vinyl Cutter",
-    amt: "Rs 200",
-    //image: Vinyl,
+    amt: "Rs 200/hr",
+    image: require("../../assets/equipment/vinyl.png"),
   },
   {
     equipname: "3D Printer",
-    amt: "Rs 200",
-    //image: printing,
+    amt: "Rs 200/hr",
+    image: require("../../assets/equipment/cnc.png"),
   },
 ];
 
 export default function HomePage() {
   let navigate = useNavigate();
   return (
-    <div className="vh-100 align-items-center justify-content-center">
+    <div className="vh-100 d-flex align-items-center flex-column">
       <h5
-        className="pb-1 mx-2 py-5 d-flex justify-content-center"
+        className="pb-1 mx-2 py-5"
         style={{
           fontFamily: "montserrat",
           fontWeight: "bold",
-          letterSpacing: "5px",
         }}
       >
         Pick your slots for
@@ -44,8 +40,7 @@ export default function HomePage() {
         details.map((items, index) => {
           return (
             <div key={index}>
-              <div className="align-items-center justify-content-center">
-                {" "}
+              <div>
                 <Card
                   sx={{
                     maxWidth: 335,
@@ -59,7 +54,7 @@ export default function HomePage() {
                     paddingBottom: "-5px",
                   }}
                 >
-                  {/* <CardMedia
+                  <CardMedia
                     component="img"
                     height="194"
                     image={items.image}
@@ -68,7 +63,7 @@ export default function HomePage() {
                       borderBottomLeftRadius: "20px",
                       borderBottomRightRadius: "20px",
                     }}
-                  /> */}
+                  />
                   <CardContent>
                     <div className="d-flex justify-content-between">
                       <Typography
@@ -82,27 +77,22 @@ export default function HomePage() {
                       </Typography>
                       <Button
                         variant="contained"
+                        href="#contained-buttons"
                         sx={{
                           borderRadius: 5,
-                          backgroundColor: "#FFA500",
+                          backgroundColor: "#FF8E23",
                           maxHeight: "50px",
                           minHeight: "30px",
-                          "&:hover": {
-                            backgroundColor: "#fff",
-                            color: "#FFA500",
-                          },
                         }}
                         onClick={() => {
-                          navigate("/booking", {
-                            state: { name: items.equipname },
-                          });
+                          navigate("/booking");
                         }}
                       >
                         Book Now
                       </Button>
                     </div>
                     <Typography
-                      className="pb-1 d-flex justify-content-start"
+                      className="pb-1"
                       style={{
                         fontFamily: "montserrat",
                       }}

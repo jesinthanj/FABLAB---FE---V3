@@ -1,14 +1,16 @@
 import { useState, forwardRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import Layout from "../../components/Layout";
 import MenuItem from "@mui/material/MenuItem";
 import {
   InputLabel,
   FormControl,
   Select,
+  TextField,
   Button,
   Snackbar,
 } from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DatePicker, TimePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { axiosGet, axiosPost } from "../requests";
@@ -20,10 +22,8 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function BookingsPage() {
+export default function AddSlots() {
   let navigate = useNavigate();
-  const { state } = useLocation();
-  const { name }: any = state;
 
   type Slots = {
     slotId: number;
@@ -90,7 +90,10 @@ export default function BookingsPage() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-        <h3>{name}</h3>
+        <h3>Section Name</h3>
+        {/* <div className="align-self-start m-3">
+          <h3>Add Slots</h3>
+        </div> */}
         <div className="container">
           <FormControl fullWidth sx={{ my: 2 }}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
