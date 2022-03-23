@@ -1,16 +1,19 @@
 import { useState, forwardRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import Layout from "../../components/Layout";
 import MenuItem from "@mui/material/MenuItem";
 import {
   InputLabel,
   FormControl,
   Select,
+  TextField,
   Button,
   Snackbar,
 } from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DatePicker, TimePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -19,13 +22,11 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function BookingsPage() {
+export default function AddSlots() {
   let navigate = useNavigate();
-  const { state } = useLocation();
-  const { name }: any = state;
 
   const date = ["2022-03-30", "2022-04-01"];
-  const time = ["11:00 - 13:00", "14:00 - 16:00"];
+  const time = ["11:00 - 13:00","14:00 - 16:00"];
 
   const [dateValue, setDateValue] = useState("");
   const [timeValue, setTimeValue] = useState("");
@@ -50,11 +51,14 @@ export default function BookingsPage() {
   };
 
   const handleTimeChange = (event: any) => {
-    setTimeValue(event.target.value as string);
-  };
+      setTimeValue(event.target.value as string);
+  }
 
   const handleBooking = () => {
-    if (dateValue === "" || timeValue === "") {
+    if (
+      dateValue === "" ||
+      timeValue === ""
+    ) {
       setError(true);
       setOpen(true);
     } else {
@@ -69,9 +73,12 @@ export default function BookingsPage() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-        <h3>{name}</h3>
+        <h3>Section Name</h3>
+        {/* <div className="align-self-start m-3">
+          <h3>Add Slots</h3>
+        </div> */}
         <div className="container">
-          <FormControl fullWidth sx={{ my: 2 }}>
+          <FormControl fullWidth sx={{my:2}}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
 
             <Select
@@ -116,14 +123,14 @@ export default function BookingsPage() {
                 backgroundColor: "#FFA73F",
                 width: 100,
                 borderRadius: 10,
-                my: 2,
+                my:2,
                 ":hover": { backgroundColor: "#ff623f" },
               }}
               onClick={() => {
                 handleBooking();
               }}
             >
-              Book
+              Book 
             </Button>
           </div>
         </div>

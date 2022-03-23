@@ -2,7 +2,6 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
 import { MdDelete } from "react-icons/md";
 
 const data = [
@@ -74,22 +73,14 @@ export default function MyBookings() {
             <p>You have made no bookings!</p>
           )}
         </div>
-        <Button
-          variant="contained"
+        <a
+          role="button"
           href="/homepage"
-          sx={{
-            borderRadius: 6,
-            marginTop: "20px",
-            px: "30px",
-            backgroundColor: "#F49C4B",
-            "&:hover": {
-              backgroundColor: "#fff",
-              color: "#F49C4B",
-            },
-          }}
+          className="btn text-white mt-4 px-4 fw-bold"
+          style={{ backgroundColor: "#F49C4B", borderRadius: "25px" }}
         >
           BACK
-        </Button>
+        </a>
       </div>
     </Layout>
   );

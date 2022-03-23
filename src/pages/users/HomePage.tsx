@@ -15,12 +15,12 @@ const details = [
     //image: CNC,
   },
   {
-    equipname: "Vinyl Cutter",
+    equipname: "Pruning Plants",
     amt: "Rs 200",
     //image: Vinyl,
   },
   {
-    equipname: "3D Printer",
+    equipname: "Pruning Plants",
     amt: "Rs 200",
     //image: printing,
   },
@@ -82,20 +82,15 @@ export default function HomePage() {
                       </Typography>
                       <Button
                         variant="contained"
+                        href="#contained-buttons"
                         sx={{
                           borderRadius: 5,
                           backgroundColor: "#FFA500",
                           maxHeight: "50px",
                           minHeight: "30px",
-                          "&:hover": {
-                            backgroundColor: "#fff",
-                            color: "#FFA500",
-                          },
                         }}
                         onClick={() => {
-                          navigate("/booking", {
-                            state: { name: items.equipname },
-                          });
+                          navigate("/booking");
                         }}
                       >
                         Book Now
