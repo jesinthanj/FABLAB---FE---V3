@@ -59,9 +59,27 @@ export default function ViewBookings() {
     sectionId: number;
     sectionName: string;
   };
+
+  type Users = {
+    name: string;
+    registerNumber: string;
+  };
+
+  type Slots = {
+    fromTime: string;
+    toTime: string;
+    sectionId: number;
+  };
+  interface SlotData {
+    users: Users;
+    slotId: number;
+    slots: Slots;
+  }
+
   const [sectionValue, setSectionValue] = useState<number>();
   const [sections, setSections] = useState<Section[]>([]);
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
+  const [slotData, setSlotData] = useState<SlotData[] | null>(null);
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
@@ -101,7 +119,7 @@ export default function ViewBookings() {
       setSections(res.data.sections);
     });
     axiosGet("/admin/getBookings").then((res) => {
-      setSections(res.data);
+      setSlotData(res.data.data);
     });
   }, []);
 
