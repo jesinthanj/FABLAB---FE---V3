@@ -6,6 +6,7 @@ import {
   Select,
   Divider,
   List,
+  Button,
   MenuItem,
 } from "@mui/material";
 import { MdDelete } from "react-icons/md";
@@ -45,7 +46,7 @@ export default function ViewBookings() {
   const date = ["2020-01-10", "2020-01-11", "2020-01-12"];
   return (
     <Layout>
-      <div className="d-flex align-items-center justify-content-center flex-column">
+      <div className="d-flex align-items-center p-3 justify-content-center flex-column">
         <h3 className="mb-4 fw-bolder">VIEW BOOKINGS</h3>
         <div
           className="row d-flex justify-content-center align-items-center"
@@ -86,13 +87,19 @@ export default function ViewBookings() {
             </FormControl>
           </div>
           <div className="col-md-2 text-center mb-3 d-grid mx-auto p-0">
-            <button
-              type="button"
-              className="btn text-white fw-bold"
-              style={{ backgroundColor: "#F49C4B", borderRadius: "25px" }}
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: 6,
+                backgroundColor: "#F49C4B",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#F49C4B",
+                },
+              }}
             >
               Search
-            </button>
+            </Button>
           </div>
         </div>
         <div
@@ -138,14 +145,22 @@ export default function ViewBookings() {
             <p>You have made no bookings!</p>
           )}
         </div>
-        <a
-          role="button"
+        <Button
+          variant="contained"
           href="/homepage"
-          className="btn text-white mt-4 px-4 fw-bold"
-          style={{ backgroundColor: "#F49C4B", borderRadius: "25px" }}
+          sx={{
+            borderRadius: 6,
+            marginTop: "20px",
+            px: "30px",
+            backgroundColor: "#F49C4B",
+            "&:hover": {
+              backgroundColor: "#fff",
+              color: "#F49C4B",
+            },
+          }}
         >
           BACK
-        </a>
+        </Button>
       </div>
     </Layout>
   );
