@@ -3,6 +3,7 @@ import Login from "./pages/auth/Login";
 import MainPage from "./pages/admin/MainPage";
 import HomePage from "./pages/users/HomePage";
 import AddSlots from "./pages/admin/AddSlots";
+import AddEquipmentsPage from "./pages/admin/AddEquipmentsPage";
 import MyBookings from "./pages/users/MyBookings";
 import ViewBookings from "./pages/admin/ViewBookings";
 import ResetPwd from "./pages/auth/ResetPwd";
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/register1" element={<RegisterPage1 />} />
         <Route path="/register2" element={<RegisterPage2 />} />
         <Route path="/register3" element={<RegisterPage3 />} />
+        <Route path="/addequip" element={<AddEquipmentsPage />} />
         <Route path="/slotConfirmation" element={<SlotConfirmationPage />} />
         <Route path="/users/confirmationpage" element={<ConfirmationPage />} />
         <Route path = "/booking" element={<BookingsPage/>}/>
