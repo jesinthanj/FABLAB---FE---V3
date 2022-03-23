@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import Layout from "../../components/Layout";
 import {
   InputLabel,
@@ -9,10 +9,12 @@ import {
   Button,
   MenuItem,
   TextField,
+  Snackbar,
 } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosGet, axiosPost } from "../requests";
 
 const data = [
@@ -45,6 +47,13 @@ const data = [
   },
 ];
 
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function ViewBookings() {
   type Section = {
     sectionId: number;
@@ -53,14 +62,46 @@ export default function ViewBookings() {
   const [sectionValue, setSectionValue] = useState<number>();
   const [sections, setSections] = useState<Section[]>([]);
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
+  const [error, setError] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event: any) => {
     setSectionValue(event.target.value as number);
   };
 
+  const handleSlots = () => {
+    if (dateValue === null || sectionValue === null) {
+      setError(true);
+      setOpen(true);
+    } else {
+      axiosPost("/admin/getBookingById", {
+        sectionId: sectionValue,
+        date: dateValue,
+      }).then((res) => {
+        if (res.data.message === "Success") {
+          setError(false);
+          setOpen(true);
+        }
+      });
+    }
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   useEffect(() => {
     axiosGet("/admin/addSlots").then((res) => {
       setSections(res.data.sections);
+    });
+    axiosGet("/admin/getBookings").then((res) => {
+      setSections(res.data);
     });
   }, []);
 
@@ -111,10 +152,24 @@ export default function ViewBookings() {
                   color: "#F49C4B",
                 },
               }}
+              onClick={() => {
+                handleSlots();
+              }}
             >
               Search
             </Button>
           </div>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            {error ? (
+              <Alert onClose={handleClose} severity="error">
+                Please Fill All The Fields
+              </Alert>
+            ) : (
+              <Alert onClose={handleClose} severity="success">
+                Check Out The Sections Here
+              </Alert>
+            )}
+          </Snackbar>
         </div>
         <div
           style={{
