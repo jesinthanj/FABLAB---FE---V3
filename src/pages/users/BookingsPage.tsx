@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
+import { axiosGet, axiosPost } from "../requests";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -24,15 +25,35 @@ export default function BookingsPage() {
   const { state } = useLocation();
   const { name }: any = state;
 
-  const date = ["2022-03-30", "2022-04-01"];
+  type Slots = {
+    slotId: number;
+    date: String;
+    from: Date;
+    to: Date;
+  };
+
+  // const date = ["2022-03-30", "2022-04-01"];
   const time = ["11:00 - 13:00", "14:00 - 16:00"];
 
+  const [slots, setSlots] = useState<Slots[]>([]);
   const [dateValue, setDateValue] = useState("");
   const [timeValue, setTimeValue] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    axiosGet("/users/bookSlots").then((res) => {
+      setSlots(res.data.slots);
+    });
+  }, []);
+
+  let date: any = [];
+  slots.forEach((slot) => {
+    if (date.indexOf(slot.date) === -1) {
+      date.push(slot.date);
+    }
+  });
+  console.log(date);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -81,7 +102,7 @@ export default function BookingsPage() {
               label="Sections"
               onChange={(e) => handleDateChange(e)}
             >
-              {date.map((item, index) => {
+              {date.map((item: any, index: number) => {
                 return (
                   <MenuItem value={item} key={index}>
                     {item}
@@ -91,7 +112,7 @@ export default function BookingsPage() {
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Section</InputLabel>
+            <InputLabel id="demo-simple-select-label">Time</InputLabel>
 
             <Select
               labelId="demo-simple-select-label"
