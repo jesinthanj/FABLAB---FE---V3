@@ -13,6 +13,7 @@ import RegisterPage3 from "./pages/auth/RegisterPage3";
 import ConfirmationPage from "../src/pages/users/ConfirmationPage";
 import "bootstrap/dist/css/bootstrap.css";
 import SlotConfirmationPage from "./pages/admin/ConfirmationPage";
+import BookingsPage from './pages/users/BookingsPage';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/register3" element={<RegisterPage3 />} />
         <Route path="/slotConfirmation" element={<SlotConfirmationPage />} />
         <Route path="/users/confirmationpage" element={<ConfirmationPage />} />
+        <Route path = "/booking" element={<BookingsPage/>}/>
       </Routes>
     </BrowserRouter>
   );

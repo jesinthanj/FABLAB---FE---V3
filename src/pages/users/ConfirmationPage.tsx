@@ -14,8 +14,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import Layout from "../../components/Layout";
+import { useNavigate } from "react-router-dom";
 
 export default function ConfirmationPage() {
+  let navigate = useNavigate();
   return (
     <Layout>
       <div className="container d-flex justify-content-center align-items-center min-vh-100">
@@ -36,11 +38,11 @@ export default function ConfirmationPage() {
                 </Typography>
               </div>
               <div className="my-3">
-                <a href="/homepage">
-                  <Button variant="contained" color="warning">
+                  <Button variant="contained" color="warning" onClick={() => {
+              navigate("/homepage");
+            }}>
                     Home
                   </Button>
-                </a>
               </div>
             </CardContent>
           </CardActionArea>
