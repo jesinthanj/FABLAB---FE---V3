@@ -3,6 +3,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 // import printing from "../../assets/equipment/3d.png";
 // import Vinyl from "../../assets/equipment/vinyl.png";
 // import CNC from "../../assets/equipment/cnc.png";
@@ -26,6 +27,7 @@ const details = [
 ];
 
 export default function HomePage() {
+  let navigate = useNavigate();
   return (
     <div className="vh-100 align-items-center justify-content-center">
       <h5
@@ -86,6 +88,9 @@ export default function HomePage() {
                           backgroundColor: "#FFA500",
                           maxHeight: "50px",
                           minHeight: "30px",
+                        }}
+                        onClick={() => {
+                          navigate("/booking");
                         }}
                       >
                         Book Now
