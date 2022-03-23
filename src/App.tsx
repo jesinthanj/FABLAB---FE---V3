@@ -12,7 +12,7 @@ import RegisterPage2 from "./pages/auth/RegisterPage2";
 import RegisterPage3 from "./pages/auth/RegisterPage3";
 import ConfirmationPage from "../src/pages/users/ConfirmationPage";
 import "bootstrap/dist/css/bootstrap.css";
-import ConfirmationPage from "./pages/admin/ConfirmationPage";
+import SlotConfirmationPage from "./pages/admin/ConfirmationPage";
 
 export default function App() {
   return (
@@ -29,7 +29,7 @@ export default function App() {
         <Route path="/register1" element={<RegisterPage1 />} />
         <Route path="/register2" element={<RegisterPage2 />} />
         <Route path="/register3" element={<RegisterPage3 />} />
-        <Route path="/slotConfirmation" element={<ConfirmationPage />} />
+        <Route path="/slotConfirmation" element={<SlotConfirmationPage />} />
         <Route path="/users/confirmationpage" element={<ConfirmationPage />} />
       </Routes>
     </BrowserRouter>

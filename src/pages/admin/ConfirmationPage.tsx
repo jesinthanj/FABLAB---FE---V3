@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function ConfirmationPage() {
+export default function SlotConfirmationPage() {
   let navigate = useNavigate();
   return (
     <Layout>
