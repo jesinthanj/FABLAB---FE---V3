@@ -1,7 +1,13 @@
 import { useState } from "react";
 import Layout from "../../components/Layout";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
+import {
+  InputLabel,
+  FormControl,
+  Select,
+  Divider,
+  List,
+  MenuItem,
+} from "@mui/material";
 import { MdDelete } from "react-icons/md";
 
 const data = [
@@ -35,10 +41,60 @@ const data = [
 ];
 
 export default function ViewBookings() {
+  const section = ["3d printing", "laser cutting"];
+  const date = ["2020-01-10", "2020-01-11", "2020-01-12"];
   return (
     <Layout>
-      <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
+      <div className="d-flex align-items-center justify-content-center flex-column">
         <h3 className="mb-4 fw-bolder">VIEW BOOKINGS</h3>
+        <div
+          className="row d-flex justify-content-center align-items-center"
+          style={{ width: "90%" }}
+        >
+          <div className="col-md-5 mb-3 p-0">
+            <FormControl variant="filled" fullWidth>
+              <InputLabel>Section</InputLabel>
+              <Select
+                value={section}
+                //   onChange={handleChange}
+              >
+                {section.map((item, index) => {
+                  return (
+                    <MenuItem value={item} key={index}>
+                      {item}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-md-5 mb-3 p-md-2 p-0">
+            <FormControl variant="filled" fullWidth>
+              <InputLabel>Date</InputLabel>
+              <Select
+                value={date}
+                //   onChange={handleChange}
+              >
+                {date.map((item, index) => {
+                  return (
+                    <MenuItem value={item} key={index}>
+                      {item}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-md-2 text-center mb-3 d-grid mx-auto p-0">
+            <button
+              type="button"
+              className="btn text-white fw-bold"
+              style={{ backgroundColor: "#F49C4B", borderRadius: "25px" }}
+            >
+              Search
+            </button>
+          </div>
+        </div>
         <div
           style={{
             backgroundColor: "#f5f5f5",
