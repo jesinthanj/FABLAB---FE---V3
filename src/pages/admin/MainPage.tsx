@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "@mui/material";
-import machine from "../../assets/machine1.jpg";
+//import { machine } from "../../assets/machine1.jpg";
 import Layout from "../../components/Layout";
 export default function MainPage() {
   return (
@@ -32,13 +32,13 @@ export default function MainPage() {
                 }}
               >
                 <div className="justify-content-center d-flex">
-                  <img
+                  {/* <img
                     style={{ marginTop: "30px", borderRadius: "10px" }}
                     width={200}
                     height={170}
                     src={machine}
                     alt=""
-                  />
+                  /> */}
                 </div>
                 <div className="justify-content-center d-flex m-3">
                   <button
@@ -66,13 +66,13 @@ export default function MainPage() {
                 }}
               >
                 <div className="justify-content-center d-flex">
-                  <img
+                  {/* <img
                     style={{ marginTop: "30px", borderRadius: "10px" }}
                     width={200}
                     height={170}
                     src={machine}
                     alt=""
-                  />
+                  /> */}
                 </div>
                 <div className="justify-content-center d-flex m-3">
                   <button

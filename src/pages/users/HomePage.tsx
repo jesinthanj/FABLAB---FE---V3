@@ -3,25 +3,25 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import printing from "../../assets/equipment/3d.png";
-import Vinyl from "../../assets/equipment/vinyl.png";
-import { CNC } from "../../assets/equipment/cnc.png";
+// import printing from "../../assets/equipment/3d.png";
+// import Vinyl from "../../assets/equipment/vinyl.png";
+// import CNC from "../../assets/equipment/cnc.png";
 
 const details = [
   {
     equipname: "CNC Router",
     amt: "Rs 200",
-    image: CNC,
+    //image: CNC,
   },
   {
     equipname: "Pruning Plants",
     amt: "Rs 200",
-    image: Vinyl,
+    //image: Vinyl,
   },
   {
     equipname: "Pruning Plants",
     amt: "Rs 200",
-    image: printing,
+    //image: printing,
   },
 ];
 
@@ -57,7 +57,7 @@ export default function HomePage() {
                     paddingBottom: "-5px",
                   }}
                 >
-                  <CardMedia
+                  {/* <CardMedia
                     component="img"
                     height="194"
                     image={items.image}
@@ -66,7 +66,7 @@ export default function HomePage() {
                       borderBottomLeftRadius: "20px",
                       borderBottomRightRadius: "20px",
                     }}
-                  />
+                  /> */}
                   <CardContent>
                     <div className="d-flex justify-content-between">
                       <Typography
