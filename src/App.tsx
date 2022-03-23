@@ -6,9 +6,8 @@ import HomePage from "./pages/users/HomePage";
 import AddSlots from "./pages/admin/AddSlots";
 import MyBookings from "./pages/users/MyBookings";
 import ViewBookings from "./pages/admin/ViewBookings";
-
-// import bootstrap
-import "bootstrap/dist/css/bootstrap.css";
+import ResetPwd from "./pages/auth/ResetPwd";
+import ChangePwd from "./pages/auth/ChangePwd";
 
 export default function App() {
   return (
@@ -19,7 +18,9 @@ export default function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/addSlots" element={<AddSlots />} />
         <Route path="/mybookings" element={<MyBookings />} />
-        <Route path="/admin/viewbookings" element={<ViewBookings />} />
+        <Route path="/admin/viewbooking" element={<ViewBookings />} />
+        <Route path="/resetpwd" element={<ResetPwd />} />
+        <Route path="/changepwd" element={<ChangePwd />} />
       </Routes>
     </BrowserRouter>
   );
