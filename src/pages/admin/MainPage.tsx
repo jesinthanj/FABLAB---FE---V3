@@ -1,97 +1,125 @@
-import React from "react";
-import { Card } from "@mui/material";
-//import { machine } from "../../assets/machine1.jpg";
-import Layout from "../../components/Layout";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+
+const image1 = require("../../assets/equipment/machine1.jpg");
+const image2 = require("../../assets/equipment/machine2.png");
+
 export default function MainPage() {
+  let navigate = useNavigate();
   return (
-    <>
-      <Layout>
-        <div
-          className="container"
-          style={{
-            maxHeight: "100vh",
-            minWidth: "100vw",
-            marginTop: "20%",
+    <div className="vh-100 d-flex align-items-center flex-column">
+      <h5
+        className="pb-1 mx-2 py-5"
+        style={{
+          fontFamily: "montserrat",
+          fontWeight: "bold",
+        }}
+      >
+        Welcome to <br />
+        <span style={{ color: "#FF8E23", letterSpacing: "3px" }}>
+          {" "}
+          LICET FABLAB{" "}
+        </span>
+      </h5>
+      <div className="py-1">
+        <Card
+          sx={{
+            maxWidth: 335,
+            borderBottomLeftRadius: "20px",
+            borderBottomRightRadius: "20px",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+            backgroundColor: "#F5F5F5",
+            margin: "20px",
+            boxShadow: "0 9px 9px -6px black",
+            paddingBottom: "-15px",
           }}
         >
-          <p
-            className="m-5 justify-content-center d-flex"
-            style={{ fontWeight: "bold", fontSize: "20px" }}
-          >
-            Welcome to LICET FABLAB
-          </p>
-          <div className="justify-content-center align-items-center min-vh-100">
-            <div className="justify-content-center align-items-center d-flex m-5">
-              <Card
-                variant="outlined"
-                style={{
-                  height: "270px",
-                  width: "250px",
-                  background: "#e6e6e6",
-                  borderRadius: "10px",
+          <CardMedia
+            component="img"
+            height="194"
+            image={image1}
+            alt="Paella dish"
+            style={{
+              borderBottomLeftRadius: "20px",
+              borderBottomRightRadius: "20px",
+            }}
+          />
+          <CardContent>
+            <div className="d-flex justify-content-center">
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={() => {
+                  navigate("/addequip");
                 }}
               >
-                <div className="justify-content-center d-flex">
-                  {/* <img
-                    style={{ marginTop: "30px", borderRadius: "10px" }}
-                    width={200}
-                    height={170}
-                    src={machine}
-                    alt=""
-                  /> */}
-                </div>
-                <div className="justify-content-center d-flex m-3">
-                  <button
-                    className="m-2"
-                    type="button"
-                    style={{
-                      background: "#FF8E23",
-                      border: "#FF8E23",
-                      borderRadius: "3px",
-                    }}
-                  >
-                    Add Slots
-                  </button>
-                </div>
-              </Card>
+                Add Equipments
+              </Button>
             </div>
-            <div className="justify-content-center d-flex m-5">
-              <Card
-                variant="outlined"
-                style={{
-                  height: "270px",
-                  width: "250px",
-                  background: "#e6e6e6",
-                  borderRadius: "10px",
+          </CardContent>
+        </Card>
+      </div>
+      <div className="py-1">
+        <Card
+          sx={{
+            maxWidth: 335,
+            borderBottomLeftRadius: "20px",
+            borderBottomRightRadius: "20px",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+            backgroundColor: "#F5F5F5",
+            margin: "20px",
+            boxShadow: "0 9px 9px -6px black",
+            paddingBottom: "-15px",
+          }}
+        >
+          <CardMedia
+            component="img"
+            height="194"
+            image={image2}
+            alt="Paella dish"
+            style={{
+              borderBottomLeftRadius: "20px",
+              borderBottomRightRadius: "20px",
+            }}
+          />
+          <CardContent>
+            <div className="d-flex justify-content-center">
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={() => {
+                  navigate("/addSlots");
                 }}
               >
-                <div className="justify-content-center d-flex">
-                  {/* <img
-                    style={{ marginTop: "30px", borderRadius: "10px" }}
-                    width={200}
-                    height={170}
-                    src={machine}
-                    alt=""
-                  /> */}
-                </div>
-                <div className="justify-content-center d-flex m-3">
-                  <button
-                    className="m-2"
-                    type="button"
-                    style={{
-                      background: "#FF8E23",
-                      border: "#FF8E23",
-                      borderRadius: "3px",
-                    }}
-                  >
-                    Add Equipments
-                  </button>
-                </div>
-              </Card>
+                Add Slots
+              </Button>
             </div>
-          </div>
-        </div>
-      </Layout>
-    </>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
