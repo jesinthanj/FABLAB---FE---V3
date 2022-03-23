@@ -1,10 +1,7 @@
 import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage1() {
-  let navigate = useNavigate();
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
@@ -32,41 +29,20 @@ export default function RegisterPage1() {
             </h1>
             <div>
               <TextField
-                color="warning"
-                className="my-4 d-flex justify-content-center"
-                label="E-mail"
+                className="py-3 d-flex justify-content-center"
+                label="email"
               />
               <TextField
-                color="warning"
-                className="my-4 d-flex justify-content-center"
-                label="Password"
+                className="py-3 d-flex justify-content-center"
+                label="password"
               />
               <TextField
-                color="warning"
-                className="my-4 d-flex justify-content-center"
-                label="Confirm Password"
+                className="py-3 d-flex justify-content-center"
+                label="confirm password"
               />
             </div>
-            <div className="d-flex justify-content-center pt-3 py-4">
-              {" "}
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: 5,
-                  backgroundColor: "#FF8E23",
-                  maxHeight: "50px",
-                  minHeight: "30px",
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "#FFA500",
-                  },
-                }}
-                onClick={() => {
-                  navigate("/register2");
-                }}
-              >
-                Next
-              </Button>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-warning btn-sm">Next</button>
             </div>
           </div>
         </div>

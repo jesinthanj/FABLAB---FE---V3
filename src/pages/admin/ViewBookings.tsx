@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import Layout from "../../components/Layout";
 import {
   InputLabel,
@@ -8,8 +8,14 @@ import {
   List,
   Button,
   MenuItem,
+  TextField,
+  Snackbar,
 } from "@mui/material";
 import { MdDelete } from "react-icons/md";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { axiosGet, axiosPost } from "../requests";
 
 const data = [
   {
@@ -41,9 +47,64 @@ const data = [
   },
 ];
 
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function ViewBookings() {
-  const section = ["3d printing", "laser cutting"];
-  const date = ["2020-01-10", "2020-01-11", "2020-01-12"];
+  type Section = {
+    sectionId: number;
+    sectionName: string;
+  };
+  const [sectionValue, setSectionValue] = useState<number>();
+  const [sections, setSections] = useState<Section[]>([]);
+  const [dateValue, setDateValue] = useState<Date | string | null>(null);
+  const [error, setError] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+
+  const handleChange = (event: any) => {
+    setSectionValue(event.target.value as number);
+  };
+
+  const handleSlots = () => {
+    if (dateValue === null || sectionValue === null) {
+      setError(true);
+      setOpen(true);
+    } else {
+      axiosPost("/admin/getBookingById", {
+        sectionId: sectionValue,
+        date: dateValue,
+      }).then((res) => {
+        if (res.data.message === "Success") {
+          setError(false);
+          setOpen(true);
+        }
+      });
+    }
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    axiosGet("/admin/addSlots").then((res) => {
+      setSections(res.data.sections);
+    });
+    axiosGet("/admin/getBookings").then((res) => {
+      setSections(res.data);
+    });
+  }, []);
+
   return (
     <Layout>
       <div className="d-flex align-items-center p-3 justify-content-center flex-column">
@@ -55,14 +116,11 @@ export default function ViewBookings() {
           <div className="col-md-5 mb-3 p-0">
             <FormControl variant="filled" fullWidth>
               <InputLabel>Section</InputLabel>
-              <Select
-                value={section}
-                //   onChange={handleChange}
-              >
-                {section.map((item, index) => {
+              <Select value={sectionValue} onChange={(e) => handleChange(e)}>
+                {sections.map((item, index) => {
                   return (
-                    <MenuItem value={item} key={index}>
-                      {item}
+                    <MenuItem value={item.sectionId} key={index}>
+                      {item.sectionName}
                     </MenuItem>
                   );
                 })}
@@ -70,21 +128,18 @@ export default function ViewBookings() {
             </FormControl>
           </div>
           <div className="col-md-5 mb-3 p-md-2 p-0">
-            <FormControl variant="filled" fullWidth>
-              <InputLabel>Date</InputLabel>
-              <Select
-                value={date}
-                //   onChange={handleChange}
-              >
-                {date.map((item, index) => {
-                  return (
-                    <MenuItem value={item} key={index}>
-                      {item}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Date"
+                value={dateValue}
+                onChange={(newValue) => {
+                  setDateValue(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} fullWidth variant="filled" />
+                )}
+              />
+            </LocalizationProvider>
           </div>
           <div className="col-md-2 text-center mb-3 d-grid mx-auto p-0">
             <Button
@@ -97,10 +152,24 @@ export default function ViewBookings() {
                   color: "#F49C4B",
                 },
               }}
+              onClick={() => {
+                handleSlots();
+              }}
             >
               Search
             </Button>
           </div>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            {error ? (
+              <Alert onClose={handleClose} severity="error">
+                Please Fill All The Fields
+              </Alert>
+            ) : (
+              <Alert onClose={handleClose} severity="success">
+                Check Out The Sections Here
+              </Alert>
+            )}
+          </Snackbar>
         </div>
         <div
           style={{
