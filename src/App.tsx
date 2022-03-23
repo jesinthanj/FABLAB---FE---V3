@@ -7,7 +7,6 @@ import AddSlots from "./pages/admin/AddSlots";
 import MyBookings from "./pages/users/MyBookings";
 import ViewBookings from "./pages/admin/ViewBookings";
 
-// import bootstrap
 import "bootstrap/dist/css/bootstrap.css";
 
 export default function App() {
