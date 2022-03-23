@@ -33,7 +33,13 @@ export default function MyBookings() {
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h3 className="mb-5 fw-bolder">MY BOOKINGS</h3>
-        <div style={{ backgroundColor: "#f5f5f5", width: "90%" }}>
+        <div
+          style={{
+            backgroundColor: "#f5f5f5",
+            width: "90%",
+            borderRadius: "10px",
+          }}
+        >
           {data && data.length > 0 ? (
             data.map((list, index) => {
               return (

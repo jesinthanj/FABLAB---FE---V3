@@ -1,5 +1,3 @@
-import * as React from "react";
-import Layout from "../../components/Layout";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -55,7 +53,8 @@ export default function HomePage() {
                     borderTopRightRadius: "20px",
                     backgroundColor: "#F5F5F5",
                     margin: "20px",
-                    boxShadow: "5px 5px 5px #888888",
+                    boxShadow: "0 9px 9px -6px black",
+                    paddingBottom: "-5px",
                   }}
                 >
                   <CardMedia
@@ -81,11 +80,12 @@ export default function HomePage() {
                       </Typography>
                       <Button
                         variant="contained"
-                        className="rounded-3"
                         href="#contained-buttons"
                         sx={{
                           borderRadius: 5,
                           backgroundColor: "#FFA500",
+                          maxHeight: "50px",
+                          minHeight: "30px",
                         }}
                       >
                         Book Now

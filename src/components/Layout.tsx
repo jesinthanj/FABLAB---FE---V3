@@ -4,7 +4,7 @@ export default function Layout(props: any) {
       <div
         style={{
           padding: "60px",
-          position: "absolute",
+          position: "fixed",
           top: 0,
           left: 0,
           backgroundColor: "#FF8E23",
@@ -15,7 +15,7 @@ export default function Layout(props: any) {
       <div
         style={{
           padding: "60px",
-          position: "absolute",
+          position: "fixed",
           bottom: 0,
           right: 0,
           backgroundColor: "#FF8E23",
