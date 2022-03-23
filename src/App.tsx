@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { render } from "react-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/auth/Login";
+import MainPage from "./pages/admin/MainPage";
+import HomePage from "./pages/users/HomePage";
+import AddSlots from "./pages/admin/AddSlots";
+import MyBookings from "./pages/users/MyBookings";
+import ViewBookings from "./pages/admin/ViewBookings";
 
-function App() {
+// import bootstrap
+import "bootstrap/dist/css/bootstrap.css";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/mainpage" element={<MainPage />} />
+        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/addSlots" element={<AddSlots />} />
+        <Route path="/mybookings" element={<MyBookings />} />
+        <Route path="/admin/viewbooking" element={<ViewBookings />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
