@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import {
   InputLabel,
@@ -8,8 +8,12 @@ import {
   List,
   Button,
   MenuItem,
+  TextField,
 } from "@mui/material";
 import { MdDelete } from "react-icons/md";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import { axiosGet, axiosPost } from "../requests";
 
 const data = [
   {
@@ -42,8 +46,24 @@ const data = [
 ];
 
 export default function ViewBookings() {
-  const section = ["3d printing", "laser cutting"];
-  const date = ["2020-01-10", "2020-01-11", "2020-01-12"];
+  type Section = {
+    sectionId: number;
+    sectionName: string;
+  };
+  const [sectionValue, setSectionValue] = useState<number>();
+  const [sections, setSections] = useState<Section[]>([]);
+  const [dateValue, setDateValue] = useState<Date | string | null>(null);
+
+  const handleChange = (event: any) => {
+    setSectionValue(event.target.value as number);
+  };
+
+  useEffect(() => {
+    axiosGet("/admin/addSlots").then((res) => {
+      setSections(res.data.sections);
+    });
+  }, []);
+
   return (
     <Layout>
       <div className="d-flex align-items-center p-3 justify-content-center flex-column">
@@ -55,14 +75,11 @@ export default function ViewBookings() {
           <div className="col-md-5 mb-3 p-0">
             <FormControl variant="filled" fullWidth>
               <InputLabel>Section</InputLabel>
-              <Select
-                value={section}
-                //   onChange={handleChange}
-              >
-                {section.map((item, index) => {
+              <Select value={sectionValue} onChange={(e) => handleChange(e)}>
+                {sections.map((item, index) => {
                   return (
-                    <MenuItem value={item} key={index}>
-                      {item}
+                    <MenuItem value={item.sectionId} key={index}>
+                      {item.sectionName}
                     </MenuItem>
                   );
                 })}
@@ -70,21 +87,18 @@ export default function ViewBookings() {
             </FormControl>
           </div>
           <div className="col-md-5 mb-3 p-md-2 p-0">
-            <FormControl variant="filled" fullWidth>
-              <InputLabel>Date</InputLabel>
-              <Select
-                value={date}
-                //   onChange={handleChange}
-              >
-                {date.map((item, index) => {
-                  return (
-                    <MenuItem value={item} key={index}>
-                      {item}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Date"
+                value={dateValue}
+                onChange={(newValue) => {
+                  setDateValue(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} fullWidth variant="filled" />
+                )}
+              />
+            </LocalizationProvider>
           </div>
           <div className="col-md-2 text-center mb-3 d-grid mx-auto p-0">
             <Button
