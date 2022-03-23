@@ -19,7 +19,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function AddSlots() {
+export default function BookingPage() {
   let navigate = useNavigate();
   const { state } = useLocation();
   const { name }: any = state;
