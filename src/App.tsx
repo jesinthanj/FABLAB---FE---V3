@@ -10,7 +10,7 @@ import ChangePwd from "./pages/auth/ChangePwd";
 import RegisterPage1 from "./pages/auth/RegisterPage1";
 import RegisterPage2 from "./pages/auth/RegisterPage2";
 import RegisterPage3 from "./pages/auth/RegisterPage3";
-
+import ConfirmationPage from "../src/pages/users/ConfirmationPage"
 import "bootstrap/dist/css/bootstrap.css";
 
 export default function App() {
@@ -28,6 +28,7 @@ export default function App() {
         <Route path="/register1" element={<RegisterPage1 />} />
         <Route path="/register2" element={<RegisterPage2 />} />
         <Route path="/register3" element={<RegisterPage3 />} />
+        <Route path="/users/confirmationpage" element={<ConfirmationPage />} />
       </Routes>
     </BrowserRouter>
   );
