@@ -1,7 +1,45 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { Snackbar, Alert } from "@mui/material";
 
 export default function RegisterPage1() {
+  let navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+  const userData = { email, confirmPassword };
+
+  function handleNext() {
+    console.log("Next button clicked");
+    if (email === "" || password === "" || confirmPassword === "") {
+      setError(true);
+      setOpen(true);
+    } else if (password !== confirmPassword) {
+      setError(true);
+      setOpen(true);
+    } else {
+      console.log(userData);
+      setOpen(true);
+      navigate("/register2");
+    }
+  }
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
@@ -31,18 +69,59 @@ export default function RegisterPage1() {
               <TextField
                 className="py-3 d-flex justify-content-center"
                 label="email"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 className="py-3 d-flex justify-content-center"
                 label="password"
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <TextField
                 className="py-3 d-flex justify-content-center"
                 label="confirm password"
+                variant="outlined"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
-            <div className="d-flex justify-content-center">
-              <button className="btn btn-warning btn-sm">Next</button>
+            <div className="d-flex justify-content-between pt-3 py-4">
+              {" "}
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={() => navigate(-1)}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={handleNext}
+              >
+                Next
+              </Button>
             </div>
           </div>
         </div>
