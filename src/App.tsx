@@ -1,4 +1,3 @@
-import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import MainPage from "./pages/admin/MainPage";
@@ -6,6 +5,9 @@ import HomePage from "./pages/users/HomePage";
 import AddSlots from "./pages/admin/AddSlots";
 import MyBookings from "./pages/users/MyBookings";
 import ViewBookings from "./pages/admin/ViewBookings";
+import RegisterPage1 from "./pages/auth/RegisterPage1";
+import RegisterPage2 from "./pages/auth/RegisterPage2";
+import RegisterPage3 from "./pages/auth/RegisterPage3";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -18,7 +20,10 @@ export default function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/addSlots" element={<AddSlots />} />
         <Route path="/mybookings" element={<MyBookings />} />
-        <Route path="/admin/viewbooking" element={<ViewBookings />} />
+        <Route path="/admin/viewbookings" element={<ViewBookings />} />
+        <Route path="/register1" element={<RegisterPage1 />} />
+        <Route path="/register2" element={<RegisterPage2 />} />
+        <Route path="/register3" element={<RegisterPage3 />} />
       </Routes>
     </BrowserRouter>
   );
