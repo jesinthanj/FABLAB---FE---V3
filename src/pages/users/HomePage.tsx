@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import printing from "../../assets/equipment/3d.png";
 import Vinyl from "../../assets/equipment/vinyl.png";
-import CNC from "../../assets/equipment/cnc.png";
+import { CNC } from "../../assets/equipment/cnc.png";
 
 const details = [
   {
