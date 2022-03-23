@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { Snackbar, Alert } from "@mui/material";
+import Button from "@mui/material/Button";
 
 export default function Login() {
   let navigate = useNavigate();
@@ -95,20 +96,34 @@ export default function Login() {
                 rel="noopener noreferrer"
                 className="text-decoration-none text-warning"
               >
-                <p style={{ fontSize: "10px" }}>Forgot password</p>
+                <p style={{ fontSize: "13px" }}>Forgot password</p>
               </a>
               <a
                 href="/register1"
                 rel="noopener noreferrer"
                 className="text-decoration-none text-warning"
               >
-                <p style={{ fontSize: "10px" }}>New user?</p>
+                <p style={{ fontSize: "13px" }}>New user?</p>
               </a>
             </div>
-            <div className="d-flex justify-content-center py-3">
-              <button className="btn btn-warning size-xs" onClick={handleLogin}>
+            <div className="d-flex justify-content-center pt-3 py-4">
+              {" "}
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={handleLogin}
+              >
                 Login
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -120,7 +135,7 @@ export default function Login() {
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
-            Logged in Successfully
+            Slots Added Successfully
           </Alert>
         )}
       </Snackbar>
