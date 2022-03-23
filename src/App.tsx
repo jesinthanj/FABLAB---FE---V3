@@ -22,14 +22,10 @@ export default function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/addSlots" element={<AddSlots />} />
         <Route path="/mybookings" element={<MyBookings />} />
-<<<<<<< HEAD
-        <Route path="/admin/viewbooking" element={<ViewBookings />} />
+        <Route path="/admin/viewbookings" element={<ViewBookings />} />
         <Route path="/register1" element={<RegisterPage1 />} />
         <Route path="/register2" element={<RegisterPage2 />} />
         <Route path="/register3" element={<RegisterPage3 />} />
-=======
-        <Route path="/admin/viewbookings" element={<ViewBookings />} />
->>>>>>> 6d6f0115d5bf0a7eca95d45e8d4e92689c7578d4
       </Routes>
     </BrowserRouter>
   );
