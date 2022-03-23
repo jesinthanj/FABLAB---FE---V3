@@ -1,4 +1,3 @@
-import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import MainPage from "./pages/admin/MainPage";
