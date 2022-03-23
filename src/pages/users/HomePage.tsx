@@ -15,12 +15,12 @@ const details = [
     //image: CNC,
   },
   {
-    equipname: "Pruning Plants",
+    equipname: "Vinyl Cutter",
     amt: "Rs 200",
     //image: Vinyl,
   },
   {
-    equipname: "Pruning Plants",
+    equipname: "3D Printer",
     amt: "Rs 200",
     //image: printing,
   },
@@ -87,6 +87,10 @@ export default function HomePage() {
                           backgroundColor: "#FFA500",
                           maxHeight: "50px",
                           minHeight: "30px",
+                          "&:hover": {
+                            backgroundColor: "#fff",
+                            color: "#FFA500",
+                          },
                         }}
                         onClick={() => {
                           navigate("/booking", {
