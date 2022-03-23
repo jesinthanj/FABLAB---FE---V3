@@ -19,7 +19,7 @@ export default function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/addSlots" element={<AddSlots />} />
         <Route path="/mybookings" element={<MyBookings />} />
-        <Route path="/admin/viewbooking" element={<ViewBookings />} />
+        <Route path="/admin/viewbookings" element={<ViewBookings />} />
       </Routes>
     </BrowserRouter>
   );
