@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card } from "@mui/material";
-import machine from "../../assets/machine1.jpg";
+//import machine from "../../assets/machine1.jpg";
 export default function HomePage() {
   return (
     <>

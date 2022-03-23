@@ -1,6 +1,5 @@
 import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
-import LicetLogo from "../../assets/licet_logo.png";
 
 export default function Login() {
   return (
@@ -15,7 +14,12 @@ export default function Login() {
             paddingTop: "8px",
           }}
         >
-          <img src={LicetLogo} alt="" width="80" height="80" />
+          <img
+            src={"../../assets/licet_logo.png"}
+            alt=""
+            width="80"
+            height="80"
+          />
         </div>
         <div className="card shadow">
           <div className="card-body">
