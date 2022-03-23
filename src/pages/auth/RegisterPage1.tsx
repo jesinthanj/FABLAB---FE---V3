@@ -1,22 +1,10 @@
 import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
-import LicetLogo from "../../assets/licet_logo.png";
 
-export default function Login() {
+export default function RegisterPage1() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            paddingRight: "8px",
-            paddingTop: "8px",
-          }}
-        >
-          <img src={LicetLogo} alt="" width="80" height="80" />
-        </div>
         <div className="card shadow">
           <div className="card-body">
             <h5
@@ -42,28 +30,19 @@ export default function Login() {
             <div>
               <TextField
                 className="py-3 d-flex justify-content-center"
-                label="username"
+                label="email"
               />
               <TextField
                 className="py-3 d-flex justify-content-center"
                 label="password"
               />
+              <TextField
+                className="py-3 d-flex justify-content-center"
+                label="confirm password"
+              />
             </div>
-            <div className="d-flex justify-content-between">
-              <a
-                href="/"
-                rel="noopener noreferrer"
-                className="text-decoration-none text-warning"
-              >
-                <p style={{ fontSize: "10px" }}>Forgot password</p>
-              </a>
-              <a
-                href="/register1"
-                rel="noopener noreferrer"
-                className="text-decoration-none text-warning"
-              >
-                <p style={{ fontSize: "10px" }}>New user?</p>
-              </a>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-warning btn-sm">Next</button>
             </div>
           </div>
         </div>
