@@ -19,6 +19,7 @@ import BookingsPage from "./pages/users/BookingsPage";
 import PwdConfirmation from "./pages/auth/PwdConfirmation";
 import RegisterPage4 from "./pages/auth/RegisterPage4";
 import { Error404 } from "./pages/Error404";
+
 export default function App() {
   return (
     <BrowserRouter>

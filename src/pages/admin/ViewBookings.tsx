@@ -15,7 +15,7 @@ import { MdDelete } from "react-icons/md";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { axiosGet, axiosPost } from "../requests";
+import { axiosGet, axiosPost, axiosDelete } from "../requests";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -61,6 +61,7 @@ export default function ViewBookings() {
   const [slotData, setSlotData] = useState<SlotData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean>(false);
+  const [deleteError, setDeleteError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
   const handleChange = (event: any) => {
@@ -94,6 +95,22 @@ export default function ViewBookings() {
         setLoading(false);
       });
     }
+  };
+
+  const handleDelete = (bookingId: number) => {
+    axiosDelete("/admin/viewBookings", {
+      bookingId: bookingId,
+    }).then((res) => {
+      if (res.data.message === "Success") {
+        setDeleteError(false);
+        setOpen(true);
+      }
+      setDeleteError(true);
+      setOpen(true);
+      setSlotData(res.data.slot);
+      console.log(res.data.slot);
+      setLoading(false);
+    });
   };
 
   const handleClose = (
@@ -208,8 +225,28 @@ export default function ViewBookings() {
                         <br />
                         {list.slots.sections.sectionName}
                         <br />
-                        <MdDelete size="25" />
+                        <MdDelete
+                          size="25"
+                          onClick={() => {
+                            handleDelete(list.bookingId);
+                          }}
+                        />
                       </p>
+                      <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                      >
+                        {deleteError ? (
+                          <Alert onClose={handleClose} severity="error">
+                            Deleted Successfully!
+                          </Alert>
+                        ) : (
+                          <Alert onClose={handleClose} severity="success">
+                            Delete was unsucessful! Please try again later.
+                          </Alert>
+                        )}
+                      </Snackbar>
                     </div>
                   </div>
                   {index !== slotData.length ? <Divider /> : null}
