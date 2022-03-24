@@ -14,6 +14,7 @@ import { DatePicker, TimePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { axiosGet, axiosPost } from "../requests";
+import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -86,6 +87,7 @@ export default function AddSlots() {
 
   return (
     <Layout>
+      <Menu />
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h3>Add Slots</h3>
         <div className="container">

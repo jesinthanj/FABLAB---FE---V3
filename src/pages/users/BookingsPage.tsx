@@ -5,14 +5,11 @@ import {
   InputLabel,
   FormControl,
   Select,
-  TextField,
   Button,
   Snackbar,
 } from "@mui/material";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { DatePicker, TimePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { axiosGet, axiosPost } from "../requests";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -22,8 +19,10 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function AddSlots() {
+export default function BookingsPage() {
   let navigate = useNavigate();
+  const { state } = useLocation();
+  const { name }: any = state;
 
   type Slots = {
     slotId: number;
@@ -68,6 +67,8 @@ export default function AddSlots() {
 
   const handleDateChange = (event: any) => {
     setDateValue(event.target.value as string);
+    let date = slots.filter((slot) => slot.date === event.target.value);
+    console.log(date);
   };
 
   const handleTimeChange = (event: any) => {
@@ -90,10 +91,7 @@ export default function AddSlots() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-        <h3>Section Name</h3>
-        {/* <div className="align-self-start m-3">
-          <h3>Add Slots</h3>
-        </div> */}
+        <h3>{name}</h3>
         <div className="container">
           <FormControl fullWidth sx={{ my: 2 }}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
