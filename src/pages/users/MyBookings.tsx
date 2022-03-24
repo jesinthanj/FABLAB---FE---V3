@@ -113,25 +113,25 @@ export default function MyBookings() {
                             handleDelete(list.bookingId);
                           }}
                         />
-                        <Snackbar
-                          open={open}
-                          autoHideDuration={6000}
-                          onClose={handleClose}
-                        >
-                          {error ? (
-                            <Alert onClose={handleClose} severity="error">
-                              Deleted Successfully!
-                            </Alert>
-                          ) : (
-                            <Alert onClose={handleClose} severity="success">
-                              Delete was unsucessful! Please try again later.
-                            </Alert>
-                          )}
-                        </Snackbar>
                       </p>
                     </div>
                   </div>
                   {index !== slotData.length ? <Divider /> : null}
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                  >
+                    {error ? (
+                      <Alert onClose={handleClose} severity="error">
+                        Delete was unsucessful! Please try again later.
+                      </Alert>
+                    ) : (
+                      <Alert onClose={handleClose} severity="success">
+                        Deleted Successfully!
+                      </Alert>
+                    )}
+                  </Snackbar>
                 </>
               );
             })

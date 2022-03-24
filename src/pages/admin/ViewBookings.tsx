@@ -239,11 +239,11 @@ export default function ViewBookings() {
                       >
                         {deleteError ? (
                           <Alert onClose={handleClose} severity="error">
-                            Deleted Successfully!
+                            Delete was unsucessful! Please try again later.
                           </Alert>
                         ) : (
                           <Alert onClose={handleClose} severity="success">
-                            Delete was unsucessful! Please try again later.
+                            Deleted Successfully!
                           </Alert>
                         )}
                       </Snackbar>
