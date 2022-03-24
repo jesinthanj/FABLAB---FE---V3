@@ -16,7 +16,7 @@ export default function AddEquipmentsPage() {
   const userData = { equip, price };
 
   function handleAdd() {
-    console.log("Login button clicked");
+    console.log("Add button clicked");
     if (equip === "" || price === "") {
       setError(true);
       setOpen(true);
