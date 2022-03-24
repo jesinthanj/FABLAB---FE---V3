@@ -5,8 +5,6 @@ import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosPost } from "../requests";
-import { useDispatch, useSelector } from "react-redux";
-import { getEmail } from "../../slices/PasswordSlice";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -22,8 +20,6 @@ export default function ResetPwd() {
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<String>("");
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
-
   function handleNext() {
     if (email === "" || onetimePwd === "") {
       setError(true);
@@ -46,8 +42,8 @@ export default function ResetPwd() {
             setError(false);
             setOpen(true);
             setMessage("OTP verified successfully");
-            dispatch(getEmail(email));
-            navigate("/changePwd");
+            console.log(email);
+            navigate("/changePwd", { state: { email: email } });
           } else {
             setError(true);
             setOpen(true);
