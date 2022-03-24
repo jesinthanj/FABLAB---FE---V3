@@ -22,10 +22,18 @@ export default function RegisterPage2() {
     if (name === "" || number === "" || designation === "") {
       setError(true);
       setOpen(true);
-    } else {
+    } else if (designation === "student") {
       console.log(userData);
       setOpen(true);
       navigate("/register3");
+    } else if (designation === "faculty") {
+      console.log(userData);
+      setOpen(true);
+      navigate("/register4");
+    } else if (designation === "industry") {
+      console.log(userData);
+      setOpen(true);
+      navigate("/register4");
     }
   }
   const handleClose = (

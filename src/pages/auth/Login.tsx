@@ -76,14 +76,14 @@ export default function Login() {
             </h1>
             <div>
               <TextField
-                className="py-3 d-flex justify-content-center"
+                className="my-3 d-flex justify-content-center"
                 label="username"
                 variant="outlined"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
-                className="py-3 d-flex justify-content-center"
+                className="my-3 d-flex justify-content-center"
                 label="password"
                 variant="outlined"
                 value={password}
