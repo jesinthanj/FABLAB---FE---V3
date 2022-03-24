@@ -31,6 +31,7 @@ export default function Login() {
         setOpen(true);
         setErrorMessage(res.data.message);
       } else {
+        localStorage.setItem("token", res.data.token);
         if (res.data.isAdmin) {
           navigate("/mainpage");
         } else {
