@@ -2,6 +2,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+
 import { useNavigate } from "react-router-dom";
 
 const image1 = require("../../assets/equipment/machine1.jpg");

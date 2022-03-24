@@ -1,8 +1,6 @@
 import { useState } from "react";
 import Layout from "../../components/Layout";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
+import { List, Divider, Button, LinearProgress } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 
 const data = [
@@ -30,9 +28,11 @@ const data = [
 ];
 
 export default function MyBookings() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <Layout>
-      <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
+      <div className="vh-100 d-flex align-items-center justify-content-center flex-column p-3">
         <h3 className="mb-5 fw-bolder">MY BOOKINGS</h3>
         <div
           style={{
@@ -41,6 +41,7 @@ export default function MyBookings() {
             borderRadius: "10px",
           }}
         >
+          {loading && <LinearProgress className="container" />}
           {data && data.length > 0 ? (
             data.map((list, index) => {
               return (
