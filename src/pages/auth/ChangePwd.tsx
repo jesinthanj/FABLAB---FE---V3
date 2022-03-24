@@ -1,9 +1,10 @@
-import {useState, forwardRef} from "react";
-import {useNavigate } from "react-router-dom";
+import { useState, forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button, TextField } from "@mui/material";
-import { Box, Snackbar} from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { axiosPost } from "../requests";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -13,7 +14,6 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function ChangePwd() {
-
   let navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,31 +22,37 @@ export default function ChangePwd() {
   const [open, setOpen] = useState(false);
 
   function handleSubmit() {
-    if(password !== "" || confirmPassword !== "")
-    {
-      if(password.length < 8){
+    if (password !== "" || confirmPassword !== "") {
+      if (password.length < 8) {
         setError(true);
         setOpen(true);
         setMessage("Password must be of 8 or more characters");
+      } else {
+        if (password === confirmPassword) {
+          console.log(true);
+          setError(false);
+          setOpen(true);
+          navigate("/pwdConfirmation");
+        } else {
+          console.log(false);
+          setError(true);
+          setOpen(true);
+          setMessage("Password did not match");
+        }
       }
-      else
-     {
-      if (password === confirmPassword) {
-        console.log(true);
-        setError(false);
-        setOpen(true);
-        navigate("/pwdConfirmation");
-      }
-      else{
-        console.log(false);
-        setError(true);
-        setOpen(true);
-        setMessage("Password did not match")
-      }
-     }
     }
      else {
-      console.log(false);
+      axiosPost("/forgot-password-update-password", {password: password }).then((res) => {
+        if (res.data.status === true) {
+          setError(false);
+          setOpen(true);
+          setMessage("Password updated successfully");
+        } else {
+          setError(true);
+          setOpen(true);
+          setMessage(res.data.message);
+        }
+      });
       setMessage("Please fill out all fields");
       setError(true);
       setOpen(true);
@@ -63,7 +69,6 @@ export default function ChangePwd() {
     setOpen(false);
   };
 
-
   return (
     <Layout>
       <Box
@@ -77,10 +82,9 @@ export default function ChangePwd() {
       >
         <div className="text-center">
           <Box
-            component="h1"
+            component="h3"
             sx={{
-              letterSpacing: 3,
-              m: 1,
+              m: 3,
               justifyContent: "center",
               fontSize: "25px",
               fontWeight: "bold",
@@ -112,28 +116,29 @@ export default function ChangePwd() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <Button
-          type="button"
-          variant="contained"
-          size="medium"
-          sx={{
-            mt: 5,
-            mb: 2,
-            backgroundColor: "#FF8E23",
-            alignItems: "center",
-            justifyContent: "center",
-            // width: "50%",
-            borderRadius: "8px",
-          }}
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
+        <div className="text-center my-4">
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: 5,
+              backgroundColor: "#FF8E23",
+              maxHeight: "50px",
+              minHeight: "30px",
+              "&:hover": {
+                backgroundColor: "#fff",
+                color: "#FFA500",
+              },
+            }}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </div>
       </Box>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (
           <Alert onClose={handleClose} severity="error">
-           {message}
+            {message}
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
