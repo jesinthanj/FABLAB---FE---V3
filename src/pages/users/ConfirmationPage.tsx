@@ -3,16 +3,8 @@ import {
   CardContent,
   Typography,
   CardActionArea,
-  CardMedia,
-  TextField,
   Button,
-  FormHelperText,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from "@mui/material";
-import React from "react";
 import Layout from "../../components/Layout";
 import { useNavigate } from "react-router-dom";
 
@@ -38,11 +30,15 @@ export default function ConfirmationPage() {
                 </Typography>
               </div>
               <div className="my-3">
-                  <Button variant="contained" color="warning" onClick={() => {
-              navigate("/homepage");
-            }}>
-                    Home
-                  </Button>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={() => {
+                    navigate("/homepage");
+                  }}
+                >
+                  Home
+                </Button>
               </div>
             </CardContent>
           </CardActionArea>
