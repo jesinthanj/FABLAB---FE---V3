@@ -17,36 +17,6 @@ import { DatePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosGet, axiosPost } from "../requests";
 
-const data = [
-  {
-    name: "Veroni Shwetha",
-    rollno: "311119205041",
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-  {
-    name: "Veroni Shwetha",
-    rollno: "311119205041",
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-  {
-    name: "Veroni Shwetha",
-    rollno: "311119205041",
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-];
-
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -74,13 +44,15 @@ export default function ViewBookings() {
   type Slots = {
     isBooked: boolean;
     sections: Sections;
+    fromTime: Date;
+    toTime: Date;
+    date: string;
   };
   interface SlotData {
-    users: Users;
     slotId: number;
-    fromTime: string;
-    toTime: string;
+    bookingId: number;
     slots: Slots;
+    users: Users;
   }
 
   const [sectionValue, setSectionValue] = useState<number>();
@@ -100,7 +72,7 @@ export default function ViewBookings() {
       setSections(res.data.sections);
     });
     axiosGet("/admin/viewBookings").then((res) => {
-      setSlotData(res.data.slots);
+      setSlotData(res.data.data);
       setLoading(false);
     });
   }, []);
@@ -214,12 +186,12 @@ export default function ViewBookings() {
                 <>
                   <div
                     className="d-flex justify-content-between p-sm-3 p-2 align-items-center"
-                    key={list.slotId}
+                    key={index}
                   >
                     <div>
                       <p className="m-0">
                         {list.users.name} <br />
-                        {list.fromTime} <br />
+                        {list.slots.date} <br />
                         {list.slots.isBooked ? (
                           <span className="text-success">Booked</span>
                         ) : (
@@ -232,7 +204,7 @@ export default function ViewBookings() {
                       <p className="m-0">
                         {list.users.registerNumber}
                         <br />
-                        {list.fromTime} - {list.toTime}
+                        {list.slots.fromTime} - {list.slots.toTime}
                         <br />
                         {list.slots.sections.sectionName}
                         <br />
@@ -240,7 +212,7 @@ export default function ViewBookings() {
                       </p>
                     </div>
                   </div>
-                  {index !== data.length ? <Divider /> : null}
+                  {index !== slotData.length ? <Divider /> : null}
                 </>
               );
             })
