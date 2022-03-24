@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const passwordSlice = createSlice({
   name: "passwordStatus",
@@ -6,7 +6,7 @@ export const passwordSlice = createSlice({
     email: null,
   },
   reducers: {
-    getEmail: (state, action) => {
+    getEmail: (state: any, action: any) => {
       state.email = action.payload;
       console.log(action.payload);
     },
