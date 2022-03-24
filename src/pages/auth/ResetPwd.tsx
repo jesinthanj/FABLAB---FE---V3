@@ -9,7 +9,7 @@ export default function ResetPwd() {
     <Layout>
       <Box
         sx={{
-          my: 20,
+          // my: 20,
           mx: 4,
           display: "flex",
           flexDirection: "column",
@@ -18,9 +18,8 @@ export default function ResetPwd() {
       >
         <div className="text-center">
           <Box
-            component="h1"
+            component="h3"
             sx={{
-              letterSpacing: 3,
               m: 3,
               justifyContent: "center",
               fontSize: "25px",
@@ -32,49 +31,57 @@ export default function ResetPwd() {
           </Box>
         </div>
 
-        <TextField
-          margin="normal"
-          fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-
-        <div className="text-end">
-          <Button
-            type="button"
-            variant="contained"
-            size="small"
-            sx={{
-              backgroundColor: "#FF8E23",
-            }}
-          >
-            Generate OTP
-          </Button>
+        <div className="container my-2">
+          {" "}
+          <TextField
+            margin="normal"
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
+          <div className="text-end">
+            <Button
+              type="button"
+              variant="contained"
+              size="small"
+              sx={{
+                backgroundColor: "#FF8E23",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#FFA500",
+                },
+              }}
+            >
+              Generate OTP
+            </Button>
+          </div>
+          <TextField
+            margin="normal"
+            fullWidth
+            name="password"
+            label="OTP"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
         </div>
-        <TextField
-          margin="normal"
-          fullWidth
-          name="password"
-          label="OTP"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <div className="text-center">
+        <div className="text-center my-4">
           <Button
-            type="button"
             variant="contained"
-            size="medium"
-            sx={{
-              my: 3,
-              backgroundColor: "#FF8E23",
-              borderRadius: "8px",
-              width: "30%",
-            }}
             href="/changepwd"
+            sx={{
+              borderRadius: 5,
+              backgroundColor: "#FF8E23",
+              maxHeight: "50px",
+              minHeight: "30px",
+              "&:hover": {
+                backgroundColor: "#fff",
+                color: "#FFA500",
+              },
+            }}
           >
             Next
           </Button>
