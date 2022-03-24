@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { Snackbar, Alert } from "@mui/material";
 import Button from "@mui/material/Button";
+import { axiosPost } from "../requests";
 
 export default function Login() {
   let navigate = useNavigate();
@@ -13,21 +14,32 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [open, setOpen] = useState(false);
   const userData = { email, password };
 
-  function handleLogin() {
-    console.log("Login button clicked");
+  async function handleLogin() {
     if (email === "" || password === "") {
       setError(true);
       setOpen(true);
+      setErrorMessage("Please Fill All The Fields");
     } else {
       setError(false);
-      console.log(userData);
-      setOpen(true);
-      navigate("/mainpage");
+      const res = await axiosPost("/auth/login", userData);
+      if (res.data.status === false) {
+        setError(true);
+        setOpen(true);
+        setErrorMessage(res.data.message);
+      } else {
+        if (res.data.isAdmin) {
+          navigate("/mainpage");
+        } else {
+          navigate("/homepage");
+        }
+      }
     }
   }
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -38,6 +50,7 @@ export default function Login() {
 
     setOpen(false);
   };
+  
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
@@ -76,16 +89,18 @@ export default function Login() {
             </h1>
             <div>
               <TextField
-                className="py-3 d-flex justify-content-center"
-                label="username"
+                className="my-3 d-flex justify-content-center"
+                label="Username"
                 variant="outlined"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
-                className="py-3 d-flex justify-content-center"
-                label="password"
+                className="my-3 d-flex justify-content-center"
+                label="Password"
                 variant="outlined"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -129,15 +144,9 @@ export default function Login() {
         </div>
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        {error ? (
-          <Alert onClose={handleClose} severity="error">
-            Please Fill All The Fields
-          </Alert>
-        ) : (
-          <Alert onClose={handleClose} severity="success">
-            Slots Added Successfully
-          </Alert>
-        )}
+        <Alert onClose={handleClose} severity="error">
+          {errorMessage}
+        </Alert>
       </Snackbar>
     </Layout>
   );
