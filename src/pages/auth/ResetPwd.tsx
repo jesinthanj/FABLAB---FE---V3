@@ -1,10 +1,10 @@
 import { useState, forwardRef } from "react";
-import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosPost } from "../requests";
+import { useNavigate } from "react-router-dom";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -20,37 +20,36 @@ export default function ResetPwd() {
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<String>("");
   const [open, setOpen] = useState(false);
-  function handleNext() {
-    if (email === "" || onetimePwd === "") {
+
+  async function handleNext() {
+    if (email.trim() === "" || onetimePwd.trim() === "") {
       setError(true);
-      setOpen(true);
       setMessage("Please fill out all fields");
+      setOpen(true);
     } else {
       if (
         typeof email === "string" &&
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
       ) {
         setError(true);
-        setOpen(true);
         setMessage("Enter a valid email");
+        setOpen(true);
       } else {
-        axiosPost("/auth/forgot-password-verify-otp", {
-          email: email,
-          otp: onetimePwd,
-        }).then((res) => {
+        try {
+          const res = await axiosPost("/auth/forgot-password-verify-otp", {
+            email: email,
+            otp: onetimePwd,
+          });
           if (res.data.status === true) {
-            setError(false);
-            setOpen(true);
-            setMessage("OTP verified successfully");
-            console.log(email);
-            navigate("/changePwd", { state: { email: email } });
-          } else {
-            setError(true);
-            setOpen(true);
-            setMessage(res.data.message);
+            navigate("/changepwd", {
+              state: {
+                email: email,
+              },
+            });
           }
-        });
-        setError(false);
+        } catch (err) {
+          setError(true);
+        }
       }
     }
   }
@@ -158,8 +157,8 @@ export default function ResetPwd() {
         />
         <div className="text-center">
           <Button
+            type="button"
             variant="contained"
-            href="/changepwd"
             sx={{
               borderRadius: 5,
               backgroundColor: "#FF8E23",

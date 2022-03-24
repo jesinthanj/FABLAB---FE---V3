@@ -15,9 +15,8 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function ChangePwd() {
   let navigate = useNavigate();
-  const { state } = useLocation();
-  const email: any = state;
-  console.log(email);
+  const { state }: any = useLocation();
+  const { email } = state;
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
