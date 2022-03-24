@@ -1,0 +1,131 @@
+import Layout from "../../components/Layout";
+import TextField from "@mui/material/TextField";
+
+import Button from "@mui/material/Button";
+import { Snackbar, Alert } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function RegisterPage4() {
+  let navigate = useNavigate();
+  const [companyName, setCompanyName] = useState("");
+  const [department, setDepartment] = useState("");
+  const [companyWebsite, setcompanyWebsite] = useState("");
+  const [address, setAddress] = useState("");
+  const [error, setError] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+  const userData = { companyName, department, companyWebsite, address };
+  function handleNext() {
+    console.log("Next button clicked");
+    if (
+      companyName === "" ||
+      department === "" ||
+      companyWebsite === "" ||
+      address === ""
+    ) {
+      setError(true);
+      setOpen(true);
+    } else {
+      console.log(userData);
+      setOpen(true);
+      navigate("/register3");
+    }
+  }
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  return (
+    <Layout>
+      <div className="vh-100 d-flex align-items-center justify-content-center">
+        <div className="card shadow">
+          <div className="card-body">
+            <div>
+              <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
+                Company Registration
+              </p>
+            </div>
+            <div>
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Company Name"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+              />
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Company Website"
+                value={companyWebsite}
+                onChange={(e) => setcompanyWebsite(e.target.value)}
+              />
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+            <div className="d-flex justify-content-between pt-3 py-4">
+              {" "}
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={() => navigate(-1)}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={handleNext}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {error ? (
+          <Alert onClose={handleClose} severity="error">
+            Please Fill All The Fields
+          </Alert>
+        ) : (
+          <Alert onClose={handleClose} severity="success">
+            Slots Added Successfully
+          </Alert>
+        )}
+      </Snackbar>
+    </Layout>
+  );
+}
