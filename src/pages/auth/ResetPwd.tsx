@@ -1,5 +1,5 @@
-import {useState, forwardRef} from "react";
-import {useNavigate } from "react-router-dom";
+import { useState, forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
@@ -12,7 +12,6 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-
 export default function ResetPwd() {
 
   let navigate = useNavigate();
@@ -22,34 +21,35 @@ export default function ResetPwd() {
   const [message, setMessage] = useState<String>("");
   const [open, setOpen] = useState(false);
 
-  
   function handleNext() {
-    if(email === "" || onetimePwd === "")
-    {
-        console.log(false);
+    if (email === "" || onetimePwd === "") {
+      setError(true);
+      setOpen(true);
+      setMessage("Please fill out all fields");
+
+      if (
+        typeof email === "string" &&
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+      ) {
         setError(true);
         setOpen(true);
-        setMessage("Please fill out all fields");
+        setMessage("Enter a valid email");
+      }
     }
-     else {
-      console.log(true);
+      else {
       setError(false);
       setOpen(true);
       navigate("/changePwd");
     }
   }
 
-  function GetOtp(){
-    if(email === ""){
-      console.log(false);
+  function GetOtp() {
+    if (email === "") {
       setError(true);
       setOpen(true);
       setMessage("Please enter your email");
-    }
-    else{
-      console.log(true);
+    } else {
       setError(false);
-      setOpen(true);
     }
   }
   const handleClose = (
@@ -62,7 +62,6 @@ export default function ResetPwd() {
 
     setOpen(false);
   };
-
 
   return (
     <Layout>
@@ -97,6 +96,7 @@ export default function ResetPwd() {
           id="email"
           label="Email"
           name="email"
+          type={email}
           autoComplete="email"
           autoFocus
           value={email}
@@ -146,7 +146,7 @@ export default function ResetPwd() {
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (
           <Alert onClose={handleClose} severity="error">
-           {message}
+            {message}
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
