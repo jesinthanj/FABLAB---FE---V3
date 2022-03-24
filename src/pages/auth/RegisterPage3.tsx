@@ -6,7 +6,7 @@ import { Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function RegisterPage2() {
+export default function RegisterPage3() {
   let navigate = useNavigate();
   const [collegeName, setCollegeName] = useState("");
   const [department, setDepartment] = useState("");
@@ -55,22 +55,29 @@ export default function RegisterPage2() {
               <TextField
                 className="my-3 d-flex justify-content-center"
                 label="College Name"
+                value={collegeName}
+                onChange={(e) => setCollegeName(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
                 label="Department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
                 label="Year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
                 label="Register Number"
+                value={registerNumber}
+                onChange={(e) => setRegisterNumber(e.target.value)}
               />
             </div>
             <div className="d-flex justify-content-between pt-3 py-4">
-              {" "}
               <Button
                 variant="contained"
                 sx={{
