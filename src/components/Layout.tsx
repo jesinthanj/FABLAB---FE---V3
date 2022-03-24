@@ -9,6 +9,7 @@ export default function Layout(props: any) {
           left: 0,
           backgroundColor: "#FF8E23",
           borderBottomRightRadius: "150px",
+          zIndex: "0",
         }}
       ></div>
       {props.children}
@@ -20,6 +21,7 @@ export default function Layout(props: any) {
           right: 0,
           backgroundColor: "#FF8E23",
           borderTopLeftRadius: "150px",
+          zIndex: "-1",
         }}
       ></div>
     </>

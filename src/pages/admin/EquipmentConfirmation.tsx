@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function SlotConfirmationPage() {
+export default function EquipmentConfirmation() {
   let navigate = useNavigate();
   return (
     <Layout>
@@ -15,7 +15,7 @@ export default function SlotConfirmationPage() {
             fontWeight: "normal",
           }}
         >
-          The Slot is added
+          The Equipment is added
         </h2>
         <h2
           className="pb-1 py-3"
