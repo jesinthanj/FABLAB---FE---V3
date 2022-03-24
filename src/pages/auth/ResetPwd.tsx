@@ -1,10 +1,69 @@
-import React from "react";
+import {useState, forwardRef} from "react";
+import {useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button, TextField } from "@mui/material";
-import { Typography, Box } from "@mui/material";
-import Menu from "../../components/Menu";
+import { Box, Snackbar } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 export default function ResetPwd() {
+
+  let navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [onetimePwd, setonetimePwd] = useState("");
+  const [error, setError] = useState<boolean>(false);
+  const [message, setMessage] = useState<String>("");
+  const [open, setOpen] = useState(false);
+
+  
+  function handleNext() {
+    if(email === "" || onetimePwd === "")
+    {
+        console.log(false);
+        setError(true);
+        setOpen(true);
+        setMessage("Please fill out all fields");
+    }
+     else {
+      console.log(true);
+      setError(false);
+      setOpen(true);
+      navigate("/changePwd");
+    }
+  }
+
+  function GetOtp(){
+    if(email === ""){
+      console.log(false);
+      setError(true);
+      setOpen(true);
+      setMessage("Please enter your email");
+    }
+    else{
+      console.log(true);
+      setError(false);
+      setOpen(true);
+    }
+  }
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+
   return (
     <Layout>
       <Box
@@ -40,6 +99,8 @@ export default function ResetPwd() {
           name="email"
           autoComplete="email"
           autoFocus
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <div className="text-end">
@@ -50,6 +111,7 @@ export default function ResetPwd() {
             sx={{
               backgroundColor: "#FF8E23",
             }}
+            onClick={GetOtp}
           >
             Generate OTP
           </Button>
@@ -61,7 +123,8 @@ export default function ResetPwd() {
           label="OTP"
           type="password"
           id="password"
-          autoComplete="current-password"
+          value={onetimePwd}
+          onChange={(e) => setonetimePwd(e.target.value)}
         />
         <div className="text-center">
           <Button
@@ -74,12 +137,23 @@ export default function ResetPwd() {
               borderRadius: "8px",
               width: "30%",
             }}
-            href="/changepwd"
+            onClick={handleNext}
           >
             Next
           </Button>
         </div>
       </Box>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {error ? (
+          <Alert onClose={handleClose} severity="error">
+           {message}
+          </Alert>
+        ) : (
+          <Alert onClose={handleClose} severity="success">
+            {message}
+          </Alert>
+        )}
+      </Snackbar>
     </Layout>
   );
 }
