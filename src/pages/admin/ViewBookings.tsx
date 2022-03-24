@@ -5,47 +5,17 @@ import {
   FormControl,
   Select,
   Divider,
-  List,
   Button,
   MenuItem,
   TextField,
   Snackbar,
+  LinearProgress,
 } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosGet, axiosPost } from "../requests";
-
-const data = [
-  {
-    name: "Veroni Shwetha",
-    rollno: "311119205041",
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-  {
-    name: "Veroni Shwetha",
-    rollno: "311119205041",
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-  {
-    name: "Veroni Shwetha",
-    rollno: "311119205041",
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-];
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -65,21 +35,31 @@ export default function ViewBookings() {
     registerNumber: string;
   };
 
-  type Slots = {
-    fromTime: string;
-    toTime: string;
+  type Sections = {
     sectionId: number;
+    sectionName: string;
+    price: number;
+  };
+
+  type Slots = {
+    isBooked: boolean;
+    sections: Sections;
+    fromTime: Date;
+    toTime: Date;
+    date: string;
   };
   interface SlotData {
-    users: Users;
     slotId: number;
+    bookingId: number;
     slots: Slots;
+    users: Users;
   }
 
   const [sectionValue, setSectionValue] = useState<number>();
   const [sections, setSections] = useState<Section[]>([]);
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
-  const [slotData, setSlotData] = useState<SlotData[] | null>(null);
+  const [slotData, setSlotData] = useState<SlotData[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
@@ -87,12 +67,22 @@ export default function ViewBookings() {
     setSectionValue(event.target.value as number);
   };
 
+  useEffect(() => {
+    axiosGet("/admin/addSlots").then((res) => {
+      setSections(res.data.sections);
+    });
+    axiosGet("/admin/viewBookings").then((res) => {
+      setSlotData(res.data.data);
+      setLoading(false);
+    });
+  }, []);
+
   const handleSlots = () => {
     if (dateValue === null || sectionValue === null) {
       setError(true);
       setOpen(true);
     } else {
-      axiosPost("/admin/getBookingById", {
+      axiosPost("/admin/viewBookings", {
         sectionId: sectionValue,
         date: dateValue,
       }).then((res) => {
@@ -100,6 +90,8 @@ export default function ViewBookings() {
           setError(false);
           setOpen(true);
         }
+        setSlotData(res.data.data);
+        setLoading(false);
       });
     }
   };
@@ -113,15 +105,6 @@ export default function ViewBookings() {
     }
     setOpen(false);
   };
-
-  useEffect(() => {
-    axiosGet("/admin/addSlots").then((res) => {
-      setSections(res.data.sections);
-    });
-    axiosGet("/admin/getBookings").then((res) => {
-      setSlotData(res.data.data);
-    });
-  }, []);
 
   return (
     <Layout>
@@ -196,40 +179,45 @@ export default function ViewBookings() {
             borderRadius: "10px",
           }}
         >
-          {data && data.length > 0 ? (
-            data.map((list, index) => {
+          {loading && <LinearProgress className="container" />}
+          {slotData && slotData.length > 0 ? (
+            slotData.map((list, index) => {
               return (
                 <>
-                  <List key={`${list}-${index}`}>
-                    <div className="d-flex justify-content-between p-sm-3 p-2 align-items-center">
-                      <div>
-                        <p className="m-0">
-                          {list.name} <br />
-                          {list.date} <br />
-                          <span className="text-success">{list.status}</span>
-                          <br />
-                          {list.price}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="m-0">
-                          {list.rollno}
-                          <br />
-                          {list.time}
-                          <br />
-                          {list.section}
-                          <br />
-                          <MdDelete size="25" />
-                        </p>
-                      </div>
+                  <div
+                    className="d-flex justify-content-between p-sm-3 p-2 align-items-center"
+                    key={index}
+                  >
+                    <div>
+                      <p className="m-0">
+                        {list.users.name} <br />
+                        {list.slots.date} <br />
+                        {list.slots.isBooked ? (
+                          <span className="text-success">Booked</span>
+                        ) : (
+                          <span className="text-danger">Not Booked</span>
+                        )}
+                        <br />₹{list.slots.sections.price}/-
+                      </p>
                     </div>
-                  </List>
-                  {index !== data.length ? <Divider /> : null}
+                    <div>
+                      <p className="m-0">
+                        {list.users.registerNumber}
+                        <br />
+                        {list.slots.fromTime} - {list.slots.toTime}
+                        <br />
+                        {list.slots.sections.sectionName}
+                        <br />
+                        <MdDelete size="25" />
+                      </p>
+                    </div>
+                  </div>
+                  {index !== slotData.length ? <Divider /> : null}
                 </>
               );
             })
           ) : (
-            <p>You have made no bookings!</p>
+            <p className="text-center p-2 m-0">No bookings made today!</p>
           )}
         </div>
         <Button

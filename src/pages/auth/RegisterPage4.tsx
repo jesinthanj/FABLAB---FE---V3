@@ -1,41 +1,36 @@
 import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { useNavigate } from "react-router-dom";
+
 import Button from "@mui/material/Button";
-import { useState } from "react";
 import { Snackbar, Alert } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-export default function RegisterPage2() {
+export default function RegisterPage4() {
   let navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-  const [designation, setDesignation] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [department, setDepartment] = useState("");
+  const [companyWebsite, setcompanyWebsite] = useState("");
+  const [address, setAddress] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { name, number, designation };
-
+  const userData = { companyName, department, companyWebsite, address };
   function handleNext() {
     console.log("Next button clicked");
-    if (name === "" || number === "" || designation === "") {
+    if (
+      companyName === "" ||
+      department === "" ||
+      companyWebsite === "" ||
+      address === ""
+    ) {
       setError(true);
       setOpen(true);
-    } else if (designation === "student") {
+    } else {
       console.log(userData);
       setOpen(true);
-      navigate("/register3");
-    } else if (designation === "faculty") {
-      console.log(userData);
-      setOpen(true);
-      navigate("/register4");
-    } else if (designation === "industry") {
-      console.log(userData);
-      setOpen(true);
-      navigate("/register4");
+      navigate("/homepage");
     }
   }
   const handleClose = (
@@ -60,43 +55,36 @@ export default function RegisterPage2() {
                 onClick={() => navigate(-1)}
               />
               <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
-                Basic details
+                Faculty/Industry
               </p>
             </div>
             <div>
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                label="Company Name"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
+                label="Department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
               />
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Designation
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  //value={age}
-                  label="designation"
-                  value={designation}
-                  onChange={(e) => setDesignation(e.target.value)}
-                  //onChange={handleChange}
-                >
-                  <MenuItem value={"student"}>Student</MenuItem>
-                  <MenuItem value={"faculty"}>Faculty</MenuItem>
-                  <MenuItem value={"industry"}>Industry</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Company Website"
+                value={companyWebsite}
+                onChange={(e) => setcompanyWebsite(e.target.value)}
+              />
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
             </div>
-            <div className="d-flex justify-center-center pt-3 py-4">
-              {" "}
+            <div className="d-flex justify-content-center pt-3 py-4">
               <Button
                 variant="contained"
                 sx={{
@@ -111,7 +99,7 @@ export default function RegisterPage2() {
                 }}
                 onClick={handleNext}
               >
-                Next
+                Submit
               </Button>
             </div>
           </div>
@@ -124,7 +112,7 @@ export default function RegisterPage2() {
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
-            Slots Added Successfully
+            Successful
           </Alert>
         )}
       </Snackbar>

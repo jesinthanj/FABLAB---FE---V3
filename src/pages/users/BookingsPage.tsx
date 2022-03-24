@@ -22,29 +22,29 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 export default function BookingsPage() {
   let navigate = useNavigate();
   const { state } = useLocation();
-  const { name }: any = state;
+  const { name, sectionId }: any = state;
 
   type Slots = {
     slotId: number;
     date: String;
-    from: Date;
-    to: Date;
+    fromTime: String;
+    toTime: String;
   };
-
-  // const date = ["2022-03-30", "2022-04-01"];
-  const time = ["11:00 - 13:00", "14:00 - 16:00"];
 
   const [slots, setSlots] = useState<Slots[]>([]);
   const [dateValue, setDateValue] = useState("");
-  const [timeValue, setTimeValue] = useState("");
+  const [slotTime, setSlotTime] = useState<Slots[]>([]);
+  const [timeValue, setTimeValue] = useState<number>();
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
+  console.log(sectionId);
+
   useEffect(() => {
-    axiosGet("/users/bookSlots").then((res) => {
+    axiosGet(`/users/bookSlots?sectionId=${sectionId}`).then((res) => {
       setSlots(res.data.slots);
     });
-  }, []);
+  }, [sectionId]);
 
   let date: any = [];
   slots.forEach((slot) => {
@@ -65,34 +65,47 @@ export default function BookingsPage() {
     setOpen(false);
   };
 
+  let time: Slots[] = [];
+
   const handleDateChange = (event: any) => {
+    time = [];
     setDateValue(event.target.value as string);
-    let date = slots.filter((slot) => slot.date === event.target.value);
-    console.log(date);
+    time = slots.filter((slot) => slot.date === event.target.value);
+    console.log(time);
+    setSlotTime(time);
   };
 
   const handleTimeChange = (event: any) => {
-    setTimeValue(event.target.value as string);
+    setTimeValue(event.target.value as number);
   };
 
   const handleBooking = () => {
-    if (dateValue === "" || timeValue === "") {
+    if (dateValue === "" || timeValue === null) {
       setError(true);
       setOpen(true);
     } else {
-      setError(false);
-      console.log(dateValue);
-      console.log(timeValue);
-      setOpen(true);
-      navigate("/users/confirmationpage");
+      axiosPost("/users/bookSlots", {
+        slotId: timeValue,
+      }).then((res) => {
+        if (res.data.message === "Success") {
+          setError(false);
+          setOpen(true);
+          navigate("/users/confirmationpage");
+        }
+      });
     }
   };
 
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-        <h3>{name}</h3>
-        <div className="container">
+        <h3
+          className="mx-3"
+          style={{ fontWeight: "bold", fontFamily: "montserrat" }}
+        >
+          {name}
+        </h3>
+        <div className="container my-4">
           <FormControl fullWidth sx={{ my: 2 }}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
 
@@ -122,24 +135,28 @@ export default function BookingsPage() {
               label="Time"
               onChange={(e) => handleTimeChange(e)}
             >
-              {time.map((item, index) => {
+              {slotTime.map((item, index) => {
+                console.log(item);
                 return (
-                  <MenuItem value={item} key={index}>
-                    {item}
+                  <MenuItem value={item.slotId} key={index}>
+                    {item.fromTime} - {item.toTime}
                   </MenuItem>
                 );
               })}
             </Select>
           </FormControl>
-          <div className="text-center">
+          <div className="text-center my-4">
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "#FFA73F",
-                width: 100,
-                borderRadius: 10,
-                my: 2,
-                ":hover": { backgroundColor: "#ff623f" },
+                borderRadius: 5,
+                backgroundColor: "#FF8E23",
+                maxHeight: "50px",
+                minHeight: "30px",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#FFA500",
+                },
               }}
               onClick={() => {
                 handleBooking();

@@ -14,6 +14,7 @@ import { DatePicker, TimePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { axiosGet, axiosPost } from "../requests";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -89,9 +90,25 @@ export default function AddSlots() {
     <Layout>
       <Menu />
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-        <h3>Add Slots</h3>
-        <div className="container">
-          <FormControl fullWidth>
+        <div className="d-flex ">
+          <a
+            href="/mainpage"
+            rel="noopener noreferrer"
+            className="text-decoration-none"
+          >
+            <AiOutlineArrowLeft style={{ color: "black" }} size="20" />
+          </a>
+          <div>
+            <h5
+              className="mx-3"
+              style={{ fontWeight: "bold", fontFamily: "montserrat" }}
+            >
+              Add Slots:
+            </h5>
+          </div>
+        </div>
+        <div className="container  my-4">
+          <FormControl color="warning" fullWidth>
             <InputLabel id="demo-simple-select-label">Section</InputLabel>
 
             <Select
@@ -111,7 +128,7 @@ export default function AddSlots() {
             </Select>
           </FormControl>
           <div>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider color="warning" dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Date"
                 value={dateValue}
@@ -156,10 +173,13 @@ export default function AddSlots() {
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "#FFA73F",
+                backgroundColor: "#FF8E23",
                 width: 100,
                 borderRadius: 10,
-                ":hover": { backgroundColor: "#ff623f" },
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#FFA500",
+                },
               }}
               onClick={() => {
                 handleSlots();

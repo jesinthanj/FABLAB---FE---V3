@@ -50,7 +50,7 @@ export default function Login() {
 
     setOpen(false);
   };
-  
+
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
@@ -107,7 +107,7 @@ export default function Login() {
             </div>
             <div className="d-flex justify-content-between">
               <a
-                href="/"
+                href="/resetpwd"
                 rel="noopener noreferrer"
                 className="text-decoration-none text-warning"
               >
