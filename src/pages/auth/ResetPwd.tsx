@@ -9,7 +9,7 @@ export default function ResetPwd() {
     <Layout>
       <Box
         sx={{
-          // my: 20,
+          my: 20,
           mx: 4,
           display: "flex",
           flexDirection: "column",
