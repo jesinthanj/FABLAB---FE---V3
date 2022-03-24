@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Menu from "../../components/Menu";
+import Layout from "../../components/Layout";
 
 const details = [
   {
@@ -31,96 +32,98 @@ export default function HomePage() {
   let navigate = useNavigate();
   return (
     <>
-      <Menu />
-      <div className="vh-100 d-flex align-items-center flex-column">
-        <h5
-          className="pb-1 mx-2 py-5"
-          style={{
-            fontFamily: "montserrat",
-            fontWeight: "bold",
-          }}
-        >
-          Pick your slots for
-        </h5>
-        {details &&
-          details.map((items, index) => {
-            return (
-              <div key={index}>
-                <div>
-                  <Card
-                    sx={{
-                      maxWidth: 335,
-                      borderBottomLeftRadius: "20px",
-                      borderBottomRightRadius: "20px",
-                      borderTopLeftRadius: "20px",
-                      borderTopRightRadius: "20px",
-                      backgroundColor: "#F5F5F5",
-                      margin: "20px",
-                      boxShadow: "0 9px 9px -6px black",
-                      paddingBottom: "-5px",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="194"
-                      image={items.image}
-                      alt="Paella dish"
-                      style={{
+      <Layout>
+        <Menu />
+        <div className="vh-100 d-flex align-items-center flex-column">
+          <h5
+            className="pb-1 mx-2 py-5"
+            style={{
+              fontFamily: "montserrat",
+              fontWeight: "bold",
+            }}
+          >
+            Pick your slots for
+          </h5>
+          {details &&
+            details.map((items, index) => {
+              return (
+                <div key={index}>
+                  <div>
+                    <Card
+                      sx={{
+                        maxWidth: 335,
                         borderBottomLeftRadius: "20px",
                         borderBottomRightRadius: "20px",
+                        borderTopLeftRadius: "20px",
+                        borderTopRightRadius: "20px",
+                        backgroundColor: "#F5F5F5",
+                        margin: "20px",
+                        boxShadow: "0 9px 9px -6px black",
+                        paddingBottom: "-5px",
                       }}
-                    />
-                    <CardContent>
-                      <div className="d-flex justify-content-between">
+                    >
+                      <CardMedia
+                        component="img"
+                        height="194"
+                        image={items.image}
+                        alt="Paella dish"
+                        style={{
+                          borderBottomLeftRadius: "20px",
+                          borderBottomRightRadius: "20px",
+                        }}
+                      />
+                      <CardContent>
+                        <div className="d-flex justify-content-between">
+                          <Typography
+                            className="pb-1 d-flex justify-content-center"
+                            style={{
+                              fontFamily: "montserrat",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {items.equipname}
+                          </Typography>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              borderRadius: 5,
+                              backgroundColor: "#FF8E23",
+                              maxHeight: "50px",
+                              minHeight: "30px",
+                              "&:hover": {
+                                backgroundColor: "#fff",
+                                color: "#FFA500",
+                              },
+                            }}
+                            onClick={() => {
+                              navigate("/booking", {
+                                state: {
+                                  name: items.equipname,
+                                  sectionId: items.sectionId,
+                                },
+                              });
+                            }}
+                          >
+                            Book Now
+                          </Button>
+                        </div>
                         <Typography
-                          className="pb-1 d-flex justify-content-center"
+                          className="pb-1"
                           style={{
                             fontFamily: "montserrat",
-                            fontWeight: "bold",
                           }}
+                          color="text.secondary"
                         >
-                          {items.equipname}
+                          {items.amt}
                         </Typography>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            borderRadius: 5,
-                            backgroundColor: "#FF8E23",
-                            maxHeight: "50px",
-                            minHeight: "30px",
-                            "&:hover": {
-                              backgroundColor: "#fff",
-                              color: "#FFA500",
-                            },
-                          }}
-                          onClick={() => {
-                            navigate("/booking", {
-                              state: {
-                                name: items.equipname,
-                                sectionId: items.sectionId,
-                              },
-                            });
-                          }}
-                        >
-                          Book Now
-                        </Button>
-                      </div>
-                      <Typography
-                        className="pb-1"
-                        style={{
-                          fontFamily: "montserrat",
-                        }}
-                        color="text.secondary"
-                      >
-                        {items.amt}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-      </div>
+              );
+            })}
+        </div>
+      </Layout>
     </>
   );
 }
