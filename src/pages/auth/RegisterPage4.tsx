@@ -105,7 +105,7 @@ export default function RegisterPage4() {
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
-            Slots Added Successfully
+            Successful
           </Alert>
         )}
       </Snackbar>
