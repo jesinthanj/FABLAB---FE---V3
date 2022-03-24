@@ -12,14 +12,15 @@ export default function MyBookings() {
   };
 
   type Slots = {
-    fromTime: string;
-    toTime: string;
     isBooked: boolean;
     sections: Sections;
+    fromTime: Date;
+    toTime: Date;
+    date: string;
   };
   interface SlotData {
-    bookingId: number;
     slotId: number;
+    bookingId: number;
     slots: Slots;
   }
   const [loading, setLoading] = useState(false);
@@ -54,7 +55,7 @@ export default function MyBookings() {
                   >
                     <div>
                       <p className="m-0">
-                        {list.slots.fromTime} <br />
+                        {list.slots.date} <br />
                         {list.slots.isBooked ? (
                           <span className="text-success">Booked</span>
                         ) : (
@@ -65,7 +66,7 @@ export default function MyBookings() {
                     </div>
                     <div>
                       <p className="m-0">
-                        {list.slots.toTime}
+                        {list.slots.fromTime} - {list.slots.toTime}
                         <br />
                         {list.slots.sections.sectionName}
                         <br />
