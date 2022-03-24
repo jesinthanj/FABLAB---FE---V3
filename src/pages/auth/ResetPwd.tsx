@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { axiosPost } from "../requests";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -13,7 +14,6 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function ResetPwd() {
-
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [onetimePwd, setonetimePwd] = useState("");
@@ -26,7 +26,7 @@ export default function ResetPwd() {
       setError(true);
       setOpen(true);
       setMessage("Please fill out all fields");
-
+    } else {
       if (
         typeof email === "string" &&
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
@@ -34,21 +34,48 @@ export default function ResetPwd() {
         setError(true);
         setOpen(true);
         setMessage("Enter a valid email");
+      } else {
+        axiosPost("/forgot-password-verify-otp", {
+          email: email,
+          otp: onetimePwd,
+        }).then((res) => {
+          if (res.data.status === true) {
+            setError(false);
+            setOpen(true);
+            setMessage("OTP verified successfully");
+            navigate("/changePwd");
+          } else {
+            setError(true);
+            setOpen(true);
+            setMessage(res.data.message);
+          }
+        });
+        setError(false);
       }
-    }
-      else {
-      setError(false);
-      setOpen(true);
-      navigate("/changePwd");
     }
   }
 
   function GetOtp() {
-    if (email === "") {
+    if (
+      email === "" &&
+      typeof email === "string" &&
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+    ) {
       setError(true);
       setOpen(true);
       setMessage("Please enter your email");
     } else {
+      axiosPost("/forgot-password-otp", { email: email }).then((res) => {
+        if (res.data.status === true) {
+          setError(false);
+          setOpen(true);
+          setMessage("OTP sent to your email");
+        } else {
+          setError(true);
+          setOpen(true);
+          setMessage(res.data.message);
+        }
+      });
       setError(false);
     }
   }
