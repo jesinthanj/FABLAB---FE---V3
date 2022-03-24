@@ -103,9 +103,8 @@ export default function ResetPwd() {
       >
         <div className="text-center">
           <Box
-            component="h1"
+            component="h3"
             sx={{
-              letterSpacing: 3,
               m: 3,
               justifyContent: "center",
               fontSize: "25px",
@@ -137,6 +136,10 @@ export default function ResetPwd() {
             size="small"
             sx={{
               backgroundColor: "#FF8E23",
+              "&:hover": {
+                backgroundColor: "#fff",
+                color: "#FFA500",
+              },
             }}
             onClick={GetOtp}
           >
@@ -155,14 +158,17 @@ export default function ResetPwd() {
         />
         <div className="text-center">
           <Button
-            type="button"
             variant="contained"
-            size="medium"
+            href="/changepwd"
             sx={{
-              my: 3,
+              borderRadius: 5,
               backgroundColor: "#FF8E23",
-              borderRadius: "8px",
-              width: "30%",
+              maxHeight: "50px",
+              minHeight: "30px",
+              "&:hover": {
+                backgroundColor: "#fff",
+                color: "#FFA500",
+              },
             }}
             onClick={handleNext}
           >

@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { Snackbar, Alert } from "@mui/material";
 
 export default function RegisterPage1() {
+  console.log("Next button clicked");
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,21 +15,33 @@ export default function RegisterPage1() {
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const userData = { email, confirmPassword };
+  const [message, setMessage] = useState<String>("");
 
   function handleNext() {
-    console.log("Next button clicked");
     if (email === "" || password === "" || confirmPassword === "") {
-      setError(true);
-      setOpen(true);
-    } else if (password !== confirmPassword) {
+      console.log(false);
+      setMessage("Please fill out all fields");
       setError(true);
       setOpen(true);
     } else {
-      console.log(userData);
-      setOpen(true);
-      navigate("/register2");
+      if (password.length < 8) {
+        setError(true);
+        setOpen(true);
+        setMessage("Password must be of 8 or more characters");
+      } else if (password !== confirmPassword) {
+        console.log(false);
+        setError(true);
+        setOpen(true);
+        setMessage("Password did not match");
+      } else {
+        console.log(userData);
+        setError(false);
+        setOpen(true);
+        navigate("/register2");
+      }
     }
   }
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -36,7 +49,6 @@ export default function RegisterPage1() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
@@ -77,6 +89,7 @@ export default function RegisterPage1() {
                 className="my-3 d-flex justify-content-center"
                 label="password"
                 variant="outlined"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -84,12 +97,12 @@ export default function RegisterPage1() {
                 className="my-3 d-flex justify-content-center"
                 label="confirm password"
                 variant="outlined"
+                type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
             <div className="d-flex justify-content-between pt-3 py-4">
-              {" "}
               <Button
                 variant="contained"
                 sx={{
@@ -129,11 +142,11 @@ export default function RegisterPage1() {
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (
           <Alert onClose={handleClose} severity="error">
-            Please Fill All The Fields
+            {message}
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
-            Slots Added Successfully
+            Done
           </Alert>
         )}
       </Snackbar>
