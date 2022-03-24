@@ -5,6 +5,8 @@ import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosPost } from "../requests";
+import { useDispatch, useSelector } from "react-redux";
+import { getEmail } from "../../slices/PasswordSlice";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -20,6 +22,7 @@ export default function ResetPwd() {
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<String>("");
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   function handleNext() {
     if (email === "" || onetimePwd === "") {
@@ -35,7 +38,7 @@ export default function ResetPwd() {
         setOpen(true);
         setMessage("Enter a valid email");
       } else {
-        axiosPost("/forgot-password-verify-otp", {
+        axiosPost("/auth/forgot-password-verify-otp", {
           email: email,
           otp: onetimePwd,
         }).then((res) => {
@@ -43,6 +46,7 @@ export default function ResetPwd() {
             setError(false);
             setOpen(true);
             setMessage("OTP verified successfully");
+            dispatch(getEmail(email));
             navigate("/changePwd");
           } else {
             setError(true);
@@ -65,7 +69,7 @@ export default function ResetPwd() {
       setOpen(true);
       setMessage("Please enter your email");
     } else {
-      axiosPost("/forgot-password-otp", { email: email }).then((res) => {
+      axiosPost("/auth/forgot-password-otp", { email: email }).then((res) => {
         if (res.data.status === true) {
           setError(false);
           setOpen(true);

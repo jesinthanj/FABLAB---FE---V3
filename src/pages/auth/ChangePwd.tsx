@@ -5,6 +5,8 @@ import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosPost } from "../requests";
+import { useSelector } from "react-redux";
+import { RootState } from "../../slices/store";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -20,6 +22,8 @@ export default function ChangePwd() {
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<String>("");
   const [open, setOpen] = useState(false);
+  const email = useSelector((state: RootState) => state.emailReducer.email);
+  console.log(email);
 
   function handleSubmit() {
     if (password !== "" || confirmPassword !== "") {
@@ -30,9 +34,21 @@ export default function ChangePwd() {
       } else {
         if (password === confirmPassword) {
           console.log(true);
-          setError(false);
-          setOpen(true);
-          navigate("/pwdConfirmation");
+          axiosPost("/auth/forgot-password-update-password", {
+            password: password,
+            email: email,
+          }).then((res) => {
+            if (res.data.status === true) {
+              setError(false);
+              setOpen(true);
+              setMessage("Password updated successfully");
+              navigate("/pwdConfirmation");
+            } else {
+              setError(true);
+              setOpen(true);
+              setMessage(res.data.message);
+            }
+          });
         } else {
           console.log(false);
           setError(true);
@@ -40,19 +56,7 @@ export default function ChangePwd() {
           setMessage("Password did not match");
         }
       }
-    }
-     else {
-      axiosPost("/forgot-password-update-password", {password: password }).then((res) => {
-        if (res.data.status === true) {
-          setError(false);
-          setOpen(true);
-          setMessage("Password updated successfully");
-        } else {
-          setError(true);
-          setOpen(true);
-          setMessage(res.data.message);
-        }
-      });
+    } else {
       setMessage("Please fill out all fields");
       setError(true);
       setOpen(true);
