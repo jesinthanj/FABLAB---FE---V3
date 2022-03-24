@@ -6,6 +6,8 @@ import { Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { AiOutlineArrowLeft } from "react-icons/ai";
+
 export default function RegisterPage4() {
   let navigate = useNavigate();
   const [companyName, setCompanyName] = useState("");
@@ -46,9 +48,14 @@ export default function RegisterPage4() {
       <div className="vh-100 d-flex align-items-center justify-content-center">
         <div className="card shadow">
           <div className="card-body">
-            <div>
+            <div className="d-flex justify-content-between">
+              <AiOutlineArrowLeft
+                style={{ color: "black" }}
+                size="20"
+                onClick={() => navigate(-1)}
+              />
               <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
-                Company Registration
+                Faculty/Industry
               </p>
             </div>
             <div>
