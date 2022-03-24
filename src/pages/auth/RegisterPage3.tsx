@@ -77,23 +77,7 @@ export default function RegisterPage3() {
                 onChange={(e) => setRegisterNumber(e.target.value)}
               />
             </div>
-            <div className="d-flex justify-content-between pt-3 py-4">
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: 5,
-                  backgroundColor: "#FF8E23",
-                  maxHeight: "50px",
-                  minHeight: "30px",
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "#FFA500",
-                  },
-                }}
-                onClick={() => navigate(-1)}
-              >
-                Back
-              </Button>
+            <div className="d-flex justify-content-center pt-3 py-4">
               <Button
                 variant="contained"
                 sx={{
@@ -108,7 +92,7 @@ export default function RegisterPage3() {
                 }}
                 onClick={handleNext}
               >
-                Next
+                Submit
               </Button>
             </div>
           </div>
