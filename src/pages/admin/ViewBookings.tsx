@@ -10,6 +10,7 @@ import {
   MenuItem,
   TextField,
   Snackbar,
+  LinearProgress,
 } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -65,10 +66,16 @@ export default function ViewBookings() {
     registerNumber: string;
   };
 
+  type Sections = {
+    sectionId: number;
+    sectionName: string;
+    price: number;
+  };
+
   type Slots = {
     fromTime: string;
     toTime: string;
-    sectionId: number;
+    sections: Sections;
   };
   interface SlotData {
     users: Users;
@@ -79,7 +86,8 @@ export default function ViewBookings() {
   const [sectionValue, setSectionValue] = useState<number>();
   const [sections, setSections] = useState<Section[]>([]);
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
-  const [slotData, setSlotData] = useState<SlotData[] | null>(null);
+  const [slotData, setSlotData] = useState<SlotData[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
@@ -87,12 +95,22 @@ export default function ViewBookings() {
     setSectionValue(event.target.value as number);
   };
 
+  useEffect(() => {
+    axiosGet("/admin/addSlots").then((res) => {
+      setSections(res.data.sections);
+    });
+    axiosGet("/admin/viewBookings").then((res) => {
+      setSlotData(res.data.slots);
+      setLoading(false);
+    });
+  }, []);
+
   const handleSlots = () => {
     if (dateValue === null || sectionValue === null) {
       setError(true);
       setOpen(true);
     } else {
-      axiosPost("/admin/getBookingById", {
+      axiosPost("/admin/viewBookings", {
         sectionId: sectionValue,
         date: dateValue,
       }).then((res) => {
@@ -100,6 +118,8 @@ export default function ViewBookings() {
           setError(false);
           setOpen(true);
         }
+        setSlotData(res.data.data);
+        setLoading(false);
       });
     }
   };
@@ -113,15 +133,6 @@ export default function ViewBookings() {
     }
     setOpen(false);
   };
-
-  useEffect(() => {
-    axiosGet("/admin/addSlots").then((res) => {
-      setSections(res.data.sections);
-    });
-    axiosGet("/admin/getBookings").then((res) => {
-      setSlotData(res.data.data);
-    });
-  }, []);
 
   return (
     <Layout>
@@ -196,28 +207,29 @@ export default function ViewBookings() {
             borderRadius: "10px",
           }}
         >
-          {data && data.length > 0 ? (
-            data.map((list, index) => {
+          {loading && <LinearProgress className="container" />}
+          {slotData && slotData.length > 0 ? (
+            slotData.map((list, index) => {
               return (
                 <>
                   <List key={`${list}-${index}`}>
                     <div className="d-flex justify-content-between p-sm-3 p-2 align-items-center">
                       <div>
                         <p className="m-0">
-                          {list.name} <br />
-                          {list.date} <br />
-                          <span className="text-success">{list.status}</span>
+                          {list.users.name} <br />
+                          {list.slots.fromTime} <br />
+                          <span className="text-success">Booked</span>
                           <br />
-                          {list.price}
+                          {list.slots.sections.price}
                         </p>
                       </div>
                       <div>
                         <p className="m-0">
-                          {list.rollno}
+                          {list.users.registerNumber}
                           <br />
-                          {list.time}
+                          {list.slots.toTime}
                           <br />
-                          {list.section}
+                          {list.slots.sections.sectionName}
                           <br />
                           <MdDelete size="25" />
                         </p>

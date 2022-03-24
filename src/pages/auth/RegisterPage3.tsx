@@ -1,11 +1,46 @@
 import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
-export default function RegisterPage2() {
+import Button from "@mui/material/Button";
+import { Snackbar, Alert } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function RegisterPage3() {
+  let navigate = useNavigate();
+  const [collegeName, setCollegeName] = useState("");
+  const [department, setDepartment] = useState("");
+  const [year, setYear] = useState("");
+  const [registerNumber, setRegisterNumber] = useState("");
+  const [error, setError] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+  const userData = { collegeName, department, year, registerNumber };
+  function handleNext() {
+    console.log("Next button clicked");
+    if (
+      collegeName === "" ||
+      department === "" ||
+      year === "" ||
+      registerNumber === ""
+    ) {
+      setError(true);
+      setOpen(true);
+    } else {
+      console.log(userData);
+      setOpen(true);
+      navigate("/homepage");
+    }
+  }
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
@@ -13,41 +48,83 @@ export default function RegisterPage2() {
           <div className="card-body">
             <div>
               <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
-                Basic details
+                Student Registration
               </p>
             </div>
             <div>
               <TextField
-                className="py-3 d-flex justify-content-center"
-                label="name"
+                className="my-3 d-flex justify-content-center"
+                label="College Name"
+                value={collegeName}
+                onChange={(e) => setCollegeName(e.target.value)}
               />
               <TextField
-                className="py-3 d-flex justify-content-center"
-                label="number"
+                className="my-3 d-flex justify-content-center"
+                label="Department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
               />
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Designation
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  //value={age}
-                  label="designation"
-                  //onChange={handleChange}
-                >
-                  <MenuItem value={"student"}>Student</MenuItem>
-                  <MenuItem value={"faculty"}>Faculty</MenuItem>
-                  <MenuItem value={"industry"}>Industry</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+              />
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Register Number"
+                value={registerNumber}
+                onChange={(e) => setRegisterNumber(e.target.value)}
+              />
             </div>
-            <div className="d-flex justify-content-center pt-3">
-              <button className="btn btn-warning btn-sm">Next</button>
+            <div className="d-flex justify-content-between pt-3 py-4">
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={() => navigate(-1)}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={handleNext}
+              >
+                Next
+              </Button>
             </div>
           </div>
         </div>
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {error ? (
+          <Alert onClose={handleClose} severity="error">
+            Please Fill All The Fields
+          </Alert>
+        ) : (
+          <Alert onClose={handleClose} severity="success">
+            Slots Added Successfully
+          </Alert>
+        )}
+      </Snackbar>
     </Layout>
   );
 }

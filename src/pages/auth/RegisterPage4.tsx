@@ -1,32 +1,34 @@
+import Layout from "../../components/Layout";
+import TextField from "@mui/material/TextField";
+
+import Button from "@mui/material/Button";
+import { Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Layout from "../../components/Layout";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { Snackbar, Alert } from "@mui/material";
-
-export default function RegisterPage1() {
+export default function RegisterPage4() {
   let navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [department, setDepartment] = useState("");
+  const [companyWebsite, setcompanyWebsite] = useState("");
+  const [address, setAddress] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { email, confirmPassword };
-
+  const userData = { companyName, department, companyWebsite, address };
   function handleNext() {
     console.log("Next button clicked");
-    if (email === "" || password === "" || confirmPassword === "") {
-      setError(true);
-      setOpen(true);
-    } else if (password !== confirmPassword) {
+    if (
+      companyName === "" ||
+      department === "" ||
+      companyWebsite === "" ||
+      address === ""
+    ) {
       setError(true);
       setOpen(true);
     } else {
       console.log(userData);
       setOpen(true);
-      navigate("/register2");
+      navigate("/homepage");
     }
   }
   const handleClose = (
@@ -39,53 +41,40 @@ export default function RegisterPage1() {
 
     setOpen(false);
   };
-
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
         <div className="card shadow">
           <div className="card-body">
-            <h5
-              className="pb-1 d-flex justify-content-center"
-              style={{
-                fontFamily: "montserrat",
-                fontWeight: "bold",
-                letterSpacing: "10px",
-              }}
-            >
-              LICET
-            </h5>
-            <h1
-              className="pb-4 d-flex justify-content-center"
-              style={{
-                fontFamily: "montserrat",
-                fontWeight: "bold",
-                letterSpacing: "10px",
-              }}
-            >
-              FABLAB
-            </h1>
+            <div>
+              <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
+                Company Registration
+              </p>
+            </div>
             <div>
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="email"
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                label="Company Name"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="password"
-                variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                label="Department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="confirm password"
-                variant="outlined"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                label="Company Website"
+                value={companyWebsite}
+                onChange={(e) => setcompanyWebsite(e.target.value)}
+              />
+              <TextField
+                className="my-3 d-flex justify-content-center"
+                label="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div className="d-flex justify-content-between pt-3 py-4">
