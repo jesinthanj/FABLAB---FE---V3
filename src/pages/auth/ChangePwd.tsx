@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { axiosPost } from "../requests";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -39,8 +40,19 @@ export default function ChangePwd() {
           setMessage("Password did not match");
         }
       }
-    } else {
-      console.log(false);
+    }
+     else {
+      axiosPost("/forgot-password-update-password", {password: password }).then((res) => {
+        if (res.data.status === true) {
+          setError(false);
+          setOpen(true);
+          setMessage("Password updated successfully");
+        } else {
+          setError(true);
+          setOpen(true);
+          setMessage(res.data.message);
+        }
+      });
       setMessage("Please fill out all fields");
       setError(true);
       setOpen(true);

@@ -5,7 +5,6 @@ import {
   FormControl,
   Select,
   Divider,
-  List,
   Button,
   MenuItem,
   TextField,
@@ -73,13 +72,14 @@ export default function ViewBookings() {
   };
 
   type Slots = {
-    fromTime: string;
-    toTime: string;
+    isBooked: boolean;
     sections: Sections;
   };
   interface SlotData {
     users: Users;
     slotId: number;
+    fromTime: string;
+    toTime: string;
     slots: Slots;
   }
 
@@ -212,36 +212,40 @@ export default function ViewBookings() {
             slotData.map((list, index) => {
               return (
                 <>
-                  <List key={`${list}-${index}`}>
-                    <div className="d-flex justify-content-between p-sm-3 p-2 align-items-center">
-                      <div>
-                        <p className="m-0">
-                          {list.users.name} <br />
-                          {list.slots.fromTime} <br />
+                  <div
+                    className="d-flex justify-content-between p-sm-3 p-2 align-items-center"
+                    key={list.slotId}
+                  >
+                    <div>
+                      <p className="m-0">
+                        {list.users.name} <br />
+                        {list.fromTime} <br />
+                        {list.slots.isBooked ? (
                           <span className="text-success">Booked</span>
-                          <br />
-                          {list.slots.sections.price}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="m-0">
-                          {list.users.registerNumber}
-                          <br />
-                          {list.slots.toTime}
-                          <br />
-                          {list.slots.sections.sectionName}
-                          <br />
-                          <MdDelete size="25" />
-                        </p>
-                      </div>
+                        ) : (
+                          <span className="text-danger">Not Booked</span>
+                        )}
+                        <br />₹{list.slots.sections.price}/-
+                      </p>
                     </div>
-                  </List>
+                    <div>
+                      <p className="m-0">
+                        {list.users.registerNumber}
+                        <br />
+                        {list.fromTime} - {list.toTime}
+                        <br />
+                        {list.slots.sections.sectionName}
+                        <br />
+                        <MdDelete size="25" />
+                      </p>
+                    </div>
+                  </div>
                   {index !== data.length ? <Divider /> : null}
                 </>
               );
             })
           ) : (
-            <p>You have made no bookings!</p>
+            <p className="text-center p-2 m-0">No bookings made today!</p>
           )}
         </div>
         <Button
