@@ -7,16 +7,19 @@ import { useNavigate } from "react-router-dom";
 
 const details = [
   {
+    sectionId: 1,
     equipname: "CNC Router",
     amt: "Rs 200/hr",
     image: require("../../assets/equipment/3d.png"),
   },
   {
+    sectionId: 2,
     equipname: "Vinyl Cutter",
     amt: "Rs 200/hr",
     image: require("../../assets/equipment/vinyl.png"),
   },
   {
+    sectionId: 3,
     equipname: "3D Printer",
     amt: "Rs 200/hr",
     image: require("../../assets/equipment/cnc.png"),
@@ -89,7 +92,10 @@ export default function HomePage() {
                         }}
                         onClick={() => {
                           navigate("/booking", {
-                            state: { name: items.equipname },
+                            state: {
+                              name: items.equipname,
+                              sectionId: items.sectionId,
+                            },
                           });
                         }}
                       >
