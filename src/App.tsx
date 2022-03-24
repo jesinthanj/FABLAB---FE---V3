@@ -16,6 +16,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import SlotConfirmationPage from "./pages/admin/ConfirmationPage";
 import EquipmentConfirmation from "./pages/admin/EquipmentConfirmation";
 import BookingsPage from "./pages/users/BookingsPage";
+import PwdConfirmation from "./pages/auth/PwdConfirmation";
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
         />
         <Route path="/users/confirmationpage" element={<ConfirmationPage />} />
         <Route path="/booking" element={<BookingsPage />} />
+        <Route path="/pwdConfirmation" element={<PwdConfirmation />} />
       </Routes>
     </BrowserRouter>
   );

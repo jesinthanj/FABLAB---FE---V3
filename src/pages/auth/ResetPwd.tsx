@@ -9,7 +9,7 @@ export default function ResetPwd() {
     <Layout>
       <Box
         sx={{
-          my: 15,
+          my: 20,
           mx: 4,
           display: "flex",
           flexDirection: "column",
@@ -48,7 +48,6 @@ export default function ResetPwd() {
             variant="contained"
             size="small"
             sx={{
-              mb: 2,
               backgroundColor: "#FF8E23",
             }}
           >
