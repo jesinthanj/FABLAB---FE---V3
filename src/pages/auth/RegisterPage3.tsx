@@ -28,7 +28,7 @@ export default function RegisterPage3() {
     } else {
       console.log(userData);
       setOpen(true);
-      navigate("/register3");
+      navigate("/homepage");
     }
   }
   const handleClose = (
