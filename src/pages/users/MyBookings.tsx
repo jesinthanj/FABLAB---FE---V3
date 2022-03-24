@@ -1,38 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
+import { Divider, Button, LinearProgress } from "@mui/material";
 import { MdDelete } from "react-icons/md";
-
-const data = [
-  {
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-  {
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-  {
-    date: "2020-06-01",
-    time: "10:00 AM - 11.30 AM",
-    section: "3d printing",
-    status: "Booked",
-    price: "$100",
-  },
-];
+import { axiosGet } from "../requests";
 
 export default function MyBookings() {
+  type Sections = {
+    sectionId: number;
+    sectionName: string;
+    price: number;
+  };
+
+  type Slots = {
+    fromTime: string;
+    toTime: string;
+    isBooked: boolean;
+    sections: Sections;
+  };
+  interface SlotData {
+    bookingId: number;
+    slotId: number;
+    slots: Slots;
+  }
+  const [loading, setLoading] = useState(false);
+  const [slotData, setSlotData] = useState<SlotData[]>([]);
+
+  useEffect(() => {
+    axiosGet("/users/myBookings").then((res) => {
+      setSlotData(res.data.slots);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <Layout>
-      <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
+      <div className="vh-100 d-flex align-items-center justify-content-center flex-column p-3">
         <h3 className="mb-5 fw-bolder">MY BOOKINGS</h3>
         <div
           style={{
@@ -41,37 +43,42 @@ export default function MyBookings() {
             borderRadius: "10px",
           }}
         >
-          {data && data.length > 0 ? (
-            data.map((list, index) => {
+          {loading && <LinearProgress className="container" />}
+          {slotData && slotData.length > 0 ? (
+            slotData.map((list, index) => {
               return (
                 <>
-                  <List key={`${list}-${index}`}>
-                    <div className="d-flex justify-content-between p-3 align-items-center">
-                      <div>
-                        <p className="m-0">
-                          {list.date} <br />
-                          <span className="text-success">{list.status}</span>
-                          <br />
-                          {list.price}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="m-0">
-                          {list.time}
-                          <br />
-                          {list.section}
-                          <br />
-                          <MdDelete size="25" />
-                        </p>
-                      </div>
+                  <div
+                    className="d-flex justify-content-between p-3 align-items-center"
+                    key={list.bookingId}
+                  >
+                    <div>
+                      <p className="m-0">
+                        {list.slots.fromTime} <br />
+                        {list.slots.isBooked ? (
+                          <span className="text-success">Booked</span>
+                        ) : (
+                          <span className="text-danger">Not Booked</span>
+                        )}
+                        <br />₹{list.slots.sections.price}/-
+                      </p>
                     </div>
-                  </List>
-                  {index !== data.length ? <Divider /> : null}
+                    <div>
+                      <p className="m-0">
+                        {list.slots.toTime}
+                        <br />
+                        {list.slots.sections.sectionName}
+                        <br />
+                        <MdDelete size="25" />
+                      </p>
+                    </div>
+                  </div>
+                  {index !== slotData.length ? <Divider /> : null}
                 </>
               );
             })
           ) : (
-            <p>You have made no bookings!</p>
+            <p className="text-center p-2 m-0">You have made no bookings!</p>
           )}
         </div>
         <Button

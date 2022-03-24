@@ -17,7 +17,8 @@ import SlotConfirmationPage from "./pages/admin/ConfirmationPage";
 import EquipmentConfirmation from "./pages/admin/EquipmentConfirmation";
 import BookingsPage from "./pages/users/BookingsPage";
 import PwdConfirmation from "./pages/auth/PwdConfirmation";
-
+import RegisterPage4 from "./pages/auth/RegisterPage4";
+import { Error404 } from "./pages/Error404";
 export default function App() {
   return (
     <BrowserRouter>
@@ -39,9 +40,11 @@ export default function App() {
           path="/equipmentConfirmation"
           element={<EquipmentConfirmation />}
         />
+        <Route path="/register4" element={<RegisterPage4 />} />
         <Route path="/users/confirmationpage" element={<ConfirmationPage />} />
         <Route path="/booking" element={<BookingsPage />} />
         <Route path="/pwdConfirmation" element={<PwdConfirmation />} />
+        <Route path="/404" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );

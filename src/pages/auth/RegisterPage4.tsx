@@ -6,22 +6,22 @@ import { Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function RegisterPage3() {
+export default function RegisterPage4() {
   let navigate = useNavigate();
-  const [collegeName, setCollegeName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [department, setDepartment] = useState("");
-  const [year, setYear] = useState("");
-  const [registerNumber, setRegisterNumber] = useState("");
+  const [companyWebsite, setcompanyWebsite] = useState("");
+  const [address, setAddress] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { collegeName, department, year, registerNumber };
+  const userData = { companyName, department, companyWebsite, address };
   function handleNext() {
     console.log("Next button clicked");
     if (
-      collegeName === "" ||
+      companyName === "" ||
       department === "" ||
-      year === "" ||
-      registerNumber === ""
+      companyWebsite === "" ||
+      address === ""
     ) {
       setError(true);
       setOpen(true);
@@ -48,15 +48,15 @@ export default function RegisterPage3() {
           <div className="card-body">
             <div>
               <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
-                Student Registration
+                Company Registration
               </p>
             </div>
             <div>
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="College Name"
-                value={collegeName}
-                onChange={(e) => setCollegeName(e.target.value)}
+                label="Company Name"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
@@ -66,15 +66,15 @@ export default function RegisterPage3() {
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="Year"
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
+                label="Company Website"
+                value={companyWebsite}
+                onChange={(e) => setcompanyWebsite(e.target.value)}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="Register Number"
-                value={registerNumber}
-                onChange={(e) => setRegisterNumber(e.target.value)}
+                label="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div className="d-flex justify-content-center pt-3 py-4">
@@ -105,7 +105,7 @@ export default function RegisterPage3() {
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
-            Slots Added Successfully
+            Successful
           </Alert>
         )}
       </Snackbar>

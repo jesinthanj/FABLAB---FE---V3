@@ -85,6 +85,10 @@ export default function HomePage() {
                           backgroundColor: "#FF8E23",
                           maxHeight: "50px",
                           minHeight: "30px",
+                          "&:hover": {
+                            backgroundColor: "#fff",
+                            color: "#FFA500",
+                          },
                         }}
                         onClick={() => {
                           navigate("/booking", {

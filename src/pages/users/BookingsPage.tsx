@@ -99,8 +99,13 @@ export default function BookingsPage() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-        <h3>{name}</h3>
-        <div className="container">
+        <h3
+          className="mx-3"
+          style={{ fontWeight: "bold", fontFamily: "montserrat" }}
+        >
+          {name}
+        </h3>
+        <div className="container my-4">
           <FormControl fullWidth sx={{ my: 2 }}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
 
@@ -140,15 +145,18 @@ export default function BookingsPage() {
               })}
             </Select>
           </FormControl>
-          <div className="text-center">
+          <div className="text-center my-4">
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "#FFA73F",
-                width: 100,
-                borderRadius: 10,
-                my: 2,
-                ":hover": { backgroundColor: "#ff623f" },
+                borderRadius: 5,
+                backgroundColor: "#FF8E23",
+                maxHeight: "50px",
+                minHeight: "30px",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#FFA500",
+                },
               }}
               onClick={() => {
                 handleBooking();
