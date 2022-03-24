@@ -1,12 +1,10 @@
 import { useState, forwardRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Button, TextField } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosPost } from "../requests";
-import { useSelector } from "react-redux";
-import { RootState } from "../../slices/store";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -17,13 +15,15 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function ChangePwd() {
   let navigate = useNavigate();
+  const { state } = useLocation();
+  const email: any = state;
+  console.log(email);
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<String>("");
   const [open, setOpen] = useState(false);
-  const email = useSelector((state: RootState) => state.emailReducer.email);
-  console.log(email);
 
   function handleSubmit() {
     if (password !== "" || confirmPassword !== "") {
