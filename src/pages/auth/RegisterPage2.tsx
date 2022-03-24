@@ -50,13 +50,13 @@ export default function RegisterPage2() {
             </div>
             <div>
               <TextField
-                className="py-3 d-flex justify-content-center"
+                className="my-3 d-flex justify-content-center"
                 label="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <TextField
-                className="py-3 d-flex justify-content-center"
+                className="my-3 d-flex justify-content-center"
                 label="number"
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
