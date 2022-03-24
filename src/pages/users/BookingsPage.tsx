@@ -19,7 +19,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function AddSlots() {
+export default function BookingsPage() {
   let navigate = useNavigate();
   const { state } = useLocation();
   const { name }: any = state;
@@ -92,9 +92,6 @@ export default function AddSlots() {
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h3>{name}</h3>
-        {/* <div className="align-self-start m-3">
-          <h3>Add Slots</h3>
-        </div> */}
         <div className="container">
           <FormControl fullWidth sx={{ my: 2 }}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
