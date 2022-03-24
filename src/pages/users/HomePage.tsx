@@ -77,15 +77,20 @@ export default function HomePage() {
                       </Typography>
                       <Button
                         variant="contained"
-                        href="#contained-buttons"
                         sx={{
                           borderRadius: 5,
                           backgroundColor: "#FF8E23",
                           maxHeight: "50px",
                           minHeight: "30px",
+                          "&:hover": {
+                            backgroundColor: "#fff",
+                            color: "#FFA500",
+                          },
                         }}
                         onClick={() => {
-                          navigate("/booking");
+                          navigate("/booking", {
+                            state: { name: items.equipname },
+                          });
                         }}
                       >
                         Book Now

@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function SlotConfirmationPage() {
+export default function PwdConfirmation() {
   let navigate = useNavigate();
   return (
     <Layout>
@@ -18,10 +18,10 @@ export default function SlotConfirmationPage() {
             textAlign: "center",
           }}
         >
-          The Slot is added
+          Your Password is <br/> changed
         </h2>
         <h2
-          className="pb-1 py-3 my-3"
+          className="pb-1 py-3"
           style={{
             fontFamily: "montserrat",
             fontWeight: "bold",
@@ -47,10 +47,10 @@ export default function SlotConfirmationPage() {
               },
             }}
             onClick={() => {
-              navigate("/mainPage");
+              navigate("/");
             }}
           >
-            Home
+            Login
           </Button>
         </div>
       </div>
