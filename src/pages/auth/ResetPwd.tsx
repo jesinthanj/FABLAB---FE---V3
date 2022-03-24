@@ -92,90 +92,92 @@ export default function ResetPwd() {
 
   return (
     <Layout>
-      <Box
-        sx={{
-          my: 20,
-          mx: 4,
-          display: "flex",
-          flexDirection: "column",
-          //alignItems: "center",
-        }}
-      >
-        <div className="text-center">
-          <Box
-            component="h3"
-            sx={{
-              m: 3,
-              justifyContent: "center",
-              fontSize: "25px",
-              fontWeight: "bold",
-            }}
-          >
-            RESET <br />
-            PASSWORD
-          </Box>
-        </div>
+      <div className="vh-100 d-flex justify-content-center align-items-center">
+        <Box
+          sx={{
+            my: 20,
+            mx: 4,
+            display: "flex",
+            flexDirection: "column",
+            //alignItems: "center",
+          }}
+        >
+          <div className="text-center">
+            <Box
+              component="h3"
+              sx={{
+                m: 3,
+                justifyContent: "center",
+                fontSize: "25px",
+                fontWeight: "bold",
+              }}
+            >
+              RESET <br />
+              PASSWORD
+            </Box>
+          </div>
 
-        <TextField
-          margin="normal"
-          fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          type={email}
-          autoComplete="email"
-          autoFocus
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <TextField
+            margin="normal"
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            type={email}
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <div className="text-end">
-          <Button
-            type="button"
-            variant="contained"
-            size="small"
-            sx={{
-              backgroundColor: "#FF8E23",
-              "&:hover": {
-                backgroundColor: "#fff",
-                color: "#FFA500",
-              },
-            }}
-            onClick={GetOtp}
-          >
-            Generate OTP
-          </Button>
-        </div>
-        <TextField
-          margin="normal"
-          fullWidth
-          name="password"
-          label="OTP"
-          type="password"
-          id="password"
-          value={onetimePwd}
-          onChange={(e) => setonetimePwd(e.target.value)}
-        />
-        <div className="text-center">
-          <Button
-            variant="contained"
-            href="/changepwd"
-            sx={{
-              borderRadius: 5,
-              backgroundColor: "#FF8E23",
-              maxHeight: "50px",
-              minHeight: "30px",
-              "&:hover": {
-                backgroundColor: "#fff",
-                color: "#FFA500",
-              },
-            }}
-            onClick={handleNext}
-          >
-            Next
-          </Button>
-        </div>
-      </Box>
+          <div className="text-end">
+            <Button
+              type="button"
+              variant="contained"
+              size="small"
+              sx={{
+                backgroundColor: "#FF8E23",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#FFA500",
+                },
+              }}
+              onClick={GetOtp}
+            >
+              Generate OTP
+            </Button>
+          </div>
+          <TextField
+            margin="normal"
+            fullWidth
+            name="password"
+            label="OTP"
+            type="password"
+            id="password"
+            value={onetimePwd}
+            onChange={(e) => setonetimePwd(e.target.value)}
+          />
+          <div className="text-center">
+            <Button
+              variant="contained"
+              href="/changepwd"
+              sx={{
+                borderRadius: 5,
+                backgroundColor: "#FF8E23",
+                maxHeight: "50px",
+                minHeight: "30px",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#FFA500",
+                },
+              }}
+              onClick={handleNext}
+            >
+              Next
+            </Button>
+          </div>
+        </Box>
+      </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (
           <Alert onClose={handleClose} severity="error">

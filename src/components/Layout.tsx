@@ -3,19 +3,19 @@ export default function Layout(props: any) {
     <>
       <div
         style={{
-          padding: "60px",
+          padding: "10vh",
           position: "fixed",
           top: 0,
           left: 0,
           backgroundColor: "#FF8E23",
           borderBottomRightRadius: "150px",
-          zIndex: "0",
+          zIndex: "-1",
         }}
       ></div>
       {props.children}
       <div
         style={{
-          padding: "60px",
+          padding: "10vh",
           position: "fixed",
           bottom: 0,
           right: 0,

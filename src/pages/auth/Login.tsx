@@ -54,18 +54,18 @@ export default function Login() {
 
   return (
     <Layout>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          paddingRight: "8px",
+          paddingTop: "8px",
+        }}
+      >
+        <img src={licetLogo} alt="" width="80" height="80" />
+      </div>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            paddingRight: "8px",
-            paddingTop: "8px",
-          }}
-        >
-          <img src={licetLogo} alt="" width="80" height="80" />
-        </div>
         <div className="card shadow">
           <div className="card-body">
             <h5
@@ -122,7 +122,7 @@ export default function Login() {
                 <p style={{ fontSize: "13px" }}>New user?</p>
               </a>
             </div>
-            <div className="d-flex justify-content-center pt-3 py-4">
+            <div className="d-flex justify-content-center pt-3">
               {" "}
               <Button
                 variant="contained"
