@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { Snackbar, Alert } from "@mui/material";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+
 export default function RegisterPage2() {
   let navigate = useNavigate();
   const [name, setName] = useState("");
@@ -51,7 +53,12 @@ export default function RegisterPage2() {
       <div className="vh-100 d-flex align-items-center justify-content-center">
         <div className="card shadow">
           <div className="card-body">
-            <div>
+            <div className="d-flex justify-content-between">
+              <AiOutlineArrowLeft
+                style={{ color: "black" }}
+                size="20"
+                onClick={() => navigate(-1)}
+              />
               <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
                 Basic details
               </p>
@@ -88,24 +95,8 @@ export default function RegisterPage2() {
                 </Select>
               </FormControl>
             </div>
-            <div className="d-flex justify-content-between pt-3 py-4">
+            <div className="d-flex justify-center-center pt-3 py-4">
               {" "}
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: 5,
-                  backgroundColor: "#FF8E23",
-                  maxHeight: "50px",
-                  minHeight: "30px",
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "#FFA500",
-                  },
-                }}
-                onClick={() => navigate(-1)}
-              >
-                Back
-              </Button>
               <Button
                 variant="contained"
                 sx={{

@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Snackbar, Alert } from "@mui/material";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export default function RegisterPage1() {
   console.log("Next button clicked");
@@ -57,6 +58,9 @@ export default function RegisterPage1() {
       <div className="vh-100 d-flex align-items-center justify-content-center">
         <div className="card shadow">
           <div className="card-body">
+            <div className="d-flex " onClick={() => navigate(-1)}>
+              <AiOutlineArrowLeft style={{ color: "black" }} size="20" />
+            </div>
             <h5
               className="pb-1 d-flex justify-content-center"
               style={{
@@ -102,23 +106,7 @@ export default function RegisterPage1() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
-            <div className="d-flex justify-content-between pt-3 py-4">
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: 5,
-                  backgroundColor: "#FF8E23",
-                  maxHeight: "50px",
-                  minHeight: "30px",
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "#FFA500",
-                  },
-                }}
-                onClick={() => navigate(-1)}
-              >
-                Back
-              </Button>
+            <div className="d-flex justify-content-center pt-3 py-4">
               <Button
                 variant="contained"
                 sx={{

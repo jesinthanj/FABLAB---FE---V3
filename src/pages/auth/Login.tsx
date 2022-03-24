@@ -92,7 +92,7 @@ export default function Login() {
             </div>
             <div className="d-flex justify-content-between">
               <a
-                href="/"
+                href="/resetpwd"
                 rel="noopener noreferrer"
                 className="text-decoration-none text-warning"
               >
