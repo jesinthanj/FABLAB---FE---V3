@@ -67,21 +67,21 @@ export default function RegisterPage1() {
             </h1>
             <div>
               <TextField
-                className="py-3 d-flex justify-content-center"
+                className="my-3 d-flex justify-content-center"
                 label="email"
                 variant="outlined"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
-                className="py-3 d-flex justify-content-center"
+                className="my-3 d-flex justify-content-center"
                 label="password"
                 variant="outlined"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <TextField
-                className="py-3 d-flex justify-content-center"
+                className="my-3 d-flex justify-content-center"
                 label="confirm password"
                 variant="outlined"
                 value={confirmPassword}
@@ -126,6 +126,17 @@ export default function RegisterPage1() {
           </div>
         </div>
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {error ? (
+          <Alert onClose={handleClose} severity="error">
+            Please Fill All The Fields
+          </Alert>
+        ) : (
+          <Alert onClose={handleClose} severity="success">
+            Slots Added Successfully
+          </Alert>
+        )}
+      </Snackbar>
     </Layout>
   );
 }
