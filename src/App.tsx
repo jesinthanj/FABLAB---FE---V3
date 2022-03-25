@@ -32,16 +32,16 @@ export default function App() {
         <Route path="/resetpwd" element={<ResetPwd />} />
         <Route path="/changepwd" element={<ChangePwd />} />
         <Route path="/admin/viewbookings" element={<ViewBookings />} />
-        <Route path="/register1" element={<RegisterPage1 />} />
-        <Route path="/register2" element={<RegisterPage2 />} />
-        <Route path="/register3" element={<RegisterPage3 />} />
+        <Route path="/register" element={<RegisterPage1 />} />
+        <Route path="/registerInfo" element={<RegisterPage2 />} />
+        <Route path="/registerStu" element={<RegisterPage3 />} />
+        <Route path="/registerInd" element={<RegisterPage4 />} />
         <Route path="/addequip" element={<AddEquipmentsPage />} />
         <Route path="/slotConfirmation" element={<SlotConfirmationPage />} />
         <Route
           path="/equipmentConfirmation"
           element={<EquipmentConfirmation />}
         />
-        <Route path="/register4" element={<RegisterPage4 />} />
         <Route path="/users/confirmationpage" element={<ConfirmationPage />} />
         <Route path="/booking" element={<BookingsPage />} />
         <Route path="/pwdConfirmation" element={<PwdConfirmation />} />
