@@ -106,7 +106,7 @@ export default function BookingsPage() {
           {name}
         </h3>
         <div className="container my-4">
-          <FormControl fullWidth sx={{ my: 2 }}>
+          <FormControl color="warning" fullWidth sx={{ my: 2 }}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
 
             <Select
@@ -132,6 +132,7 @@ export default function BookingsPage() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={timeValue}
+              color="warning"
               label="Time"
               onChange={(e) => handleTimeChange(e)}
             >
