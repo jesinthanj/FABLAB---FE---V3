@@ -64,13 +64,13 @@ export default function Login() {
           paddingTop: "8px",
         }}
       >
-        <img src={licetLogo} alt="" width="100" height="100" />
+        <img src={licetLogo} alt="" width="90" height="90" />
       </div>
       <div className="vh-100 d-flex align-items-center justify-content-center">
         <div className="card shadow" style={{ borderRadius: "30px" }}>
           <div className="card-body p-md-5 p-4">
             <h5
-              className="pb-1 d-flex justify-content-center"
+              className=" d-flex justify-content-start"
               style={{
                 fontFamily: "montserrat",
                 fontWeight: "bold",
@@ -80,12 +80,11 @@ export default function Login() {
               LICET
             </h5>
             <h1
-              className="pb-4 d-flex justify-content-center"
+              className="pb-4 d-flex justify-content-start"
               style={{
                 fontFamily: "montserrat",
                 fontWeight: "bold",
                 letterSpacing: "10px",
-                marginRight: "-10px",
               }}
             >
               FABLAB
@@ -126,12 +125,13 @@ export default function Login() {
                 <p style={{ fontSize: "13px" }}>New user?</p>
               </a>
             </div>
-            <div className="d-flex justify-content-center pt-3">
+            <div className="d-flex justify-content-end pt-3">
               {" "}
               <Button
-                className="w-100"
+                className=""
                 variant="contained"
                 sx={{
+                  borderRadius: "30px",
                   backgroundColor: "#FF8E23",
                   maxHeight: "50px",
                   minHeight: "30px",
