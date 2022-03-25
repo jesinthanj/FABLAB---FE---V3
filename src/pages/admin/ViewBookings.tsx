@@ -59,9 +59,9 @@ export default function ViewBookings() {
   const [sections, setSections] = useState<Section[]>([]);
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
   const [slotData, setSlotData] = useState<SlotData[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
-  const [deleteError, setDeleteError] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
   const [open, setOpen] = useState(false);
 
   const handleChange = (event: any) => {
@@ -74,23 +74,28 @@ export default function ViewBookings() {
     });
     axiosGet("/admin/viewBookings").then((res) => {
       setSlotData(res.data.data);
+      console.log(res.data.data);
       setLoading(false);
     });
   }, []);
 
-  const handleSlots = () => {
+  const handleSearch = () => {
     if (dateValue === null || sectionValue === null) {
       setError(true);
+      setMessage("Please select all the fields");
       setOpen(true);
     } else {
+      console.log(dateValue, sectionValue);
       axiosPost("/admin/viewBookings", {
         sectionId: sectionValue,
         date: dateValue,
       }).then((res) => {
-        if (res.data.message === "Success") {
+        if (res.data.message) {
           setError(false);
+          setMessage("Success");
           setOpen(true);
         }
+        console.log(res.data);
         setSlotData(res.data.data);
         setLoading(false);
       });
@@ -102,14 +107,13 @@ export default function ViewBookings() {
       bookingId: bookingId,
     }).then((res) => {
       if (res.data.message === "Success") {
-        setDeleteError(false);
+        setError(false);
+        setMessage("Booking deleted successfully");
         setOpen(true);
       }
-      setDeleteError(true);
+      setError(true);
+      setMessage("Booking not deleted");
       setOpen(true);
-      setSlotData(res.data.slot);
-      console.log(res.data.slot);
-      setLoading(false);
     });
   };
 
@@ -162,6 +166,7 @@ export default function ViewBookings() {
           <div className="col-md-2 text-center mb-3 d-grid mx-auto p-0">
             <Button
               variant="contained"
+              type="button"
               sx={{
                 borderRadius: 6,
                 backgroundColor: "#F49C4B",
@@ -171,23 +176,12 @@ export default function ViewBookings() {
                 },
               }}
               onClick={() => {
-                handleSlots();
+                handleSearch();
               }}
             >
               Search
             </Button>
           </div>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            {error ? (
-              <Alert onClose={handleClose} severity="error">
-                Please Fill All The Fields
-              </Alert>
-            ) : (
-              <Alert onClose={handleClose} severity="success">
-                Check Out The Sections Here
-              </Alert>
-            )}
-          </Snackbar>
         </div>
         <div
           style={{
@@ -196,65 +190,55 @@ export default function ViewBookings() {
             borderRadius: "10px",
           }}
         >
-          {loading && <LinearProgress className="container" />}
-          {slotData && slotData.length > 0 ? (
-            slotData.map((list, index) => {
-              return (
-                <>
-                  <div
-                    className="d-flex justify-content-between p-sm-3 p-2 align-items-center"
-                    key={index}
-                  >
-                    <div>
-                      <p className="m-0">
-                        {list.users.name} <br />
-                        {list.slots.date} <br />
-                        {list.slots.isBooked ? (
-                          <span className="text-success">Booked</span>
-                        ) : (
-                          <span className="text-danger">Not Booked</span>
-                        )}
-                        <br />₹{list.slots.sections.price}/-
-                      </p>
-                    </div>
-                    <div>
-                      <p className="m-0">
-                        {list.users.registerNumber}
-                        <br />
-                        {list.slots.fromTime} - {list.slots.toTime}
-                        <br />
-                        {list.slots.sections.sectionName}
-                        <br />
-                        <MdDelete
-                          size="25"
-                          onClick={() => {
-                            handleDelete(list.bookingId);
-                          }}
-                        />
-                      </p>
-                      <Snackbar
-                        open={open}
-                        autoHideDuration={6000}
-                        onClose={handleClose}
-                      >
-                        {deleteError ? (
-                          <Alert onClose={handleClose} severity="error">
-                            Delete was unsucessful! Please try again later.
-                          </Alert>
-                        ) : (
-                          <Alert onClose={handleClose} severity="success">
-                            Deleted Successfully!
-                          </Alert>
-                        )}
-                      </Snackbar>
-                    </div>
-                  </div>
-                  {index !== slotData.length ? <Divider /> : null}
-                </>
-              );
-            })
+          {loading ? (
+            <LinearProgress className="container" />
           ) : (
-            <p className="text-center p-2 m-0">No bookings made today!</p>
+            <>
+              {slotData && slotData.length > 0 ? (
+                slotData.map((list, index) => {
+                  return (
+                    <>
+                      <div
+                        className="d-flex justify-content-between p-sm-3 p-2 align-items-center"
+                        key={index}
+                      >
+                        <div>
+                          <p className="m-0">
+                            {list.users.name} <br />
+                            {list.slots.date} <br />
+                            {list.slots.isBooked ? (
+                              <span className="text-success">Booked</span>
+                            ) : (
+                              <span className="text-danger">Not Booked</span>
+                            )}
+                            <br />₹{list.slots.sections.price}/-
+                          </p>
+                        </div>
+                        <div>
+                          <p className="m-0">
+                            {list.users.registerNumber}
+                            <br />
+                            {list.slots.fromTime} - {list.slots.toTime}
+                            <br />
+                            {list.slots.sections.sectionName}
+                            <br />
+                            <MdDelete
+                              size="25"
+                              onClick={() => {
+                                handleDelete(list.bookingId);
+                              }}
+                            />
+                          </p>
+                        </div>
+                      </div>
+                      {index !== slotData.length ? <Divider /> : null}
+                    </>
+                  );
+                })
+              ) : (
+                <p className="text-center p-2 m-0">No bookings made today!</p>
+              )}
+            </>
           )}
         </div>
         <Button
@@ -274,6 +258,17 @@ export default function ViewBookings() {
           BACK
         </Button>
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {error ? (
+          <Alert onClose={handleClose} severity="error">
+            {message}
+          </Alert>
+        ) : (
+          <Alert onClose={handleClose} severity="success">
+            {message}
+          </Alert>
+        )}
+      </Snackbar>
     </Layout>
   );
 }

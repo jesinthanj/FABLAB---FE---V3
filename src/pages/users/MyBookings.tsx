@@ -31,7 +31,7 @@ export default function MyBookings() {
     bookingId: number;
     slots: Slots;
   }
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [slotData, setSlotData] = useState<SlotData[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
@@ -47,7 +47,7 @@ export default function MyBookings() {
     axiosDelete("/users/myBookings", {
       bookingId: bookingId,
     }).then((res) => {
-      if (res.data.message === "Success") {
+      if (res.data.message) {
         setError(false);
         setOpen(true);
       }
@@ -80,63 +80,56 @@ export default function MyBookings() {
             borderRadius: "10px",
           }}
         >
-          {loading && <LinearProgress className="container" />}
-          {slotData && slotData.length > 0 ? (
-            slotData.map((list, index) => {
-              return (
-                <>
-                  <div
-                    className="d-flex justify-content-between p-3 align-items-center"
-                    key={list.bookingId}
-                  >
-                    <div>
-                      <p className="m-0">
-                        {list.slots.date} <br />
-                        {list.slots.isBooked ? (
-                          <span className="text-success">Booked</span>
-                        ) : (
-                          <span className="text-danger">Not Booked</span>
-                        )}
-                        <br />₹{list.slots.sections.price}/-
-                      </p>
-                    </div>
-                    <div>
-                      <p className="m-0">
-                        {list.slots.fromTime} - {list.slots.toTime}
-                        <br />
-                        {list.slots.sections.sectionName}
-                        <br />
-                        <MdDelete
-                          size="25"
-                          type="submit"
-                          onClick={() => {
-                            handleDelete(list.bookingId);
-                          }}
-                        />
-                      </p>
-                    </div>
-                  </div>
-                  {index !== slotData.length ? <Divider /> : null}
-                  <Snackbar
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                  >
-                    {error ? (
-                      <Alert onClose={handleClose} severity="error">
-                        Delete was unsucessful! Please try again later.
-                      </Alert>
-                    ) : (
-                      <Alert onClose={handleClose} severity="success">
-                        Deleted Successfully!
-                      </Alert>
-                    )}
-                  </Snackbar>
-                </>
-              );
-            })
+          {loading ? (
+            <LinearProgress className="container" />
           ) : (
-            <p className="text-center p-2 m-0">You have made no bookings!</p>
+            <>
+              {" "}
+              {slotData && slotData.length > 0 ? (
+                slotData.map((list, index) => {
+                  return (
+                    <>
+                      <div
+                        className="d-flex justify-content-between p-3 align-items-center"
+                        key={list.bookingId}
+                      >
+                        <div>
+                          <p className="m-0">
+                            {list.slots.date} <br />
+                            {list.slots.isBooked ? (
+                              <span className="text-success">Booked</span>
+                            ) : (
+                              <span className="text-danger">Not Booked</span>
+                            )}
+                            <br />₹{list.slots.sections.price}/-
+                          </p>
+                        </div>
+                        <div>
+                          <p className="m-0">
+                            {list.slots.fromTime} - {list.slots.toTime}
+                            <br />
+                            {list.slots.sections.sectionName}
+                            <br />
+                            <MdDelete
+                              size="25"
+                              type="submit"
+                              onClick={() => {
+                                handleDelete(list.bookingId);
+                              }}
+                            />
+                          </p>
+                        </div>
+                      </div>
+                      {index !== slotData.length ? <Divider /> : null}
+                    </>
+                  );
+                })
+              ) : (
+                <p className="text-center p-2 m-0">
+                  You have made no bookings!
+                </p>
+              )}
+            </>
           )}
         </div>
         <Button
@@ -156,6 +149,17 @@ export default function MyBookings() {
           BACK
         </Button>
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {error ? (
+          <Alert onClose={handleClose} severity="error">
+            Delete was unsucessful! Please try again later.
+          </Alert>
+        ) : (
+          <Alert onClose={handleClose} severity="success">
+            Deleted Successfully!
+          </Alert>
+        )}
+      </Snackbar>
     </Layout>
   );
 }
