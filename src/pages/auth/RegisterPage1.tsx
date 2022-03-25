@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerOne } from "../../slices/RegisterSlice";
 
 import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
@@ -8,19 +10,18 @@ import { Snackbar, Alert } from "@mui/material";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export default function RegisterPage1() {
-  console.log("Next button clicked");
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { email, confirmPassword };
+  const userData = { email, password };
   const [message, setMessage] = useState<String>("");
 
   function handleNext() {
     if (email === "" || password === "" || confirmPassword === "") {
-      console.log(false);
       setMessage("Please fill out all fields");
       setError(true);
       setOpen(true);
@@ -30,12 +31,11 @@ export default function RegisterPage1() {
         setOpen(true);
         setMessage("Password must be of 8 or more characters");
       } else if (password !== confirmPassword) {
-        console.log(false);
         setError(true);
         setOpen(true);
         setMessage("Password did not match");
       } else {
-        console.log(userData);
+        dispatch(registerOne(userData));
         setError(false);
         setOpen(true);
         navigate("/register2");

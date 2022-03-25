@@ -5,32 +5,52 @@ import Button from "@mui/material/Button";
 import { Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../slices/store";
 
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { axiosPost } from "../requests";
 
 export default function RegisterPage3() {
   let navigate = useNavigate();
   const [collegeName, setCollegeName] = useState("");
   const [department, setDepartment] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState<number>(1);
   const [registerNumber, setRegisterNumber] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { collegeName, department, year, registerNumber };
-  function handleNext() {
-    console.log("Next button clicked");
+
+  const registerData = useSelector((state: RootState) => state.register);
+
+  async function handleNext() {
     if (
       collegeName === "" ||
       department === "" ||
-      year === "" ||
+      year === null ||
       registerNumber === ""
     ) {
       setError(true);
       setOpen(true);
     } else {
-      console.log(userData);
-      setOpen(true);
-      navigate("/homepage");
+      const response = await axiosPost("/auth/register", {
+        email: registerData.email,
+        name: registerData.name,
+        password: registerData.password,
+        collegeName: collegeName,
+        companyName: registerData.companyName,
+        companyAddress: registerData.companyAddress,
+        companyWebsite: registerData.companyWebsite,
+        contact: registerData.contact,
+        department: department,
+        designation: registerData.designation,
+        registerNumber: registerNumber,
+        year: year,
+      });
+      if (response.status) {
+        setError(false);
+        setOpen(true);
+        navigate("/");
+      }
     }
   }
   const handleClose = (
@@ -75,7 +95,7 @@ export default function RegisterPage3() {
                 className="my-3 d-flex justify-content-center"
                 label="Year"
                 value={year}
-                onChange={(e) => setYear(e.target.value)}
+                onChange={(e) => setYear(Number(e.target.value))}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
@@ -112,7 +132,7 @@ export default function RegisterPage3() {
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
-            Slots Added Successfully
+            Register Successfully!
           </Alert>
         )}
       </Snackbar>
