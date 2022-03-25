@@ -2,34 +2,30 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Menu from "../../components/Menu";
 import Layout from "../../components/Layout";
-
-const details = [
-  {
-    sectionId: 1,
-    equipname: "CNC Router",
-    amt: "Rs 200/hr",
-    image: require("../../assets/equipment/3d.png"),
-  },
-  {
-    sectionId: 2,
-    equipname: "Vinyl Cutter",
-    amt: "Rs 200/hr",
-    image: require("../../assets/equipment/vinyl.png"),
-  },
-  {
-    sectionId: 3,
-    equipname: "3D Printer",
-    amt: "Rs 200/hr",
-    image: require("../../assets/equipment/cnc.png"),
-  },
-];
+import { axiosGet } from "../requests";
 
 export default function HomePage() {
+  type Sections = {
+    sectionId: number;
+    sectionName: string;
+    price: number;
+    imageUrl: string;
+  };
   let navigate = useNavigate();
+
+  const [details, setDetails] = useState<Sections[]>([]);
+
+  useEffect(() => {
+    axiosGet("/users/showSections").then((res) => {
+      setDetails(res.data.sections);
+    });
+  }, []);
+
   return (
     <>
       <Layout>
@@ -48,8 +44,9 @@ export default function HomePage() {
             details.map((items, index) => {
               return (
                 <div key={index}>
-                  <div>
+                  <div className="card-body">
                     <Card
+                      className="shadow"
                       sx={{
                         maxWidth: 335,
                         borderBottomLeftRadius: "20px",
@@ -58,14 +55,13 @@ export default function HomePage() {
                         borderTopRightRadius: "20px",
                         backgroundColor: "#F5F5F5",
                         margin: "20px",
-                        boxShadow: "0 9px 9px -6px black",
                         paddingBottom: "-5px",
                       }}
                     >
                       <CardMedia
                         component="img"
-                        height="194"
-                        image={items.image}
+                        width="250px"
+                        image={items.imageUrl}
                         alt="Paella dish"
                         style={{
                           borderBottomLeftRadius: "20px",
@@ -81,7 +77,18 @@ export default function HomePage() {
                               fontWeight: "bold",
                             }}
                           >
-                            {items.equipname}
+                            {items.sectionName}
+                          </Typography>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <Typography
+                            className="pb-1"
+                            style={{
+                              fontFamily: "montserrat",
+                            }}
+                            color="text.secondary"
+                          >
+                            {items.price}
                           </Typography>
                           <Button
                             variant="contained"
@@ -98,7 +105,7 @@ export default function HomePage() {
                             onClick={() => {
                               navigate("/booking", {
                                 state: {
-                                  name: items.equipname,
+                                  name: items.sectionName,
                                   sectionId: items.sectionId,
                                 },
                               });
@@ -107,15 +114,6 @@ export default function HomePage() {
                             Book Now
                           </Button>
                         </div>
-                        <Typography
-                          className="pb-1"
-                          style={{
-                            fontFamily: "montserrat",
-                          }}
-                          color="text.secondary"
-                        >
-                          {items.amt}
-                        </Typography>
                       </CardContent>
                     </Card>
                   </div>

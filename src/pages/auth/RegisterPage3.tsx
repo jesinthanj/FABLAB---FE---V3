@@ -66,8 +66,8 @@ export default function RegisterPage3() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div className="card shadow">
-          <div className="card-body">
+        <div className="card shadow" style={{ borderRadius: "30px" }}>
+          <div className="card-body p-md-5 p-4">
             <div className="d-flex justify-content-between">
               <AiOutlineArrowLeft
                 style={{ color: "black" }}
@@ -80,24 +80,28 @@ export default function RegisterPage3() {
             </div>
             <div>
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="College Name"
                 value={collegeName}
                 onChange={(e) => setCollegeName(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Department"
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Year"
                 value={year}
                 onChange={(e) => setYear(Number(e.target.value))}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Register Number"
                 value={registerNumber}

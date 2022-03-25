@@ -3,30 +3,41 @@ import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { Snackbar, Alert } from "@mui/material";
-import { useState } from "react";
+import { Snackbar } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { axiosGet, axiosPost } from "../requests";
+import { useState, forwardRef, useEffect } from "react";
+import Menu from "../../components/Menu";
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function AddEquipmentsPage() {
   let navigate = useNavigate();
 
+  type Section = {
+    equip: string;
+    price: number;
+  };
+
   const [equip, setEquip] = useState("");
   const [price, setPrice] = useState("");
+  // eslint-disable-next-line
+  const [sections, setSections] = useState<Section[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { equip, price };
+  // const userData = { equip, price };
 
-  function handleAdd() {
-    console.log("Add button clicked");
-    if (equip === "" || price === "") {
-      setError(true);
-      setOpen(true);
-    } else {
-      setError(false);
-      console.log(userData);
-      setOpen(true);
-      navigate("/equipmentConfirmation");
-    }
-  }
+  useEffect(() => {
+    axiosGet("/admin/addEquipments").then((res) => {
+      setSections(res.data.sections);
+    });
+  }, []);
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -38,9 +49,31 @@ export default function AddEquipmentsPage() {
     setOpen(false);
   };
 
+  const handleAdd = () => {
+    if (equip === "" || price === "") {
+      setError(true);
+      setOpen(true);
+    } else {
+      axiosPost("/admin/addEquipments", {
+        equipment: equip,
+        price: price,
+      }).then((res) => {
+        if (res.data.message === "Success") {
+          setError(false);
+          setOpen(true);
+          navigate("/equipmentConfirmation");
+        }
+      });
+    }
+  };
+
   return (
     <Layout>
-      <div className="vh-100 d-flex align-items-center justify-content-center">
+      <Menu />
+      <div
+        className="d-flex align-items-center justify-content-center"
+        style={{ height: "80vh" }}
+      >
         <div className="card shadow">
           <div className="card-body">
             <div className="d-flex ">
