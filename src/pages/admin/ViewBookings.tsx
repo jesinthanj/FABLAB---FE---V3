@@ -41,12 +41,18 @@ export default function ViewBookings() {
     price: number;
   };
 
+  type Booking = {
+    bookingId: number;
+    users: Users;
+  };
+
   type Slots = {
     isBooked: boolean;
     sections: Sections;
     fromTime: Date;
     toTime: Date;
     date: string;
+    booking: Booking;
   };
   interface SlotData {
     slotId: number;
@@ -54,11 +60,17 @@ export default function ViewBookings() {
     slots: Slots;
     users: Users;
   }
+  interface SearchData {
+    sectionName: string;
+    price: number;
+    slots: Slots;
+  }
 
-  const [sectionValue, setSectionValue] = useState<number>();
+  const [sectionValue, setSectionValue] = useState<number | null>(null);
   const [sections, setSections] = useState<Section[]>([]);
   const [dateValue, setDateValue] = useState<Date | string | null>(null);
   const [slotData, setSlotData] = useState<SlotData[]>([]);
+  const [searchData, setSearchData] = useState<SearchData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
@@ -79,41 +91,46 @@ export default function ViewBookings() {
     });
   }, []);
 
-  const handleSearch = () => {
+  async function handleSearch() {
     if (dateValue === null || sectionValue === null) {
       setError(true);
       setMessage("Please select all the fields");
       setOpen(true);
     } else {
+      setLoading(true);
+      setSlotData([]);
       console.log(dateValue, sectionValue);
       axiosPost("/admin/viewBookings", {
         sectionId: sectionValue,
         date: dateValue,
       }).then((res) => {
-        if (res.data.message) {
-          setError(false);
-          setMessage("Success");
-          setOpen(true);
-        }
         console.log(res.data);
-        setSlotData(res.data.data);
+        setSearchData(res.data.data);
         setLoading(false);
       });
     }
-  };
+  }
 
   const handleDelete = (bookingId: number) => {
     axiosDelete("/admin/viewBookings", {
       bookingId: bookingId,
     }).then((res) => {
       if (res.data.message === "Success") {
+        slotData.forEach((data) => {
+          if (data.bookingId === bookingId) {
+            setSlotData(
+              slotData.filter((data) => data.bookingId !== bookingId)
+            );
+          }
+        });
         setError(false);
         setMessage("Booking deleted successfully");
         setOpen(true);
+      } else {
+        setError(true);
+        setMessage("Booking not deleted");
+        setOpen(true);
       }
-      setError(true);
-      setMessage("Booking not deleted");
-      setOpen(true);
     });
   };
 
@@ -139,13 +156,11 @@ export default function ViewBookings() {
             <FormControl variant="filled" fullWidth>
               <InputLabel>Section</InputLabel>
               <Select value={sectionValue} onChange={(e) => handleChange(e)}>
-                {sections.map((item, index) => {
-                  return (
-                    <MenuItem value={item.sectionId} key={index}>
-                      {item.sectionName}
-                    </MenuItem>
-                  );
-                })}
+                {sections.map((item, index) => (
+                  <MenuItem value={item.sectionId} key={`${item}-${index}`}>
+                    {item.sectionName}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </div>
@@ -183,24 +198,24 @@ export default function ViewBookings() {
             </Button>
           </div>
         </div>
-        <div
-          style={{
-            backgroundColor: "#f5f5f5",
-            width: "90%",
-            borderRadius: "10px",
-          }}
-        >
-          {loading ? (
-            <LinearProgress className="container" />
-          ) : (
-            <>
-              {slotData && slotData.length > 0 ? (
+        {loading ? (
+          <LinearProgress className="container" />
+        ) : (
+          <>
+            <div
+              style={{
+                backgroundColor: "#f5f5f5",
+                width: "90%",
+                borderRadius: "10px",
+              }}
+            >
+              {slotData.length > 0 &&
                 slotData.map((list, index) => {
                   return (
                     <>
                       <div
                         className="d-flex justify-content-between p-sm-3 p-2 align-items-center"
-                        key={index}
+                        key={list.bookingId}
                       >
                         <div>
                           <p className="m-0">
@@ -234,16 +249,61 @@ export default function ViewBookings() {
                       {index !== slotData.length ? <Divider /> : null}
                     </>
                   );
-                })
-              ) : (
-                <p className="text-center p-2 m-0">No bookings made today!</p>
-              )}
-            </>
-          )}
-        </div>
+                })}
+            </div>
+          </>
+        )}
+
+        <>
+          <div
+            style={{
+              backgroundColor: "#f5f5f5",
+              width: "90%",
+              borderRadius: "10px",
+            }}
+          >
+            {searchData.length > 0 &&
+              searchData.map((list, index) => {
+                return (
+                  <>
+                    <div
+                      className="d-flex justify-content-between p-sm-3 p-2 align-items-center"
+                      key={list.slots.booking.bookingId}
+                    >
+                      <div>
+                        <p className="m-0">
+                          {list.slots.booking.users.name} <br />
+                          {list.slots.date} <br />
+                          <span className="text-success">Booked</span>
+                          <br />₹{list.price}/-
+                        </p>
+                      </div>
+                      <div>
+                        <p className="m-0">
+                          {list.slots.booking.users.registerNumber}
+                          <br />
+                          {list.slots.fromTime} - {list.slots.toTime}
+                          <br />
+                          {list.sectionName}
+                          <br />
+                          <MdDelete
+                            size="25"
+                            onClick={() => {
+                              handleDelete(list.slots.booking.bookingId);
+                            }}
+                          />
+                        </p>
+                      </div>
+                    </div>
+                    {index !== slotData.length ? <Divider /> : null}
+                  </>
+                );
+              })}
+          </div>
+        </>
+
         <Button
           variant="contained"
-          href="/homepage"
           sx={{
             borderRadius: 6,
             marginTop: "20px",
