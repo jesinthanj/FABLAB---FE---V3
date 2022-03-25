@@ -101,14 +101,7 @@ export default function BookingsPage() {
 
   return (
     <Layout>
-      <Menu/>
-      {loading ? (
-        <div className="vh-100 d-flex align-items-center justify-content-center flex-column m-4">
-          <LinearProgress className="container" />
-        </div>
-      ) : (
-        <>
-        {(
+      <Menu />
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h3
           className="mx-3"
@@ -117,7 +110,7 @@ export default function BookingsPage() {
           {name}
         </h3>
         <div className="container my-4">
-          <FormControl fullWidth sx={{ my: 2 }}>
+          <FormControl color="warning" fullWidth sx={{ my: 2 }}>
             <InputLabel id="demo-simple-select-label">Date</InputLabel>
 
             <Select
@@ -143,6 +136,7 @@ export default function BookingsPage() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={timeValue}
+              color="warning"
               label="Time"
               onChange={(e) => handleTimeChange(e)}
             >
@@ -178,9 +172,6 @@ export default function BookingsPage() {
           </div>
         </div>
       </div>
-  )}
-</>
-)}
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (

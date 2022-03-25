@@ -77,7 +77,7 @@ export default function MyBookings() {
 
   return (
     <Layout>
-      <Menu/>
+      <Menu />
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column p-3">
         <h3 className="mb-5 fw-bolder">MY BOOKINGS</h3>
         <div

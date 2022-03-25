@@ -69,8 +69,11 @@ export default function AddEquipmentsPage() {
 
   return (
     <Layout>
-      <Menu/>
-      <div className="vh-100 d-flex align-items-center justify-content-center">
+      <Menu />
+      <div
+        className="d-flex align-items-center justify-content-center"
+        style={{ height: "80vh" }}
+      >
         <div className="card shadow">
           <div className="card-body">
             <div className="d-flex ">

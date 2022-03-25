@@ -18,7 +18,7 @@ export default function MainPage() {
         <Menu />
         <div className="vh-100 d-flex align-items-center flex-column">
           <h5
-            className="pb-1 mx-2 py-5"
+            className="pb-1 py-5 text-center "
             style={{
               fontFamily: "montserrat",
               fontWeight: "bold",
@@ -32,6 +32,7 @@ export default function MainPage() {
           </h5>
           <div className="py-1">
             <Card
+              className="shadow"
               sx={{
                 maxWidth: 335,
                 borderBottomLeftRadius: "20px",
@@ -40,7 +41,6 @@ export default function MainPage() {
                 borderTopRightRadius: "20px",
                 backgroundColor: "#F5F5F5",
                 margin: "20px",
-                boxShadow: "0 9px 9px -6px black",
                 paddingBottom: "-15px",
               }}
             >
@@ -80,6 +80,7 @@ export default function MainPage() {
           </div>
           <div className="py-1">
             <Card
+              className="shadow"
               sx={{
                 maxWidth: 335,
                 borderBottomLeftRadius: "20px",
@@ -88,7 +89,6 @@ export default function MainPage() {
                 borderTopRightRadius: "20px",
                 backgroundColor: "#F5F5F5",
                 margin: "20px",
-                boxShadow: "0 9px 9px -6px black",
                 paddingBottom: "-15px",
               }}
             >

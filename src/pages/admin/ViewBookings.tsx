@@ -147,7 +147,7 @@ export default function ViewBookings() {
 
   return (
     <Layout>
-      <Menu/>
+      <Menu />
       <div className="d-flex align-items-center p-3 justify-content-center flex-column">
         <h3 className="mb-4 fw-bolder">VIEW BOOKINGS</h3>
         <div
@@ -303,22 +303,6 @@ export default function ViewBookings() {
               })}
           </div>
         </>
-
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: 6,
-            marginTop: "20px",
-            px: "30px",
-            backgroundColor: "#F49C4B",
-            "&:hover": {
-              backgroundColor: "#fff",
-              color: "#F49C4B",
-            },
-          }}
-        >
-          BACK
-        </Button>
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (
