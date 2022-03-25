@@ -4,6 +4,7 @@ import { Divider, Button, LinearProgress, Snackbar } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosGet, axiosDelete } from "../requests";
+import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -76,6 +77,7 @@ export default function MyBookings() {
 
   return (
     <Layout>
+      <Menu />
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column p-3">
         <h3 className="mb-5 fw-bolder">MY BOOKINGS</h3>
         <div
