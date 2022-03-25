@@ -1,8 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import Layout from "../../components/Layout";
-import { Divider, Button, LinearProgress } from "@mui/material";
+import { Divider, Button, LinearProgress, Snackbar } from "@mui/material";
 import { MdDelete } from "react-icons/md";
-import { axiosGet } from "../requests";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { axiosGet, axiosDelete } from "../requests";
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function MyBookings() {
   type Sections = {
@@ -23,8 +31,10 @@ export default function MyBookings() {
     bookingId: number;
     slots: Slots;
   }
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [slotData, setSlotData] = useState<SlotData[]>([]);
+  const [error, setError] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     axiosGet("/users/myBookings").then((res) => {
@@ -32,6 +42,32 @@ export default function MyBookings() {
       setLoading(false);
     });
   }, []);
+
+  const handleDelete = (bookingId: number) => {
+    axiosDelete("/users/myBookings", {
+      bookingId: bookingId,
+    }).then((res) => {
+      if (res.data.message) {
+        setError(false);
+        setOpen(true);
+      }
+      setError(true);
+      setOpen(true);
+      setSlotData(res.data.slot);
+      console.log(res.data.slot);
+      setLoading(false);
+    });
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   return (
     <Layout>
@@ -44,42 +80,56 @@ export default function MyBookings() {
             borderRadius: "10px",
           }}
         >
-          {loading && <LinearProgress className="container" />}
-          {slotData && slotData.length > 0 ? (
-            slotData.map((list, index) => {
-              return (
-                <>
-                  <div
-                    className="d-flex justify-content-between p-3 align-items-center"
-                    key={list.bookingId}
-                  >
-                    <div>
-                      <p className="m-0">
-                        {list.slots.date} <br />
-                        {list.slots.isBooked ? (
-                          <span className="text-success">Booked</span>
-                        ) : (
-                          <span className="text-danger">Not Booked</span>
-                        )}
-                        <br />₹{list.slots.sections.price}/-
-                      </p>
-                    </div>
-                    <div>
-                      <p className="m-0">
-                        {list.slots.fromTime} - {list.slots.toTime}
-                        <br />
-                        {list.slots.sections.sectionName}
-                        <br />
-                        <MdDelete size="25" />
-                      </p>
-                    </div>
-                  </div>
-                  {index !== slotData.length ? <Divider /> : null}
-                </>
-              );
-            })
+          {loading ? (
+            <LinearProgress className="container" />
           ) : (
-            <p className="text-center p-2 m-0">You have made no bookings!</p>
+            <>
+              {" "}
+              {slotData && slotData.length > 0 ? (
+                slotData.map((list, index) => {
+                  return (
+                    <>
+                      <div
+                        className="d-flex justify-content-between p-3 align-items-center"
+                        key={list.bookingId}
+                      >
+                        <div>
+                          <p className="m-0">
+                            {list.slots.date} <br />
+                            {list.slots.isBooked ? (
+                              <span className="text-success">Booked</span>
+                            ) : (
+                              <span className="text-danger">Not Booked</span>
+                            )}
+                            <br />₹{list.slots.sections.price}/-
+                          </p>
+                        </div>
+                        <div>
+                          <p className="m-0">
+                            {list.slots.fromTime} - {list.slots.toTime}
+                            <br />
+                            {list.slots.sections.sectionName}
+                            <br />
+                            <MdDelete
+                              size="25"
+                              type="submit"
+                              onClick={() => {
+                                handleDelete(list.bookingId);
+                              }}
+                            />
+                          </p>
+                        </div>
+                      </div>
+                      {index !== slotData.length ? <Divider /> : null}
+                    </>
+                  );
+                })
+              ) : (
+                <p className="text-center p-2 m-0">
+                  You have made no bookings!
+                </p>
+              )}
+            </>
           )}
         </div>
         <Button
@@ -99,6 +149,17 @@ export default function MyBookings() {
           BACK
         </Button>
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {error ? (
+          <Alert onClose={handleClose} severity="error">
+            Delete was unsucessful! Please try again later.
+          </Alert>
+        ) : (
+          <Alert onClose={handleClose} severity="success">
+            Deleted Successfully!
+          </Alert>
+        )}
+      </Snackbar>
     </Layout>
   );
 }
