@@ -9,14 +9,14 @@ interface SecondRegister {
   contact: string;
   designation: string;
 }
-
+// eslint-disable-next-line
 interface StudentRegister {
   collegeName: string;
   department: string;
   year: number;
   registerNumber: string;
 }
-
+// eslint-disable-next-line
 interface CompanyRegister {
   companyName: string;
   department: string;
