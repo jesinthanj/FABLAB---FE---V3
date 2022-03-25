@@ -63,11 +63,11 @@ export default function Login() {
           paddingTop: "8px",
         }}
       >
-        <img src={licetLogo} alt="" width="80" height="80" />
+        <img src={licetLogo} alt="" width="100" height="100" />
       </div>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div className="card shadow">
-          <div className="card-body">
+        <div className="card shadow" style={{ borderRadius: "30px" }}>
+          <div className="card-body p-md-5 p-4">
             <h5
               className="pb-1 d-flex justify-content-center"
               style={{
@@ -84,6 +84,7 @@ export default function Login() {
                 fontFamily: "montserrat",
                 fontWeight: "bold",
                 letterSpacing: "10px",
+                marginRight: "-10px",
               }}
             >
               FABLAB
@@ -125,9 +126,9 @@ export default function Login() {
             <div className="d-flex justify-content-center pt-3">
               {" "}
               <Button
+                className="w-100"
                 variant="contained"
                 sx={{
-                  borderRadius: 5,
                   backgroundColor: "#FF8E23",
                   maxHeight: "50px",
                   minHeight: "30px",
