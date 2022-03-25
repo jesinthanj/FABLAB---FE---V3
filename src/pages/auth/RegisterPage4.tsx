@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../slices/store";
+import { axiosPost } from "../requests";
 
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
@@ -18,12 +19,10 @@ export default function RegisterPage4() {
   const [address, setAddress] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { companyName, department, companyWebsite, address };
 
   const registerData = useSelector((state: RootState) => state.register);
 
-  function handleNext() {
-    console.log("Next button clicked");
+  async function handleNext() {
     if (
       companyName === "" ||
       department === "" ||
@@ -33,22 +32,25 @@ export default function RegisterPage4() {
       setError(true);
       setOpen(true);
     } else {
-      const data = {
+      const response = await axiosPost("/auth/register", {
         email: registerData.email,
         name: registerData.name,
         password: registerData.password,
         collegeName: registerData.collegeName,
-        companyName: companyName,
-        companyAddress: address,
-        companyWebsite: companyWebsite,
+        companyName: registerData.companyName,
+        companyAddress: registerData.companyAddress,
+        companyWebsite: registerData.companyWebsite,
         contact: registerData.contact,
         department: department,
         designation: registerData.designation,
         registerNumber: registerData.registerNumber,
         year: registerData.year,
-      };
-      setOpen(true);
-      navigate("/homepage");
+      });
+      if (response.status) {
+        setError(false);
+        setOpen(true);
+        navigate("/");
+      }
     }
   }
   const handleClose = (

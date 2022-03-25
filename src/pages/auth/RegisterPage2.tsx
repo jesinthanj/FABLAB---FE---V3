@@ -23,7 +23,6 @@ export default function RegisterPage2() {
   const userData = { name, contact, designation };
 
   function handleNext() {
-    console.log("Next button clicked");
     if (name === "" || contact === "" || designation === "") {
       setError(true);
       setOpen(true);

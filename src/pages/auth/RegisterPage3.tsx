@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../slices/store";
 
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { axiosPost } from "../requests";
 
 export default function RegisterPage3() {
   let navigate = useNavigate();
@@ -18,11 +19,10 @@ export default function RegisterPage3() {
   const [registerNumber, setRegisterNumber] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { collegeName, department, year, registerNumber };
 
   const registerData = useSelector((state: RootState) => state.register);
 
-  function handleNext() {
+  async function handleNext() {
     if (
       collegeName === "" ||
       department === "" ||
@@ -32,7 +32,7 @@ export default function RegisterPage3() {
       setError(true);
       setOpen(true);
     } else {
-      const data = {
+      const response = await axiosPost("/auth/register", {
         email: registerData.email,
         name: registerData.name,
         password: registerData.password,
@@ -45,10 +45,12 @@ export default function RegisterPage3() {
         designation: registerData.designation,
         registerNumber: registerNumber,
         year: year,
-      };
-      console.log(data);
-      setOpen(true);
-      navigate("/homepage");
+      });
+      if (response.status) {
+        setError(false);
+        setOpen(true);
+        navigate("/");
+      }
     }
   }
   const handleClose = (
@@ -130,7 +132,7 @@ export default function RegisterPage3() {
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">
-            Slots Added Successfully
+            Register Successfully!
           </Alert>
         )}
       </Snackbar>
