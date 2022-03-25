@@ -7,6 +7,7 @@ import { Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosGet, axiosPost } from "../requests";
 import { useState, forwardRef, useEffect } from "react";
+import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -25,6 +26,7 @@ export default function AddEquipmentsPage() {
 
   const [equip, setEquip] = useState("");
   const [price, setPrice] = useState("");
+  // eslint-disable-next-line
   const [sections, setSections] = useState<Section[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
@@ -67,7 +69,11 @@ export default function AddEquipmentsPage() {
 
   return (
     <Layout>
-      <div className="vh-100 d-flex align-items-center justify-content-center">
+      <Menu />
+      <div
+        className="d-flex align-items-center justify-content-center"
+        style={{ height: "80vh" }}
+      >
         <div className="card shadow">
           <div className="card-body">
             <div className="d-flex ">

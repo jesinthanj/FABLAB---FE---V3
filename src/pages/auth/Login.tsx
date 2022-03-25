@@ -64,13 +64,13 @@ export default function Login() {
           paddingTop: "8px",
         }}
       >
-        <img src={licetLogo} alt="" width="80" height="80" />
+        <img src={licetLogo} alt="" width="90" height="90" />
       </div>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div className="card shadow">
-          <div className="card-body">
+        <div className="card shadow" style={{ borderRadius: "30px" }}>
+          <div className="card-body p-md-5 p-4">
             <h5
-              className="pb-1 d-flex justify-content-center"
+              className=" d-flex justify-content-start"
               style={{
                 fontFamily: "montserrat",
                 fontWeight: "bold",
@@ -80,7 +80,7 @@ export default function Login() {
               LICET
             </h5>
             <h1
-              className="pb-4 d-flex justify-content-center"
+              className="pb-4 d-flex justify-content-start"
               style={{
                 fontFamily: "montserrat",
                 fontWeight: "bold",
@@ -91,6 +91,7 @@ export default function Login() {
             </h1>
             <div>
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Username"
                 variant="outlined"
@@ -99,6 +100,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Password"
                 variant="outlined"
@@ -116,19 +118,20 @@ export default function Login() {
                 <p style={{ fontSize: "13px" }}>Forgot password</p>
               </a>
               <a
-                href="/register1"
+                href="/register"
                 rel="noopener noreferrer"
                 className="text-decoration-none text-warning"
               >
                 <p style={{ fontSize: "13px" }}>New user?</p>
               </a>
             </div>
-            <div className="d-flex justify-content-center pt-3">
+            <div className="d-flex justify-content-end pt-3">
               {" "}
               <Button
+                className=""
                 variant="contained"
                 sx={{
-                  borderRadius: 5,
+                  borderRadius: "30px",
                   backgroundColor: "#FF8E23",
                   maxHeight: "50px",
                   minHeight: "30px",

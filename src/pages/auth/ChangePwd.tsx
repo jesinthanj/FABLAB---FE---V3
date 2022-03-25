@@ -97,6 +97,7 @@ export default function ChangePwd() {
           </div>
 
           <TextField
+            color="warning"
             margin="normal"
             fullWidth
             id="password"
@@ -108,6 +109,7 @@ export default function ChangePwd() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
+            color="warning"
             margin="normal"
             fullWidth
             name="cpassword"
