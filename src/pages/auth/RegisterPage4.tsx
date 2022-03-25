@@ -66,8 +66,8 @@ export default function RegisterPage4() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div className="card shadow">
-          <div className="card-body">
+        <div className="card shadow" style={{ borderRadius: "30px" }}>
+          <div className="card-body p-md-5 p-4">
             <div className="d-flex justify-content-between">
               <AiOutlineArrowLeft
                 style={{ color: "black" }}
