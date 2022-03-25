@@ -47,15 +47,20 @@ export default function MyBookings() {
     axiosDelete("/users/myBookings", {
       bookingId: bookingId,
     }).then((res) => {
-      if (res.data.message) {
+      if (res.data.message === "Success") {
+        slotData.forEach((data) => {
+          if (data.bookingId === bookingId) {
+            setSlotData(
+              slotData.filter((data) => data.bookingId !== bookingId)
+            );
+          }
+        });
         setError(false);
         setOpen(true);
+      } else {
+        setError(true);
+        setOpen(true);
       }
-      setError(true);
-      setOpen(true);
-      setSlotData(res.data.slot);
-      console.log(res.data.slot);
-      setLoading(false);
     });
   };
 
@@ -84,7 +89,6 @@ export default function MyBookings() {
             <LinearProgress className="container" />
           ) : (
             <>
-              {" "}
               {slotData && slotData.length > 0 ? (
                 slotData.map((list, index) => {
                   return (
@@ -152,7 +156,7 @@ export default function MyBookings() {
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (
           <Alert onClose={handleClose} severity="error">
-            Delete was unsucessful! Please try again later.
+            Delete was unsucessful!
           </Alert>
         ) : (
           <Alert onClose={handleClose} severity="success">

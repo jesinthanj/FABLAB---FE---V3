@@ -13,6 +13,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // eslint-disable-next-line
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -91,6 +92,7 @@ export default function Login() {
             </h1>
             <div>
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Username"
                 variant="outlined"
@@ -99,6 +101,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Password"
                 variant="outlined"
@@ -116,7 +119,7 @@ export default function Login() {
                 <p style={{ fontSize: "13px" }}>Forgot password</p>
               </a>
               <a
-                href="/register1"
+                href="/register"
                 rel="noopener noreferrer"
                 className="text-decoration-none text-warning"
               >

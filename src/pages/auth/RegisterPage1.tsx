@@ -38,7 +38,7 @@ export default function RegisterPage1() {
         dispatch(registerOne(userData));
         setError(false);
         setOpen(true);
-        navigate("/register2");
+        navigate("/registerInfo");
       }
     }
   }
@@ -83,6 +83,7 @@ export default function RegisterPage1() {
             </h1>
             <div>
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="email"
                 variant="outlined"
@@ -90,6 +91,7 @@ export default function RegisterPage1() {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="password"
                 variant="outlined"
@@ -98,6 +100,7 @@ export default function RegisterPage1() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="confirm password"
                 variant="outlined"
