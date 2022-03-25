@@ -80,24 +80,28 @@ export default function RegisterPage3() {
             </div>
             <div>
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="College Name"
                 value={collegeName}
                 onChange={(e) => setCollegeName(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Department"
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Year"
                 value={year}
                 onChange={(e) => setYear(Number(e.target.value))}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Register Number"
                 value={registerNumber}

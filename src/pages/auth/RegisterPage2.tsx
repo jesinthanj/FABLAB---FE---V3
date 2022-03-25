@@ -29,11 +29,11 @@ export default function RegisterPage2() {
     } else if (designation === "student") {
       dispatch(registerTwo(userData));
       setOpen(true);
-      navigate("/register3");
+      navigate("/registerStu");
     } else if (designation === "faculty" || designation === "industry") {
       dispatch(registerTwo(userData));
       setOpen(true);
-      navigate("/register4");
+      navigate("/registerInd");
     }
   }
   const handleClose = (
@@ -63,18 +63,20 @@ export default function RegisterPage2() {
             </div>
             <div>
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <TextField
+                color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="contact"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
               />
-              <FormControl fullWidth>
+              <FormControl color="warning" fullWidth>
                 <InputLabel id="demo-simple-select-label">
                   Designation
                 </InputLabel>
