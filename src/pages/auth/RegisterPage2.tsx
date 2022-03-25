@@ -9,31 +9,29 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { Snackbar, Alert } from "@mui/material";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { registerTwo } from "../../slices/RegisterSlice";
 
 export default function RegisterPage2() {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [contact, setContact] = useState("");
   const [designation, setDesignation] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const userData = { name, number, designation };
+  const userData = { name, contact, designation };
 
   function handleNext() {
-    console.log("Next button clicked");
-    if (name === "" || number === "" || designation === "") {
+    if (name === "" || contact === "" || designation === "") {
       setError(true);
       setOpen(true);
     } else if (designation === "student") {
-      console.log(userData);
+      dispatch(registerTwo(userData));
       setOpen(true);
       navigate("/register3");
-    } else if (designation === "faculty") {
-      console.log(userData);
-      setOpen(true);
-      navigate("/register4");
-    } else if (designation === "industry") {
-      console.log(userData);
+    } else if (designation === "faculty" || designation === "industry") {
+      dispatch(registerTwo(userData));
       setOpen(true);
       navigate("/register4");
     }
@@ -72,9 +70,9 @@ export default function RegisterPage2() {
               />
               <TextField
                 className="my-3 d-flex justify-content-center"
-                label="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
+                label="contact"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
               />
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">

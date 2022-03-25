@@ -24,7 +24,7 @@ export default function EquipmentConfirmation() {
             fontWeight: "bold",
           }}
         >
-          SUCESSFULLY!
+          SUCCESSFULLY!
         </h2>
         <div className="text-center mx-2 py-5">
           <Button

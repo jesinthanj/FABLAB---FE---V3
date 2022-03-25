@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Menu from "../../components/Menu";
 
 const image1 = require("../../assets/equipment/machine1.jpg");
-const image2 = require("../../assets/equipment/machine2.png");
+const image2 = require("../../assets/equipment/machine2.jpg");
 
 export default function MainPage() {
   let navigate = useNavigate();
@@ -120,7 +120,7 @@ export default function MainPage() {
                       navigate("/addSlots");
                     }}
                   >
-                    Add Slots
+                    Manage Slots
                   </Button>
                 </div>
               </CardContent>
