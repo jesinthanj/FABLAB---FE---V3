@@ -16,6 +16,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosGet, axiosPost, axiosDelete } from "../requests";
+import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -146,6 +147,7 @@ export default function ViewBookings() {
 
   return (
     <Layout>
+      <Menu/>
       <div className="d-flex align-items-center p-3 justify-content-center flex-column">
         <h3 className="mb-4 fw-bolder">VIEW BOOKINGS</h3>
         <div

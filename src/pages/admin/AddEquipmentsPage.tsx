@@ -7,6 +7,7 @@ import { Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { axiosGet, axiosPost } from "../requests";
 import { useState, forwardRef, useEffect } from "react";
+import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -68,6 +69,7 @@ export default function AddEquipmentsPage() {
 
   return (
     <Layout>
+      <Menu/>
       <div className="vh-100 d-flex align-items-center justify-content-center">
         <div className="card shadow">
           <div className="card-body">

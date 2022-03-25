@@ -2,11 +2,13 @@ import React from "react";
 import Layout from "../../components/Layout";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Menu from "../../components/Menu";
 
 export default function SlotConfirmationPage() {
   let navigate = useNavigate();
   return (
     <Layout>
+      <Menu/>
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h2
           className="pb-1"

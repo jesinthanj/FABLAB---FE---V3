@@ -7,10 +7,12 @@ import {
   Select,
   Button,
   Snackbar,
+  LinearProgress
 } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate, useLocation } from "react-router-dom";
 import { axiosGet, axiosPost } from "../requests";
+import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -38,11 +40,12 @@ export default function BookingsPage() {
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
-  console.log(sectionId);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axiosGet(`/users/bookSlots?sectionId=${sectionId}`).then((res) => {
       setSlots(res.data.slots);
+      setLoading(false);
     });
   }, [sectionId]);
 
@@ -98,6 +101,14 @@ export default function BookingsPage() {
 
   return (
     <Layout>
+      <Menu/>
+      {loading ? (
+        <div className="vh-100 d-flex align-items-center justify-content-center flex-column m-4">
+          <LinearProgress className="container" />
+        </div>
+      ) : (
+        <>
+        {(
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h3
           className="mx-3"
@@ -167,6 +178,10 @@ export default function BookingsPage() {
           </div>
         </div>
       </div>
+  )}
+</>
+)}
+
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         {error ? (
           <Alert onClose={handleClose} severity="error">
