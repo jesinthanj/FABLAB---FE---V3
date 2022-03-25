@@ -49,15 +49,15 @@ export default function RegisterPage2() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div className="card shadow">
-          <div className="card-body">
+        <div className="card shadow" style={{ borderRadius: "30px" }}>
+          <div className="card-body p-md-5 p-4">
             <div className="d-flex justify-content-between">
               <AiOutlineArrowLeft
                 style={{ color: "black" }}
                 size="20"
                 onClick={() => navigate(-1)}
               />
-              <p style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
+              <p className= "d-flex justify-content-start" style={{ fontWeight: "bold", fontFamily: "montserrat" }}>
                 Basic details
               </p>
             </div>
@@ -65,14 +65,14 @@ export default function RegisterPage2() {
               <TextField
                 color="warning"
                 className="my-3 d-flex justify-content-center"
-                label="name"
+                label="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <TextField
                 color="warning"
                 className="my-3 d-flex justify-content-center"
-                label="contact"
+                label="Contact"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
               />
@@ -95,7 +95,7 @@ export default function RegisterPage2() {
                 </Select>
               </FormControl>
             </div>
-            <div className="d-flex justify-center-center pt-3 py-4">
+            <div className="d-flex justify-content-end pt-3">
               {" "}
               <Button
                 variant="contained"

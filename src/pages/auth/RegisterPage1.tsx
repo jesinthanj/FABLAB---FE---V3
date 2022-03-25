@@ -56,13 +56,13 @@ export default function RegisterPage1() {
   return (
     <Layout>
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <div className="card shadow">
-          <div className="card-body">
+        <div className="card shadow " style={{ borderRadius: "30px" }}>
+          <div className="card-body p-md-5 p-4">
             <div className="d-flex " onClick={() => navigate(-1)}>
               <AiOutlineArrowLeft style={{ color: "black" }} size="20" />
             </div>
             <h5
-              className="pb-1 d-flex justify-content-center"
+              className=" pt-3 d-flex justify-content-start"
               style={{
                 fontFamily: "montserrat",
                 fontWeight: "bold",
@@ -72,7 +72,7 @@ export default function RegisterPage1() {
               LICET
             </h5>
             <h1
-              className="pb-4 d-flex justify-content-center"
+              className="pb-4 d-flex justify-content-start"
               style={{
                 fontFamily: "montserrat",
                 fontWeight: "bold",
@@ -85,7 +85,7 @@ export default function RegisterPage1() {
               <TextField
                 color="warning"
                 className="my-3 d-flex justify-content-center"
-                label="email"
+                label="Email"
                 variant="outlined"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -93,7 +93,7 @@ export default function RegisterPage1() {
               <TextField
                 color="warning"
                 className="my-3 d-flex justify-content-center"
-                label="password"
+                label="Password"
                 variant="outlined"
                 type="password"
                 value={password}
@@ -102,14 +102,14 @@ export default function RegisterPage1() {
               <TextField
                 color="warning"
                 className="my-3 d-flex justify-content-center"
-                label="confirm password"
+                label="Confirm Password"
                 variant="outlined"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
-            <div className="d-flex justify-content-center pt-3 py-4">
+            <div className="d-flex justify-content-end pt-3">
               <Button
                 variant="contained"
                 sx={{
