@@ -1,6 +1,6 @@
 import { useState, forwardRef, useEffect } from "react";
 import Layout from "../../components/Layout";
-import MenuItem from "@mui/material/MenuItem";
+import { MenuItem, LinearProgress } from "@mui/material";
 import {
   InputLabel,
   FormControl,
@@ -39,10 +39,12 @@ export default function AddSlots() {
   const [sectionValue, setSectionValue] = useState<number>();
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axiosGet("/admin/addSlots").then((res) => {
       setSections(res.data.sections);
+      setLoading(false);
     });
   }, []);
 
@@ -89,115 +91,125 @@ export default function AddSlots() {
   return (
     <Layout>
       <Menu />
-      {sections.length > 0 ? (
-        <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-          <div className="d-flex ">
-            <a
-              href="/mainpage"
-              rel="noopener noreferrer"
-              className="text-decoration-none"
-            >
-              <AiOutlineArrowLeft style={{ color: "black" }} size="20" />
-            </a>
-            <div>
-              <h5
-                className="mx-3"
-                style={{ fontWeight: "bold", fontFamily: "montserrat" }}
-              >
-                Add Slots:
-              </h5>
-            </div>
-          </div>
-          <div className="container  my-4">
-            <FormControl color="warning" fullWidth>
-              <InputLabel id="demo-simple-select-label">Section</InputLabel>
-
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={sectionValue}
-                label="Sections"
-                onChange={(e) => handleChange(e)}
-              >
-                {sections.map((item, index) => {
-                  return (
-                    <MenuItem value={item.sectionId} key={index}>
-                      {item.sectionName}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-            <div>
-              <LocalizationProvider
-                color="warning"
-                dateAdapter={AdapterDateFns}
-              >
-                <DatePicker
-                  label="Date"
-                  value={dateValue}
-                  onChange={(newValue) => {
-                    setDateValue(newValue);
-                  }}
-                  renderInput={(params) => (
-                    <TextField {...params} fullWidth sx={{ my: 3 }} />
-                  )}
-                />
-              </LocalizationProvider>
-            </div>
-            <div>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <TimePicker
-                  label="From Time"
-                  value={fromValue}
-                  ampm={false}
-                  onChange={(newValue) => {
-                    setFromValue(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} fullWidth />}
-                />
-              </LocalizationProvider>
-            </div>
-            <div>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <TimePicker
-                  label="To Time"
-                  value={toValue}
-                  ampm={false}
-                  onChange={(newValue) => {
-                    setToValue(newValue);
-                  }}
-                  renderInput={(params) => (
-                    <TextField {...params} fullWidth sx={{ my: 3 }} />
-                  )}
-                />
-              </LocalizationProvider>
-            </div>
-            <div className="text-center">
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#FF8E23",
-                  width: 100,
-                  borderRadius: 10,
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "#FFA500",
-                  },
-                }}
-                onClick={() => {
-                  handleSlots();
-                }}
-              >
-                Add
-              </Button>
-            </div>
-          </div>
+      {loading ? (
+        <div className="vh-100 d-flex align-items-center justify-content-center flex-column m-4">
+          <LinearProgress className="container" />
         </div>
       ) : (
-        <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
-          <h4>No Slots to Book</h4>
-        </div>
+        <>
+          {sections.length > 0 ? (
+            <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
+              <div className="d-flex ">
+                <a
+                  href="/mainpage"
+                  rel="noopener noreferrer"
+                  className="text-decoration-none"
+                >
+                  <AiOutlineArrowLeft style={{ color: "black" }} size="20" />
+                </a>
+                <div>
+                  <h5
+                    className="mx-3"
+                    style={{ fontWeight: "bold", fontFamily: "montserrat" }}
+                  >
+                    Add Slots:
+                  </h5>
+                </div>
+              </div>
+              <div className="container  my-4">
+                <FormControl color="warning" fullWidth>
+                  <InputLabel id="demo-simple-select-label">Section</InputLabel>
+
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={sectionValue}
+                    label="Sections"
+                    onChange={(e) => handleChange(e)}
+                  >
+                    {sections.map((item, index) => {
+                      return (
+                        <MenuItem value={item.sectionId} key={index}>
+                          {item.sectionName}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+                <div>
+                  <LocalizationProvider
+                    color="warning"
+                    dateAdapter={AdapterDateFns}
+                  >
+                    <DatePicker
+                      label="Date"
+                      value={dateValue}
+                      onChange={(newValue) => {
+                        setDateValue(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth sx={{ my: 3 }} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <TimePicker
+                      label="From Time"
+                      value={fromValue}
+                      ampm={false}
+                      onChange={(newValue) => {
+                        setFromValue(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <TimePicker
+                      label="To Time"
+                      value={toValue}
+                      ampm={false}
+                      onChange={(newValue) => {
+                        setToValue(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth sx={{ my: 3 }} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div className="text-center">
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#FF8E23",
+                      width: 100,
+                      borderRadius: 10,
+                      "&:hover": {
+                        backgroundColor: "#fff",
+                        color: "#FFA500",
+                      },
+                    }}
+                    onClick={() => {
+                      handleSlots();
+                    }}
+                  >
+                    Add
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
+              <h4>No Slots to Book</h4>
+            </div>
+          )}
+        </>
       )}
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
