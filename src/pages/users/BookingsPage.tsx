@@ -11,6 +11,7 @@ import {
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useNavigate, useLocation } from "react-router-dom";
 import { axiosGet, axiosPost } from "../requests";
+import Menu from "../../components/Menu";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -98,6 +99,7 @@ export default function BookingsPage() {
 
   return (
     <Layout>
+      <Menu />
       <div className="vh-100 d-flex align-items-center justify-content-center flex-column">
         <h3
           className="mx-3"
