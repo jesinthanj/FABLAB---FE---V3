@@ -25,6 +25,7 @@ export default function AddEquipmentsPage() {
 
   const [equip, setEquip] = useState("");
   const [price, setPrice] = useState("");
+  // eslint-disable-next-line
   const [sections, setSections] = useState<Section[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
