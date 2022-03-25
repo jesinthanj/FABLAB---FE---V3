@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import { Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../slices/store";
 
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
@@ -12,23 +14,39 @@ export default function RegisterPage3() {
   let navigate = useNavigate();
   const [collegeName, setCollegeName] = useState("");
   const [department, setDepartment] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState<number>(1);
   const [registerNumber, setRegisterNumber] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const userData = { collegeName, department, year, registerNumber };
+
+  const registerData = useSelector((state: RootState) => state.register);
+
   function handleNext() {
-    console.log("Next button clicked");
     if (
       collegeName === "" ||
       department === "" ||
-      year === "" ||
+      year === null ||
       registerNumber === ""
     ) {
       setError(true);
       setOpen(true);
     } else {
-      console.log(userData);
+      const data = {
+        email: registerData.email,
+        name: registerData.name,
+        password: registerData.password,
+        collegeName: collegeName,
+        companyName: registerData.companyName,
+        companyAddress: registerData.companyAddress,
+        companyWebsite: registerData.companyWebsite,
+        contact: registerData.contact,
+        department: department,
+        designation: registerData.designation,
+        registerNumber: registerNumber,
+        year: year,
+      };
+      console.log(data);
       setOpen(true);
       navigate("/homepage");
     }
@@ -75,7 +93,7 @@ export default function RegisterPage3() {
                 className="my-3 d-flex justify-content-center"
                 label="Year"
                 value={year}
-                onChange={(e) => setYear(e.target.value)}
+                onChange={(e) => setYear(Number(e.target.value))}
               />
               <TextField
                 className="my-3 d-flex justify-content-center"

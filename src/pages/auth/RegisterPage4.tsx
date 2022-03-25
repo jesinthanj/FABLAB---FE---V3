@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import { Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../slices/store";
 
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
@@ -17,6 +19,9 @@ export default function RegisterPage4() {
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const userData = { companyName, department, companyWebsite, address };
+
+  const registerData = useSelector((state: RootState) => state.register);
+
   function handleNext() {
     console.log("Next button clicked");
     if (
@@ -28,7 +33,20 @@ export default function RegisterPage4() {
       setError(true);
       setOpen(true);
     } else {
-      console.log(userData);
+      const data = {
+        email: registerData.email,
+        name: registerData.name,
+        password: registerData.password,
+        collegeName: registerData.collegeName,
+        companyName: companyName,
+        companyAddress: address,
+        companyWebsite: companyWebsite,
+        contact: registerData.contact,
+        department: department,
+        designation: registerData.designation,
+        registerNumber: registerData.registerNumber,
+        year: registerData.year,
+      };
       setOpen(true);
       navigate("/homepage");
     }
