@@ -13,7 +13,7 @@ interface SecondRegister {
 interface StudentRegister {
   collegeName: string;
   department: string;
-  year: number;
+  batch: string;
   registerNumber: string;
 }
 // eslint-disable-next-line
@@ -38,7 +38,7 @@ export const registerSlice = createSlice({
     department: "",
     designation: "",
     registerNumber: "",
-    year: 0,
+    batch: "",
   },
   reducers: {
     registerOne: (state, action: PayloadAction<FirstRegister>) => {

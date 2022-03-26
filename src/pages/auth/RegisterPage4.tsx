@@ -44,7 +44,7 @@ export default function RegisterPage4() {
         department: department,
         designation: registerData.designation,
         registerNumber: registerData.registerNumber,
-        year: registerData.year,
+        batch: registerData.batch,
       });
       if (response.status) {
         setError(false);

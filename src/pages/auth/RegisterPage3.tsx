@@ -15,7 +15,7 @@ export default function RegisterPage3() {
   let navigate = useNavigate();
   const [collegeName, setCollegeName] = useState("");
   const [department, setDepartment] = useState("");
-  const [year, setYear] = useState<number>(1);
+  const [batch, setBatch] = useState("");
   const [registerNumber, setRegisterNumber] = useState("");
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function RegisterPage3() {
     if (
       collegeName === "" ||
       department === "" ||
-      year === null ||
+      batch === null ||
       registerNumber === ""
     ) {
       setError(true);
@@ -44,7 +44,7 @@ export default function RegisterPage3() {
         department: department,
         designation: registerData.designation,
         registerNumber: registerNumber,
-        year: year,
+        batch: batch,
       });
       if (response.status) {
         setError(false);
@@ -83,6 +83,7 @@ export default function RegisterPage3() {
                 color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="College Name"
+                placeholder="eg LICET"
                 value={collegeName}
                 onChange={(e) => setCollegeName(e.target.value)}
               />
@@ -96,9 +97,9 @@ export default function RegisterPage3() {
               <TextField
                 color="warning"
                 className="my-3 d-flex justify-content-center"
-                label="Year"
-                value={year}
-                onChange={(e) => setYear(Number(e.target.value))}
+                label="Batch"
+                value={batch}
+                onChange={(e) => setBatch(e.target.value)}
               />
               <TextField
                 color="warning"
