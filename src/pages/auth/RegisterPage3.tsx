@@ -98,6 +98,7 @@ export default function RegisterPage3() {
                 color="warning"
                 className="my-3 d-flex justify-content-center"
                 label="Batch"
+                placeholder="Start-End year"
                 value={batch}
                 onChange={(e) => setBatch(e.target.value)}
               />

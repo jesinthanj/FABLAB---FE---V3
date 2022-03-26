@@ -5,6 +5,8 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { TimePicker, LocalizationProvider } from "@mui/lab";
 import { axiosGet, axiosPost } from "../requests";
 import { useState, forwardRef, useEffect } from "react";
 import Menu from "../../components/Menu";
@@ -26,6 +28,9 @@ export default function AddEquipmentsPage() {
 
   const [equip, setEquip] = useState("");
   const [price, setPrice] = useState("");
+  const [count, setCount] = useState("");
+  const [fromTime, fromTimeValue] = useState<Date | string | null>(null);
+  const [toTime, toTimeValue]= useState<Date | string | null>(null);
   // eslint-disable-next-line
   const [sections, setSections] = useState<Section[]>([]);
   const [error, setError] = useState<boolean>(false);
@@ -50,13 +55,16 @@ export default function AddEquipmentsPage() {
   };
 
   const handleAdd = () => {
-    if (equip === "" || price === "") {
+    if (equip === "" || price === "" || fromTime ===""|| toTime==="") {
       setError(true);
       setOpen(true);
     } else {
       axiosPost("/admin/addEquipments", {
         equipment: equip,
         price: price,
+        startTime: fromTime,
+        endTime: toTime,
+        count: count
       }).then((res) => {
         if (res.data.message === "Success") {
           setError(false);
@@ -66,7 +74,6 @@ export default function AddEquipmentsPage() {
       });
     }
   };
-
   return (
     <Layout>
       <Menu />
@@ -107,6 +114,47 @@ export default function AddEquipmentsPage() {
                 label="Price/Hr"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+              />
+              <div>
+                  <LocalizationProvider
+                    color="warning"
+                    dateAdapter={AdapterDateFns}
+                  >
+                    <TimePicker
+                      label="Opening Time"
+                      value={fromTime}
+                      onChange={(newValue) => {
+                        fromTimeValue(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div>
+                  <LocalizationProvider
+                    color="warning"
+                    dateAdapter={AdapterDateFns}
+                  >
+                    <TimePicker
+                      label="Closing Time"
+                      value={toTime}
+                      onChange={(newValue) => {
+                        toTimeValue(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth sx={{ mt:2}} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </div>
+              <TextField
+                color="warning"
+                className="my-3 d-flex justify-content-center"
+                label="Number of person"
+                value={count}
+                onChange={(e) => setCount(e.target.value)}
               />
             </div>
             <div className="d-flex justify-content-center">
