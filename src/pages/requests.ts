@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const endpoint = "http://192.168.2.160:5000/api";
-export const imgurl = "http://192.168.2.160:5000";
+export const endpoint = process.env.ENDPOINT_URL;
+export const imgurl = process.env.IMG_URL;
 
 export function axiosGet(url: string) {
   return axios.request({
