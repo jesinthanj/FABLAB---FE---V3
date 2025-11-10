@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export const endpoint = process.env.ENDPOINT_URL;
+export const endpoint = process.env.REACT_APP_API_URL!;
 export const imgurl = process.env.IMG_URL;
+
+console.log(endpoint)
 
 export function axiosGet(url: string) {
   return axios.request({

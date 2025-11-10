@@ -3,8 +3,11 @@ import Layout from "../../components/Layout";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { Snackbar, Alert } from "@mui/material";
-import Button from "@mui/material/Button";
 import { axiosPost } from "../requests";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 export default function Login() {
   let navigate = useNavigate();
@@ -18,6 +21,9 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [open, setOpen] = useState(false);
   const userData = { email, password };
+  
+  const handleOpen = () => setOpen(true);
+
 
   async function handleLogin() {
     if (email === "" || password === "") {
@@ -52,6 +58,19 @@ export default function Login() {
 
     setOpen(false);
   };
+
+
+const style = {
+  position: "absolute" as const,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
   return (
     <Layout>
@@ -127,6 +146,40 @@ export default function Login() {
             </div>
             <div className="d-flex justify-content-end pt-3">
               {" "}
+              <Button className="mx-2"
+                variant="contained"
+                sx={{
+                  borderRadius: "30px",
+                  backgroundColor: "#FF8E23",
+                  maxHeight: "50px",
+                  minHeight: "30px",
+                  "&:hover": {
+                    backgroundColor: "#fff",
+                    color: "#FFA500",
+                  },
+                }}
+                onClick={handleOpen}>Want to get a demo?</Button>
+              <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <h4>Use these creds</h4>
+                    <br />
+                  </Typography>
+                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <h5>For Admin</h5>
+                    Username : admin@licet.ac.in <br />
+                    Password : Licet@123 <br />
+                    <br />
+                    <h5>For User</h5>
+                    Username : user@licet.ac.in <br />
+                    Password : Licet@123 <br />
+                  </Typography>
+                </Box>
+              </Modal>
               <Button
                 className=""
                 variant="contained"
